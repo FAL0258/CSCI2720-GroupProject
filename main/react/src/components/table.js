@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import SearchBox from "./searchbox.js"
 
@@ -29,9 +29,30 @@ const TableRow = (props) => {
 };
 
 const Tables = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filtered, setFiltered] = useState([]);
+
+  const handleInput = (e) => {
+    setSearchQuery(e.target.value);
+  }
+  
+  const filterData = (data) => {
+    return data.loc.toLowerCase().includes(searchQuery.toLowerCase());
+  }
+
+  // Debugging
+  useEffect(() => {
+    setFiltered(data1.filter(filterData));
+  }, [searchQuery]);
+
   return (
     <main>
-      <SearchBox />
+      <div className="main">
+        <div className="form-group has-search">
+          <span className="fa fa-search form-control-feedback"></span>
+          <input type="text" className="form-control" placeholder="Search" onChange={handleInput} value={searchQuery} />
+        </div>
+      </div>
       <br />
       <div>
         <table
@@ -45,9 +66,15 @@ const Tables = () => {
             </tr>
           </thead>
           <tbody>
-            {data1.map((d, index) => (
-              <TableRow i={index} key={index} />
-            ))}
+            {filtered.map((d, index) => {
+              let url = "/locationpage/" + index;
+              return(
+                <tr>
+                  <td><Link to={url}> {filtered[index].loc}</Link></td>
+                  
+                  <td>{filtered[index].num}</td>
+                </tr>
+            )})}
           </tbody>
         </table>
       </div>
