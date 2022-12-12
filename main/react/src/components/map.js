@@ -6,13 +6,6 @@ import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
  *       https://www.youtube.com/watch?v=9e-5QHpadi0
  */
 
-const locdata = [
-  { lat: 22.501639, lng: 114.128911 },
-  { lat: 22.39181, lng: 113.976771 },
-  { lat: 22.35665, lng: 114.12623 },
-  { lat: 22.44152, lng: 114.02289 },
-];
-
 const Maps = (props) => {
   const containerStyle = {
     width: props.mapWidth,
@@ -54,7 +47,7 @@ const Maps = (props) => {
       onLoad={onLoad}
       onUnmount={onUnmount}
     >
-      {locdata.map((coordinates) => <Marker position={coordinates} />)};
+      {props.coordinates.map((coordinates) => <Marker position={coordinates} />)};
     </GoogleMap>
   ) : (
     <></>
