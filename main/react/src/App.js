@@ -50,7 +50,7 @@ function App (props){
             <Link to="/table"> <li className="nav-item text-dark">Table</li></Link>
             <Link to="/map"> <li className="nav-item text-dark">Map</li></Link>
             <Link to="/favloc"> <li className="nav-item text-dark">Favorite Location</li></Link>
-            <Link to="/adminedit"> <li className="nav-item text-dark">Admin Edit</li></Link>
+            <Link to="/crudevent1"> <li className="nav-item text-dark">Admin Edit</li></Link>
             
               </ul>
             </nav>
@@ -63,8 +63,7 @@ function App (props){
             <Route path="/table" element={<Table />} />
             <Route path="/map" element={<Map />} />
             <Route path="/favloc" element={<Favloc />} />
-            <Route path="/adminedit" element={<Adminedit />} />
-        
+                    
             <Route path="/locationpage/:index" element={<LocationPage />} />
              <Route path="/crudevent/:chosen" element={<CRUDevent />} />
           <Route path="/crudevent1" element={<CRUDevent1  />} />
