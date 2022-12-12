@@ -1,16 +1,10 @@
 #topright{
-   position: fixed;
-   right: 10px;
-   top: 10px;
+   position: absolute;
+   right: 1%;
+   top: 1%;
    
 }
 
 #idid:hover{
     font-weight: bold;
-}
-
-#username{
-   position: fixed;
-   right: 10px;
-   top: 10px;
 }
