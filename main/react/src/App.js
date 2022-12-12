@@ -44,7 +44,7 @@ function App (props){
           <div>
             
             <nav className="navbar navbar-expand-lg justify-content-center bg-light" >
-            <ul class="navbar-nav"> 
+            <ul className="navbar-nav"> 
             
             <Link to="/"> <li className="nav-item text-dark">Home</li></Link>
             <Link to="/table"> <li className="nav-item text-dark">Table</li></Link>
@@ -86,7 +86,7 @@ function App (props){
           <div>
             
             <nav className="navbar navbar-expand-lg justify-content-center bg-light" >
-            <ul class="navbar-nav">
+            <ul className="navbar-nav">
             
             <Link to="/"> <li className="nav-item text-dark">Home</li></Link>
             <Link to="/table"> <li className="nav-item text-dark">Table</li></Link>
@@ -183,11 +183,11 @@ const LocationPage = () => {
       <div className="row">
       <section className="col-sm-12 col-md-6 col-log-6" id="fav" style={{background:"lightgoldenrodyellow"}}>
       <h2 style={{background:"rosybrown", color:"white", textAlign:"center"}}>Location Detail</h2>
-      <Link to="/crudevent"><button type="button" class="btn btn-outline-danger"> Edit</button>      </Link>
+      <Link to="/crudevent"><button type="button" className="btn btn-outline-danger"> Edit</button>      </Link>
       <div id="smallermap"><SmallerMaps/></div>
       <p>Location: {data1[index].loc}</p>
       <p>Number of Events: {data1[index].num}</p>
-      <button type="button" class="btn btn-outline-danger" onClick={fillheart} ><b>Add to favorite location <i id="nonfill" class="bi bi-heart"></i></b></button>
+      <button type="button" className="btn btn-outline-danger" onClick={fillheart} ><b>Add to favorite location <i id="nonfill" className="bi bi-heart"></i></b></button>
       
       </section>
       <section className="col-sm-12 col-md-6 col-log-6" style={{background:"lavenderblush", color:"rosybrown"}}>
@@ -219,7 +219,7 @@ const Favloc = () => {
   return ( 
   <div className="container">
   <div className="row">
-          <h2><b>Your Favorite Location</b><i class="bi bi-balloon-heart-fill"></i></h2>
+          <h2><b>Your Favorite Location</b><i className="bi bi-balloon-heart-fill"></i></h2>
           <Tables/>
       </div></div>
       );

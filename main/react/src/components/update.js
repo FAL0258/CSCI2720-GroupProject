@@ -8,20 +8,20 @@ function Update(){
     
         <form action="" method="post">
        
-       <label for="eventId">Event Id</label>
+       <label htmlFor="eventId">Event Id</label>
        <input type="text" id="eventId" name="eventId" required/>
        <button type="button" onclick="load()">Load Information</button>
        <br/>
           
-       <label for="name">Event name</label>
+       <label htmlFor="name">Event name</label>
        <input type="text" id="name" name="name"/>
        <br/>
            
-       <label for="locId">Event location</label>
+       <label htmlFor="locId">Event location</label>
        <input type="text" id="locId" name="locId"/>
        <br/>
            
-       <label for="quota">Location quota</label>
+       <label htmlFor="quota">Location quota</label>
        <input type="text" id="quota" name="quota"/>
        <br/>
        

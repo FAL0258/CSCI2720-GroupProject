@@ -14,35 +14,35 @@ let {chosen} = useParams();
 
 <form action="" method="post">
 
-<label for="eventId"  className="d-none">Event Id</label>
+<label htmlFor="eventId"  className="d-none">Event Id</label>
 <input type="text" className="form-control" style={{width:400, margin:'auto'}} placeholder="EventID" id="eventId" name="eventId"/>
 <br/>
 
-<label for="title" className="d-none">Title</label>
+<label htmlFor="title" className="d-none">Title</label>
 <input type="text" className="form-control" style={{width:400, margin:'auto'}} placeholder="Event Title" id="title" name="title"/>
 <br/>
 
-<label for="venue" className="d-none">Venue</label>
+<label htmlFor="venue" className="d-none">Venue</label>
 <input type="text" className="form-control" style={{width:400, margin:'auto'}} placeholder="Event Venue" id="venue" name="venue"/>
 <br/>
 
-<label for="date" className="d-none">Date</label>
+<label htmlFor="date" className="d-none">Date</label>
 <input type="text" className="form-control" style={{width:400, margin:'auto'}} placeholder="Event Date" id="date" name="date"/>
 <br/>
 
-<label for="description" className="d-none">Description</label>
+<label htmlFor="description" className="d-none">Description</label>
 <input type="text" className="form-control" style={{width:400, margin:'auto'}} placeholder="Description" id="description" name="description"/>
 <br/>
 
-<label for="presenter" className="d-none">Presenter</label>
+<label htmlFor="presenter" className="d-none">Presenter</label>
 <input type="text" className="form-control" style={{width:400, margin:'auto'}} placeholder="Presenter" id="presenter" name="presenter"/>
 <br/>
 
-<label for="price" className="d-none">Presenter</label>
+<label htmlFor="price" className="d-none">Presenter</label>
 <input type="text" className="form-control" style={{width:400, margin:'auto'}} placeholder="Price" id="price" name="price"/>
 <br/>
 
-<button class="btn btn-lg btn-block" style={{width:400, margin:'auto', backgroundColor: 'rosybrown', color:'white'}} type="submit">Create</button>
+<button className="btn btn-lg btn-block" style={{width:400, margin:'auto', backgroundColor: 'rosybrown', color:'white'}} type="submit">Create</button>
 </form>
 </body>
 </>
@@ -58,23 +58,23 @@ if( chosen==2){   return(
 
 <form action="" method="post">
 
-<label for="locationId"  className="d-none">Location ID</label>
+<label htmlFor="locationId"  className="d-none">Location ID</label>
 <input type="text" className="form-control" style={{width:400, margin:'auto'}} placeholder="Location ID" id="locationId" name="locationId"/>
 <br/>
 
-<label for="name" className="d-none">Location Name</label>
+<label htmlFor="name" className="d-none">Location Name</label>
 <input type="text" className="form-control" style={{width:400, margin:'auto'}} placeholder="Location Name" id="name" name="name"/>
 <br/>
 
-<label for="latitude" className="d-none">Latitude</label>
+<label htmlFor="latitude" className="d-none">Latitude</label>
 <input type="text" className="form-control" style={{width:400, margin:'auto'}} placeholder="Latitude" id="latitude" name="latitude"/>
 <br/>
 
-<label for="longitude" className="d-none">Longitude</label>
+<label htmlFor="longitude" className="d-none">Longitude</label>
 <input type="text" className="form-control" style={{width:400, margin:'auto'}} placeholder="Longitude" id="longitude" name="longitude"/>
 <br/>
 
-<button class="btn btn-lg btn-block" style={{width:400, margin:'auto', backgroundColor: 'rosybrown', color:'white'}} type="submit">Create</button>
+<button className="btn btn-lg btn-block" style={{width:400, margin:'auto', backgroundColor: 'rosybrown', color:'white'}} type="submit">Create</button>
 </form>
 </body>
 </>
@@ -89,15 +89,15 @@ if( chosen==2){   return(
 
 <form action="" method="post">
 
-<label for="name"  className="d-none">User Name</label>
+<label htmlFor="name"  className="d-none">User Name</label>
 <input type="text" className="form-control" style={{width:400, margin:'auto'}} placeholder="User Name" id="name" name="name"/>
 <br/>
 
-<label for="password" className="d-none">User Password</label>
+<label htmlFor="password" className="d-none">User Password</label>
 <input type="text" className="form-control" style={{width:400, margin:'auto'}} placeholder="User Password" id="password" name="password"/>
 <br/>
 
-<button class="btn btn-lg btn-block" style={{width:400, margin:'auto', backgroundColor: 'rosybrown', color:'white'}} type="submit">Create</button>
+<button className="btn btn-lg btn-block" style={{width:400, margin:'auto', backgroundColor: 'rosybrown', color:'white'}} type="submit">Create</button>
 </form>
 </body>
  </>

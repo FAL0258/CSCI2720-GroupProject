@@ -6,13 +6,13 @@ const Comment = () => {
             <div className="row">
                 <section id="comment" className="col-12">
                     <form>
-                        <div class="mb-3">
+                        <div className="mb-3">
                         </div>
-                        <div class="mb-3">
-                            <label for="new-comment" class="form-label">Comment</label>
-                            <textarea class="form-control" id="new-comment" rows="3" required></textarea>
+                        <div className="mb-3">
+                            <label htmlFor="new-comment" className="form-label">Comment</label>
+                            <textarea className="form-control" id="new-comment" rows="3" required></textarea>
                         </div>
-                    <button type="button" class="btn" style={{backgroundColor: 'rosybrown', color:'white'}}>Add comment</button>
+                    <button type="button" className="btn" style={{backgroundColor: 'rosybrown', color:'white'}}>Add comment</button>
                     </form>
                 </section>
             </div>
