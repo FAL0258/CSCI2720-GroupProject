@@ -170,7 +170,6 @@ const Table = () => {
         <h2><b>Table</b></h2>
         
         <section className="col-sm-5 col-md-5 col-lg-5">
-        <SearchBox/><br/>
     <Tables/>
 
     </section>
