@@ -20,14 +20,6 @@ import Create from "./components/create.js"
 //npm i -S @react-google-maps/api
 import "./style.css"   
 
-const data = [
-  {filename: "cuhk-2013.jpg", year:2013, remarks: "Sunset over CUHK"},
-  {filename: "cuhk-2017.jpg", year:2017, remarks: "Bird's-eye view of CUHK"},
-  {filename: "sci-2013.jpg", year:2013, remarks: "The CUHK Emblem"},
-  {filename: "shb-2013.jpg", year:2013, remarks: "The Engineering Buildings"},
-  {filename: "stream-2009.jpg", year:2009, remarks: "Nature hidden in the campus"},
-  ];
-
   let data1 = [
     {loc: "Tai Po Public Library", num: "4"},{loc: "Sha Tin Town Hall", num: "6"},{loc: "Fa Yuen Street Public Library", num: "9"},{loc: "Fanling Public Library", num: "5"},
     {loc: "Lek Yuen Public Library", num: "10"},{loc: "Lung Hing Public Library", num: "7"},{loc: "Ngau Chi Wan Public Library", num: "8"},{loc: "Hong Kong Film Archive", num: "3"},
