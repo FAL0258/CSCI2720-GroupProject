@@ -1,6 +1,6 @@
 /**
  * TODO:
- * -Modify dataset to accomodate for clickable markers 
+ * -Modify dataset to accomodate for clickable markers: each coordinate needs to be associated to a certain location ID
  */
 
 import React, { useState, useCallback } from "react";
@@ -12,6 +12,10 @@ import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
  */
 
 const Maps = (props) => {
+
+  const filterData = () => {
+    // abstract, used for filtering the location coordinates
+  }
 
   // Set height and width accordingly
   const containerStyle = {
@@ -58,7 +62,7 @@ const Maps = (props) => {
       {/**
        * For each coordinate in props.coordinates, render a Marker at that coordinate
        */}
-      {props.coordinates.map((coordinate, i) => <Marker key={i} position={coordinate} />)};
+      {props.coordinates.map((coordinate, index) => <Marker key={index} position={coordinate} />)};
     </GoogleMap>
   ) : (
     <></>
