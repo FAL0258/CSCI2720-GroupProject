@@ -32,7 +32,7 @@ function App (props){
     // Handling session state 
     /*
     const ckToken = window.sessionStorage.getItem("fakeCookie");
-    let oisAdmin = false;
+    let oisAdmin = 'false';
     let ouName = "";
     if (ckToken == null){
       //return (<LoginPage setToken={setToken} setUser={setUser}/>)
