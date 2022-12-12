@@ -6,20 +6,18 @@ const LoginPage = () => {
         <div className="container">
             <div className="row text-center">
                 <br/>
-                <form class="form-signin">
-                    <img class="mb-4" style={{border: '5px dashed rosybrown',borderRadius: 50 + 'px', width:200, height:200}} src={icon} alt="icon" /><br/>
-                    
-                    <label for="inputEmail" class="d-none">Email address</label>
-                    <input type="email" id="inputEmail" class="form-control " placeholder="Email address" style={{width:400, margin:'auto'}} required autofocus/>
-                    
-                    <label for="inputPassword" class="d-none">Password</label><br/>
-                    <input type="password" id="inputPassword" class="form-control" style={{width:400, margin:'auto'}}  placeholder="Password" required/>
-                    
-                    <div class="checkbox mb-3">
-            
-                    </div>
-                    <button class="btn btn-lg btn-block" style={{backgroundColor: 'rosybrown', color:'white'}} type="submit">Log in</button>
-                </form>
+                 <form>
+            <img className="mb-4" style={{border: '5px dashed rosybrown',borderRadius: 50 + 'px', width:200, height:200}} src={icon} alt="icon" /><br/>
+        <label for="uid" className="d-none">Uid</label>
+        <input type="text" id="uid" name="uId" className="form-control" style={{width:400, margin:'auto'}} placeholder="Username" required autofocus/>
+
+        <label for="upw" className="d-none">Upw</label>
+        <input type="text" id="upw" name="uPw" className="form-control" style={{width:400, margin:'auto'}}  placeholder="Password" required/>
+            <br/>
+       <button className="btn btn-lg btn-block" style={{backgroundColor: 'rosybrown', color:'white'}} type="button" onclick="getLoginRes(document.getElementById('uid').value, document.getElementById('upw');">
+   Login
+   </button>
+   </form>
             </div>
         </div>
     );
