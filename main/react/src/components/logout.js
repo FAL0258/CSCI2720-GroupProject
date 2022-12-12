@@ -4,7 +4,12 @@ import "./style3.css";
 const LogOut = (props) => {
 
     const confirmLogOut = () => {
-        window.confirm("Are you sure to log out?");
+        if (window.confirm("Are you sure to log out?")){
+            window.sessionStorage.removeItem("fakeCookie");
+            window.sessionStorage.removeItem("userName");
+            window.sessionStorage.removeItem("isAdmin");
+            window.location.replace("/");
+        }
     }
 
     return(

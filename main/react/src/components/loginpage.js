@@ -1,14 +1,15 @@
 import React from 'react';
 import icon from '../icon.png';
 import PropTypes from 'prop-types';
+import crypto from "crypto-js";
 
 async function loginUser(datas){
     let api = "http://localhost:4000/validateDB";
     return fetch(api, { method: "post", body: datas})
-     .then(data => data.json())
+     .then(data => data.json());
 }
 
-const LoginPage = ( {setToken} ) => {
+const LoginPage = () => {
 
     const getLoginRes = async (event, uid, upw) => {
         event.preventDefault();
@@ -16,10 +17,19 @@ const LoginPage = ( {setToken} ) => {
         data.append("uId", uid);
         data.append("uPw", upw);
         
-        //ac&pw: admin admin, user1 user1
         const identity = await loginUser(data);
         console.log(identity);
-        setToken(identity.uName);
+        if (identity.ok == 1){
+            //setUser(identity);
+            
+            window.sessionStorage.setItem("fakeCookie", crypto.SHA256(identity.uName).toString());
+            window.sessionStorage.setItem("userName", identity.uName);
+            window.sessionStorage.setItem("isAdmin", identity.isAdmin);
+            window.location.replace("/");
+        }
+        else{
+            window.alert("Invalid account");
+        }
 
     }
 
@@ -46,6 +56,3 @@ const LoginPage = ( {setToken} ) => {
 
 
 export default React.memo(LoginPage);
-LoginPage.propTypes = {
-    setToken: PropTypes.func.isRequired
-}

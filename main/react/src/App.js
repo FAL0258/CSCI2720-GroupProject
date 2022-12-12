@@ -24,22 +24,34 @@ let data1 = [
   {loc: "Lek Yuen Public Library", num: "10"},{loc: "Lung Hing Public Library", num: "7"},{loc: "Ngau Chi Wan Public Library", num: "8"},{loc: "Hong Kong Film Archive", num: "3"},
   {loc: "North Lamma Public Library", num: "4"},{loc: "Emperor Cinemas iSQUARE", num: "8"}
   ];
-
-
   
 
 function App (props){
-    const [token, setToken] = useState();
-    if (!token || token == null){
-        return (<LoginPage setToken={setToken}/>)
-    }
+    //const [userData, setUser] = useState();
 
-    else if (token == "Admin"){
-      // Use token variable to determine whether it is admin or not
-      console.log(token);
+    // Handling session state 
+    /*
+    const ckToken = window.sessionStorage.getItem("fakeCookie");
+    let oisAdmin = false;
+    let ouName = "";
+    if (ckToken == null){
+      //return (<LoginPage setToken={setToken} setUser={setUser}/>)
+      return (<LoginPage />)
+    }
+    oisAdmin = window.sessionStorage.getItem("isAdmin");
+    ouName = window.sessionStorage.getItem("userName");
+    */
+    
+    // Temp session
+    let oisAdmin = 'true';
+    let ouName = 'Admin';
+
+    // Admin page
+    if (oisAdmin == 'true'){
+      console.log(oisAdmin);
       return (
         <BrowserRouter>
-        <LogOut name={token}/>
+        <LogOut name={ouName}/>
         <Title name={props.name} style={{color: "red"}} />
           <div>
             
@@ -76,12 +88,12 @@ function App (props){
         </BrowserRouter>
       );
     }
+    // Normal User page
     else{
-      // Use token variable to determine whether it is admin or not
-      console.log(token);
+      console.log(oisAdmin);
       return (
         <BrowserRouter>
-        <LogOut name={token}/>
+        <LogOut name={ouName}/>
         <Title name={props.name} style={{color: "red"}} />
           <div>
             
@@ -268,11 +280,11 @@ DB in node js
     console.log(res.body);
     console.log(validated);
     if (validated){
-      let output = {uName: result.name, isAdmin: result.isAdmin};
+      let output = {uName: result.name, isAdmin: result.isAdmin, ok: 1};
       res.send(JSON.stringify(output));
     }
     else{
-      res.send([]);
+      res.send(JSON.stringify({ok: 0}));
     }
   });
 */
