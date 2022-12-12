@@ -65,11 +65,12 @@ function App (props){
             <Route path="/adminedit" element={<Adminedit />} />
         
             <Route path="/locationpage/:index" element={<LocationPage />} />
-            <Route path="/crudevent" element={<CRUDevent />} />
-            <Route path="/create" element={<Create />} />
-          <Route path="/read" element={<Read />} />
-            <Route path="/update" element={<Update />} />
-            <Route path="/delete" element={<Delete />} />
+             <Route path="/crudevent/:chosen" element={<CRUDevent />} />
+          <Route path="/crudevent1" element={<CRUDevent1  />} />
+          <Route path="/create/:chosen" element={<Create />} />
+        <Route path="/read/:chosen" element={<Read />} />
+          <Route path="/update/:chosen" element={<Update />} />
+          <Route path="/delete/:chosen" element={<Delete />} />
             <Route path="*" element={<NoMatch />} />
           </Routes>
         </BrowserRouter>
