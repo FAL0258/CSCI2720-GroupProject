@@ -196,7 +196,7 @@ const LocationPage = () => {
       <section className="col-sm-12 col-md-6 col-log-6" id="fav" style={{background:"lightgoldenrodyellow"}}>
       <h2 style={{background:"rosybrown", color:"white", textAlign:"center"}}>Location Detail</h2>
       <Link to="/crudevent"><button type="button" className="btn btn-outline-danger"> Edit</button>      </Link>
-      <div id="smallermap"><SmallerMaps/></div>
+      <div id="smallermap"><Maps mapWidth="500px" mapHeight="500px"/></div>
       <p>Location: {data1[index].loc}</p>
       <p>Number of Events: {data1[index].num}</p>
       <button type="button" className="btn btn-outline-danger" onClick={fillheart} ><b>Add to favorite location <i id="nonfill" className="bi bi-heart"></i></b></button>
@@ -216,7 +216,7 @@ const LocationPage = () => {
 
 const Map = () => {
 
-  return(<section className="justify-content-center" id="map"><Maps /></section>);
+  return(<section className="justify-content-center" id="map"><Maps mapWidth="800px" mapHeight="600px" /></section>);
 }
  
   
