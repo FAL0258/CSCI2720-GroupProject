@@ -30,7 +30,7 @@ const LoginPage = ( {setToken} ) => {
                 <form>
                     <img className="mb-4" style={{border: '5px dashed rosybrown',borderRadius: 50 + 'px', width:200, height:200}} src={icon} alt="icon" /><br/>
                     <label htmlFor="uid" className="d-none">Uid</label>
-                    <input type="text" id="uid" name="uId" className="form-control" style={{width:400, margin:'auto'}} placeholder="Username" required autofocus/>
+                    <input type="text" id="uid" name="uId" className="form-control" style={{width:400, margin:'auto'}} placeholder="Username" required autoFocus/>
 
                     <label htmlFor="upw" className="d-none">Upw</label>
                     <input type="text" id="upw" name="uPw" className="form-control" style={{width:400, margin:'auto'}}  placeholder="Password" required/>
