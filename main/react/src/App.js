@@ -24,7 +24,14 @@ let data1 = [
   {loc: "Lek Yuen Public Library", num: "10"},{loc: "Lung Hing Public Library", num: "7"},{loc: "Ngau Chi Wan Public Library", num: "8"},{loc: "Hong Kong Film Archive", num: "3"},
   {loc: "North Lamma Public Library", num: "4"},{loc: "Emperor Cinemas iSQUARE", num: "8"}
   ];
-  
+
+// Test data for map markers
+const locData = [
+  { lat: 22.501639, lng: 114.128911 },
+  { lat: 22.39181, lng: 113.976771 },
+  { lat: 22.35665, lng: 114.12623 },
+  { lat: 22.44152, lng: 114.02289 },
+];
 
 function App (props){
     //const [userData, setUser] = useState();
@@ -163,7 +170,6 @@ const Table = () => {
         <h2><b>Table</b></h2>
         
         <section className="col-sm-5 col-md-5 col-lg-5">
-        <SearchBox/><br/>
     <Tables/>
 
     </section>
@@ -196,7 +202,7 @@ const LocationPage = () => {
       <section className="col-sm-12 col-md-6 col-log-6" id="fav" style={{background:"lightgoldenrodyellow"}}>
       <h2 style={{background:"rosybrown", color:"white", textAlign:"center"}}>Location Detail</h2>
       <Link to="/crudevent"><button type="button" className="btn btn-outline-danger"> Edit</button>      </Link>
-      <div id="smallermap"><Maps mapWidth="500px" mapHeight="500px"/></div>
+      <div id="smallermap"><Maps mapWidth="500px" mapHeight="500px" coordinates={locData} /></div>
       <p>Location: {data1[index].loc}</p>
       <p>Number of Events: {data1[index].num}</p>
       <button type="button" className="btn btn-outline-danger" onClick={fillheart} ><b>Add to favorite location <i id="nonfill" className="bi bi-heart"></i></b></button>
@@ -216,7 +222,7 @@ const LocationPage = () => {
 
 const Map = () => {
 
-  return(<section className="justify-content-center" id="map"><Maps mapWidth="800px" mapHeight="600px" /></section>);
+  return(<section className="justify-content-center" id="map"><Maps mapWidth="800px" mapHeight="600px" coordinates={locData} /></section>);
 }
  
   

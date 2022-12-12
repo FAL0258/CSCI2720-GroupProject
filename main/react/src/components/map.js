@@ -1,3 +1,8 @@
+/**
+ * TODO:
+ * -Modify dataset to accomodate for clickable markers 
+ */
+
 import React, { useState, useCallback } from "react";
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
 
@@ -6,14 +11,9 @@ import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
  *       https://www.youtube.com/watch?v=9e-5QHpadi0
  */
 
-const locdata = [
-  { lat: 22.501639, lng: 114.128911 },
-  { lat: 22.39181, lng: 113.976771 },
-  { lat: 22.35665, lng: 114.12623 },
-  { lat: 22.44152, lng: 114.02289 },
-];
-
 const Maps = (props) => {
+
+  // Set height and width accordingly
   const containerStyle = {
     width: props.mapWidth,
     height: props.mapHeight,
@@ -29,6 +29,7 @@ const Maps = (props) => {
     lng: 114.1372,
   };
 
+  // Set whether the map API has loaded or not
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: "AIzaSyD0bhHj99UCaw3koa6z2St9AwIJYfn7xHo",
@@ -45,7 +46,7 @@ const Maps = (props) => {
     setMap(null);
   }, []);
   
-
+  // If loaded render the map, if not then don't
   return isLoaded ? (
     <GoogleMap
       mapContainerStyle={containerStyle}
@@ -54,7 +55,10 @@ const Maps = (props) => {
       onLoad={onLoad}
       onUnmount={onUnmount}
     >
-      {locdata.map((coordinates) => <Marker position={coordinates} />)};
+      {/**
+       * For each coordinate in props.coordinates, render a Marker at that coordinate
+       */}
+      {props.coordinates.map((coordinate, i) => <Marker key={i} position={coordinate} />)};
     </GoogleMap>
   ) : (
     <></>
