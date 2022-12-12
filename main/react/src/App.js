@@ -29,48 +29,51 @@ let data1 = [
 
 function App (props){
     const [token, setToken] = useState();
-      if (!token || token == null){
+    if (!token || token == null){
         return (<LoginPage setToken={setToken}/>)
     }
-    return (
-      <BrowserRouter>
-      <LogOut />
-      <Title name={props.name} style={{color: "red"}} />
-        <div>
-          
-          <nav className="navbar navbar-expand-lg justify-content-center bg-light" >
-          <ul class="navbar-nav"> 
-          
-          <Link to="/home"> <li className="nav-item text-dark">Home</li></Link>
-          <Link to="/table"> <li className="nav-item text-dark">Table</li></Link>
-          <Link to="/map"> <li className="nav-item text-dark">Map</li></Link>
-          <Link to="/favloc"> <li className="nav-item text-dark">Favorite Location</li></Link>
-          <Link to="/adminedit"> <li className="nav-item text-dark">Admin Edit</li></Link>
-          
-             </ul>
-          </nav>
-        </div>
 
+    else{
+      console.log(token);
+      return (
+        <BrowserRouter>
+        <LogOut name={token}/>
+        <Title name={props.name} style={{color: "red"}} />
+          <div>
+            
+            <nav className="navbar navbar-expand-lg justify-content-center bg-light" >
+            <ul class="navbar-nav"> 
+            
+            <Link to="/"> <li className="nav-item text-dark">Home</li></Link>
+            <Link to="/table"> <li className="nav-item text-dark">Table</li></Link>
+            <Link to="/map"> <li className="nav-item text-dark">Map</li></Link>
+            <Link to="/favloc"> <li className="nav-item text-dark">Favorite Location</li></Link>
+            <Link to="/adminedit"> <li className="nav-item text-dark">Admin Edit</li></Link>
+            
+              </ul>
+            </nav>
+          </div>
+
+          
+
+          <Routes>
+          <Route path="/" element={<Home />} />
+            <Route path="/table" element={<Table />} />
+            <Route path="/map" element={<Map />} />
+            <Route path="/favloc" element={<Favloc />} />
+            <Route path="/adminedit" element={<Adminedit />} />
         
-
-        <Routes>
-        <Route path="/" element={<LoginPage />} />
-        <Route path="/home" element={<Home />} />
-          <Route path="/table" element={<Table />} />
-          <Route path="/map" element={<Map />} />
-          <Route path="/favloc" element={<Favloc />} />
-          <Route path="/adminedit" element={<Adminedit />} />
-       
-          <Route path="/locationpage/:index" element={<LocationPage />} />
-          <Route path="/crudevent" element={<CRUDevent />} />
-          <Route path="/create" element={<Create />} />
-        <Route path="/read" element={<Read />} />
-          <Route path="/update" element={<Update />} />
-          <Route path="/delete" element={<Delete />} />
-          <Route path="*" element={<NoMatch />} />
-        </Routes>
-      </BrowserRouter>
-    );
+            <Route path="/locationpage/:index" element={<LocationPage />} />
+            <Route path="/crudevent" element={<CRUDevent />} />
+            <Route path="/create" element={<Create />} />
+          <Route path="/read" element={<Read />} />
+            <Route path="/update" element={<Update />} />
+            <Route path="/delete" element={<Delete />} />
+            <Route path="*" element={<NoMatch />} />
+          </Routes>
+        </BrowserRouter>
+      );
+    }
   }
 
 
