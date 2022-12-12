@@ -19,9 +19,8 @@ const TableRow = (props) => {
   let url = "/locationpage/" + i;
   return (
     <tr>
-      <td>
-        <a href={url}>{data1[i].loc}</a>
-      </td>
+      <td><Link to={url}> {data1[i].loc}</Link></td>
+      
       <td>{data1[i].num}</td>
     </tr>
   );
