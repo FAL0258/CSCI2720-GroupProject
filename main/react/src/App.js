@@ -33,7 +33,8 @@ function App (props){
         return (<LoginPage setToken={setToken}/>)
     }
 
-    else{
+    else if (token == "Admin"){
+      // Use token variable to determine whether it is admin or not
       console.log(token);
       return (
         <BrowserRouter>
@@ -69,6 +70,40 @@ function App (props){
           <Route path="/read" element={<Read />} />
             <Route path="/update" element={<Update />} />
             <Route path="/delete" element={<Delete />} />
+            <Route path="*" element={<NoMatch />} />
+          </Routes>
+        </BrowserRouter>
+      );
+    }
+    else{
+      // Use token variable to determine whether it is admin or not
+      console.log(token);
+      return (
+        <BrowserRouter>
+        <LogOut name={token}/>
+        <Title name={props.name} style={{color: "red"}} />
+          <div>
+            
+            <nav className="navbar navbar-expand-lg justify-content-center bg-light" >
+            <ul class="navbar-nav">
+            
+            <Link to="/"> <li className="nav-item text-dark">Home</li></Link>
+            <Link to="/table"> <li className="nav-item text-dark">Table</li></Link>
+            <Link to="/map"> <li className="nav-item text-dark">Map</li></Link>
+            <Link to="/favloc"> <li className="nav-item text-dark">Favorite Location</li></Link>
+            
+              </ul>
+            </nav>
+          </div>
+
+          
+
+          <Routes>
+          <Route path="/" element={<Home />} />
+            <Route path="/table" element={<Table />} />
+            <Route path="/map" element={<Map />} />
+            <Route path="/favloc" element={<Favloc />} />
+            <Route path="/locationpage/:index" element={<LocationPage />} />
             <Route path="*" element={<NoMatch />} />
           </Routes>
         </BrowserRouter>
