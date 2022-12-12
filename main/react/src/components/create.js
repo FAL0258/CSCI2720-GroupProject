@@ -38,7 +38,7 @@ let {chosen} = useParams();
 <input type="text" className="form-control" style={{width:400, margin:'auto'}} placeholder="Presenter" id="presenter" name="presenter"/>
 <br/>
 
-<label htmlFor="price" className="d-none">Presenter</label>
+<label htmlFor="price" className="d-none">Price</label>
 <input type="text" className="form-control" style={{width:400, margin:'auto'}} placeholder="Price" id="price" name="price"/>
 <br/>
 
