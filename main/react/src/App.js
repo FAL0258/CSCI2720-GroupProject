@@ -251,3 +251,28 @@ const Title = (props) => { /*these are REACT Component */
 
 
 export default App;
+
+/*
+DB in node js
+  app.post('/validateDB', async (req, res) => {
+    let uid = req.body["uId"];
+    let upw = req.body["uPw"];
+    //let un = req.body["name"];
+    //let enc = Bcrypt.hashSync(upw);
+    //ac&pw: admin admin, user1 user1
+    let validated = false;
+    const result = await User.findOne({ userId: uid});
+    if (result !== null){
+      validated = Bcrypt.compareSync(upw, result.password);
+    }
+    console.log(res.body);
+    console.log(validated);
+    if (validated){
+      let output = {uName: result.name, isAdmin: result.isAdmin};
+      res.send(JSON.stringify(output));
+    }
+    else{
+      res.send([]);
+    }
+  });
+*/

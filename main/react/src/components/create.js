@@ -9,7 +9,7 @@ let {chosen} = useParams();
  if( chosen==1){   return(
        <>
 
-<body className="text-center">
+<div className="text-center">
 <h2 style={{background:"rosybrown", color:"white", textAlign:"center"}}>Create Event</h2>
 
 <form action="" method="post">
@@ -44,7 +44,7 @@ let {chosen} = useParams();
 
 <button className="btn btn-lg btn-block" style={{width:400, margin:'auto', backgroundColor: 'rosybrown', color:'white'}} type="submit">Create</button>
 </form>
-</body>
+</div>
 </>
     );}
 
@@ -53,7 +53,7 @@ if( chosen==2){   return(
         <>
        
  
-<body className="text-center">
+<div className="text-center">
 <h2 style={{background:"rosybrown", color:"white", textAlign:"center"}}>Create Location</h2>
 
 <form action="" method="post">
@@ -76,7 +76,7 @@ if( chosen==2){   return(
 
 <button className="btn btn-lg btn-block" style={{width:400, margin:'auto', backgroundColor: 'rosybrown', color:'white'}} type="submit">Create</button>
 </form>
-</body>
+</div>
 </>
      );}
 //form3
@@ -84,7 +84,7 @@ if( chosen==2){   return(
         <>
          
  
-         <body className="text-center">
+         <div className="text-center">
 <h2 style={{background:"rosybrown", color:"white", textAlign:"center"}}>Create User</h2>
 
 <form action="" method="post">
@@ -99,7 +99,7 @@ if( chosen==2){   return(
 
 <button className="btn btn-lg btn-block" style={{width:400, margin:'auto', backgroundColor: 'rosybrown', color:'white'}} type="submit">Create</button>
 </form>
-</body>
+</div>
  </>
      );}
 }
