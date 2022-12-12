@@ -1,3 +1,5 @@
+
+import ReactDOM from 'react-dom/client';
 import React from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { useParams, useLocation } from 'react-router-dom';
@@ -10,6 +12,11 @@ import LoginPage from "./components/loginpage.js"
 import SearchBox from "./components/searchbox.js"
 import LogOut from "./components/logout.js"
 import Comment from "./components/comment.js"
+import CRUDevent from "./components/crudevent.js"
+import Update from "./components/update.js"
+import Delete from "./components/delete.js"
+import Read from "./components/read.js"
+import Create from "./components/create.js"
 //npm i -S @react-google-maps/api
 import "./style.css"   
 
