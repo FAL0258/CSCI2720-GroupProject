@@ -27,7 +27,7 @@ import "./style.css"
 
   
 
-function App (props){
+const App = (props) => {
   
     return (
       <BrowserRouter>
@@ -71,7 +71,7 @@ function App (props){
   }
 
 
-function NoMatch() {
+const NoMatch = () => {
   let location = useLocation();
   return (
     <div>
@@ -84,7 +84,7 @@ function NoMatch() {
 
 
 
-function Home () {
+const Home = () => {
 
     return (
     <>
@@ -99,7 +99,7 @@ function Home () {
   }
 
 
-function Table (){
+const Table = () => {
   
     
   return (
@@ -119,9 +119,9 @@ function Table (){
   }
 
 
-function LocationPage() {
+const LocationPage = () => {
     let {index} = useParams();
-    function fillheart() {
+    const fillheart = () => {
       
       let special = document.querySelector("#nonfill")
       if (special.classList.contains("bi-heart")) {
@@ -160,7 +160,7 @@ function LocationPage() {
 
 
 
-function Map (){
+const Map = () => {
 
   return(<section className="justify-content-center" id="map"><Maps /></section>);
 }
@@ -172,7 +172,7 @@ function Map (){
 
 
 
-function Favloc () {
+const Favloc = () => {
 
   return ( 
   <div className="container">
@@ -184,7 +184,7 @@ function Favloc () {
   
 }
 
-function Adminedit () {
+const Adminedit = () => {
 
     return (
     <>
@@ -198,7 +198,7 @@ function Adminedit () {
   }
 
 
-function Title (props) { /*these are REACT Component */
+const Title = (props) => { /*these are REACT Component */
 
   return ( 
       <header> 
