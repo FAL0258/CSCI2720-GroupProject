@@ -1,19 +1,26 @@
 import React from 'react';
 import icon from '../icon.png';
+import PropTypes from 'prop-types';
 
-const LoginPage = () => {
+async function loginUser(datas){
+    let api = "http://localhost:4000/validateDB";
+    return fetch(api, { method: "post", body: datas})
+     .then(data => data.json())
+}
 
-    const getLoginRes = (event, uid, upw) => {
+const LoginPage = ( {setToken} ) => {
+
+    const getLoginRes = async (event, uid, upw) => {
+        event.preventDefault();
         let data = new URLSearchParams();
-        let api = "http://localhost:4000/validateDB";
         data.append("uId", uid);
         data.append("uPw", upw);
         
         //ac&pw: admin admin, user1 user1
-        fetch(api, { method: "post", body: data })
-        .then(res => res.json())
-        .then(data => console.log(data))
-        .catch(err => console.log("?"));
+        const identity = await loginUser(data);
+        console.log(identity);
+        setToken(identity.uName);
+
     }
 
     return(
@@ -39,3 +46,6 @@ const LoginPage = () => {
 
 
 export default React.memo(LoginPage);
+LoginPage.propTypes = {
+    setToken: PropTypes.func.isRequired
+}

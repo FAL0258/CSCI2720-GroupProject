@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { useParams, useLocation } from 'react-router-dom';
 //npm install @googlemaps/react-wrapper
@@ -18,20 +18,20 @@ import Create from "./components/create.js"
 //npm i -S @react-google-maps/api
 import "./style.css"   
 
-  let data1 = [
-    {loc: "Tai Po Public Library", num: "4"},{loc: "Sha Tin Town Hall", num: "6"},{loc: "Fa Yuen Street Public Library", num: "9"},{loc: "Fanling Public Library", num: "5"},
-    {loc: "Lek Yuen Public Library", num: "10"},{loc: "Lung Hing Public Library", num: "7"},{loc: "Ngau Chi Wan Public Library", num: "8"},{loc: "Hong Kong Film Archive", num: "3"},
-    {loc: "North Lamma Public Library", num: "4"},{loc: "Emperor Cinemas iSQUARE", num: "8"}
-     ];
-
-
-  
+let data1 = [
+  {loc: "Tai Po Public Library", num: "4"},{loc: "Sha Tin Town Hall", num: "6"},{loc: "Fa Yuen Street Public Library", num: "9"},{loc: "Fanling Public Library", num: "5"},
+  {loc: "Lek Yuen Public Library", num: "10"},{loc: "Lung Hing Public Library", num: "7"},{loc: "Ngau Chi Wan Public Library", num: "8"},{loc: "Hong Kong Film Archive", num: "3"},
+  {loc: "North Lamma Public Library", num: "4"},{loc: "Emperor Cinemas iSQUARE", num: "8"}
+  ];
 
 function App (props){
-  
+    const [token, setToken] = useState();
+    if (!token || token == null){
+      return (<LoginPage setToken={setToken}/>)
+    }
     return (
       <BrowserRouter>
-      <LogOut/>
+      <LogOut />
       <Title name={props.name} style={{color: "red"}} />
         <div>
           

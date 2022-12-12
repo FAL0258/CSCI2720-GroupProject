@@ -10,7 +10,7 @@ const LogOut = () => {
     return(
         <div>
             <div id="topright">
-                <i>Cherie </i>
+                <i>?</i>
                 <button type="button" id="idid" style={{backgroundColor: 'rosybrown', color:'white'}} class="btn" onClick={confirmLogOut}> logout</button>
             </div>
         </div>
