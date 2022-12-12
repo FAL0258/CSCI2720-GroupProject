@@ -7,6 +7,8 @@ import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
  */
 
 const Maps = (props) => {
+
+  // Set height and width accordingly
   const containerStyle = {
     width: props.mapWidth,
     height: props.mapHeight,
@@ -22,6 +24,7 @@ const Maps = (props) => {
     lng: 114.1372,
   };
 
+  // Set whether the map API has loaded or not
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: "AIzaSyD0bhHj99UCaw3koa6z2St9AwIJYfn7xHo",
@@ -38,7 +41,7 @@ const Maps = (props) => {
     setMap(null);
   }, []);
   
-
+  // If loaded render the map, if not then don't
   return isLoaded ? (
     <GoogleMap
       mapContainerStyle={containerStyle}
@@ -47,7 +50,10 @@ const Maps = (props) => {
       onLoad={onLoad}
       onUnmount={onUnmount}
     >
-      {props.coordinates.map((coordinates) => <Marker position={coordinates} />)};
+      {/**
+       * For each coordinate in props.coordinates, render a Marker at that coordinate
+       */}
+      {props.coordinates.map((coordinate) => <Marker position={coordinate} />)};
     </GoogleMap>
   ) : (
     <></>
