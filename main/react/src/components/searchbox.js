@@ -5,12 +5,12 @@ import "./style2.css"
 class SearchBox extends React.Component{
     render(){
         return(
-<div class="main">
+<div className="main">
   
  
-  <div class="form-group has-search">
-    <span class="fa fa-search form-control-feedback"></span>
-    <input type="text" class="form-control" placeholder="Search"/>
+  <div className="form-group has-search">
+    <span className="fa fa-search form-control-feedback"></span>
+    <input type="text" className="form-control" placeholder="Search"/>
   </div>
   
 

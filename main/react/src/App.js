@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { useParams, useLocation } from 'react-router-dom';
 //npm install @googlemaps/react-wrapper
@@ -11,6 +11,7 @@ import SearchBox from "./components/searchbox.js"
 import LogOut from "./components/logout.js"
 import Comment from "./components/comment.js"
 import CRUDevent from "./components/crudevent.js"
+import CRUDevent1 from "./components/crudevent1.js"
 import Update from "./components/update.js"
 import Delete from "./components/delete.js"
 import Read from "./components/read.js"
@@ -18,56 +19,97 @@ import Create from "./components/create.js"
 //npm i -S @react-google-maps/api
 import "./style.css"   
 
-  let data1 = [
-    {loc: "Tai Po Public Library", num: "4"},{loc: "Sha Tin Town Hall", num: "6"},{loc: "Fa Yuen Street Public Library", num: "9"},{loc: "Fanling Public Library", num: "5"},
-    {loc: "Lek Yuen Public Library", num: "10"},{loc: "Lung Hing Public Library", num: "7"},{loc: "Ngau Chi Wan Public Library", num: "8"},{loc: "Hong Kong Film Archive", num: "3"},
-    {loc: "North Lamma Public Library", num: "4"},{loc: "Emperor Cinemas iSQUARE", num: "8"}
-     ];
+let data1 = [
+  {loc: "Tai Po Public Library", num: "4"},{loc: "Sha Tin Town Hall", num: "6"},{loc: "Fa Yuen Street Public Library", num: "9"},{loc: "Fanling Public Library", num: "5"},
+  {loc: "Lek Yuen Public Library", num: "10"},{loc: "Lung Hing Public Library", num: "7"},{loc: "Ngau Chi Wan Public Library", num: "8"},{loc: "Hong Kong Film Archive", num: "3"},
+  {loc: "North Lamma Public Library", num: "4"},{loc: "Emperor Cinemas iSQUARE", num: "8"}
+  ];
 
 
   
 
-const App = (props) => {
-  
-    return (
-      <BrowserRouter>
-      <LogOut/>
-      <Title name={props.name} style={{color: "red"}} />
-        <div>
-          
-          <nav className="navbar navbar-expand-lg justify-content-center bg-light" >
-          <ul class="navbar-nav"> 
-          
-          <Link to="/home"> <li className="nav-item text-dark">Home</li></Link>
-          <Link to="/table"> <li className="nav-item text-dark">Table</li></Link>
-          <Link to="/map"> <li className="nav-item text-dark">Map</li></Link>
-          <Link to="/favloc"> <li className="nav-item text-dark">Favorite Location</li></Link>
-          <Link to="/adminedit"> <li className="nav-item text-dark">Admin Edit</li></Link>
-          
-             </ul>
-          </nav>
-        </div>
+function App (props){
+    const [token, setToken] = useState();
+    if (!token || token == null){
+        return (<LoginPage setToken={setToken}/>)
+    }
 
-        
+    else if (token == "Admin"){
+      // Use token variable to determine whether it is admin or not
+      console.log(token);
+      return (
+        <BrowserRouter>
+        <LogOut name={token}/>
+        <Title name={props.name} style={{color: "red"}} />
+          <div>
+            
+            <nav className="navbar navbar-expand-lg justify-content-center bg-light" >
+            <ul className="navbar-nav"> 
+            
+            <Link to="/"> <li className="nav-item text-dark">Home</li></Link>
+            <Link to="/table"> <li className="nav-item text-dark">Table</li></Link>
+            <Link to="/map"> <li className="nav-item text-dark">Map</li></Link>
+            <Link to="/favloc"> <li className="nav-item text-dark">Favorite Location</li></Link>
+            <Link to="/crudevent1"> <li className="nav-item text-dark">Admin Edit</li></Link>
+            
+              </ul>
+            </nav>
+          </div>
 
-        <Routes>
-        <Route path="/" element={<LoginPage />} />
-        <Route path="/home" element={<Home />} />
-          <Route path="/table" element={<Table />} />
-          <Route path="/map" element={<Map />} />
-          <Route path="/favloc" element={<Favloc />} />
-          <Route path="/adminedit" element={<Adminedit />} />
-       
-          <Route path="/locationpage/:index" element={<LocationPage />} />
-          <Route path="/crudevent" element={<CRUDevent />} />
-          <Route path="/create" element={<Create />} />
-        <Route path="/read" element={<Read />} />
-          <Route path="/update" element={<Update />} />
-          <Route path="/delete" element={<Delete />} />
-          <Route path="*" element={<NoMatch />} />
-        </Routes>
-      </BrowserRouter>
-    );
+          
+
+          <Routes>
+          <Route path="/" element={<Home />} />
+            <Route path="/table" element={<Table />} />
+            <Route path="/map" element={<Map />} />
+            <Route path="/favloc" element={<Favloc />} />
+                    
+            <Route path="/locationpage/:index" element={<LocationPage />} />
+             <Route path="/crudevent/:chosen" element={<CRUDevent />} />
+          <Route path="/crudevent1" element={<CRUDevent1  />} />
+          <Route path="/create/:chosen" element={<Create />} />
+        <Route path="/read/:chosen" element={<Read />} />
+          <Route path="/update/:chosen" element={<Update />} />
+          <Route path="/delete/:chosen" element={<Delete />} />
+            <Route path="*" element={<NoMatch />} />
+          </Routes>
+        </BrowserRouter>
+      );
+    }
+    else{
+      // Use token variable to determine whether it is admin or not
+      console.log(token);
+      return (
+        <BrowserRouter>
+        <LogOut name={token}/>
+        <Title name={props.name} style={{color: "red"}} />
+          <div>
+            
+            <nav className="navbar navbar-expand-lg justify-content-center bg-light" >
+            <ul className="navbar-nav">
+            
+            <Link to="/"> <li className="nav-item text-dark">Home</li></Link>
+            <Link to="/table"> <li className="nav-item text-dark">Table</li></Link>
+            <Link to="/map"> <li className="nav-item text-dark">Map</li></Link>
+            <Link to="/favloc"> <li className="nav-item text-dark">Favorite Location</li></Link>
+            
+              </ul>
+            </nav>
+          </div>
+
+          
+
+          <Routes>
+          <Route path="/" element={<Home />} />
+            <Route path="/table" element={<Table />} />
+            <Route path="/map" element={<Map />} />
+            <Route path="/favloc" element={<Favloc />} />
+            <Route path="/locationpage/:index" element={<LocationPage />} />
+            <Route path="*" element={<NoMatch />} />
+          </Routes>
+        </BrowserRouter>
+      );
+    }
   }
 
 
@@ -141,11 +183,11 @@ const LocationPage = () => {
       <div className="row">
       <section className="col-sm-12 col-md-6 col-log-6" id="fav" style={{background:"lightgoldenrodyellow"}}>
       <h2 style={{background:"rosybrown", color:"white", textAlign:"center"}}>Location Detail</h2>
-      <Link to="/crudevent"><button type="button" class="btn btn-outline-danger"> Edit</button>      </Link>
+      <Link to="/crudevent"><button type="button" className="btn btn-outline-danger"> Edit</button>      </Link>
       <div id="smallermap"><SmallerMaps/></div>
       <p>Location: {data1[index].loc}</p>
       <p>Number of Events: {data1[index].num}</p>
-      <button type="button" class="btn btn-outline-danger" onClick={fillheart} ><b>Add to favorite location <i id="nonfill" class="bi bi-heart"></i></b></button>
+      <button type="button" className="btn btn-outline-danger" onClick={fillheart} ><b>Add to favorite location <i id="nonfill" className="bi bi-heart"></i></b></button>
       
       </section>
       <section className="col-sm-12 col-md-6 col-log-6" style={{background:"lavenderblush", color:"rosybrown"}}>
@@ -177,7 +219,7 @@ const Favloc = () => {
   return ( 
   <div className="container">
   <div className="row">
-          <h2><b>Your Favorite Location</b><i class="bi bi-balloon-heart-fill"></i></h2>
+          <h2><b>Your Favorite Location</b><i className="bi bi-balloon-heart-fill"></i></h2>
           <Tables/>
       </div></div>
       );
@@ -209,3 +251,28 @@ const Title = (props) => { /*these are REACT Component */
 
 
 export default App;
+
+/*
+DB in node js
+  app.post('/validateDB', async (req, res) => {
+    let uid = req.body["uId"];
+    let upw = req.body["uPw"];
+    //let un = req.body["name"];
+    //let enc = Bcrypt.hashSync(upw);
+    //ac&pw: admin admin, user1 user1
+    let validated = false;
+    const result = await User.findOne({ userId: uid});
+    if (result !== null){
+      validated = Bcrypt.compareSync(upw, result.password);
+    }
+    console.log(res.body);
+    console.log(validated);
+    if (validated){
+      let output = {uName: result.name, isAdmin: result.isAdmin};
+      res.send(JSON.stringify(output));
+    }
+    else{
+      res.send([]);
+    }
+  });
+*/
