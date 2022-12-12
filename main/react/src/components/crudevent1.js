@@ -5,6 +5,12 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 function CRUDevent1 (){
   
     return(<>
+      <div className="container">
+      <div className="row">
+      
+      <h2 className="my-5" style={{background:"#DEC7C7", color:"#5E4747", textAlign:"center", borderRadius:20}}>Choose one to edit:<i class="bi bi-pencil-square"></i></h2>
+      </div></div>
+        
      <div className="container">
       <div className="row">
     
