@@ -30,12 +30,12 @@ const data = [
 
   
 
-class App extends React.Component {
-  render() {
+function App (props){
+  
     return (
       <BrowserRouter>
       <LogOut/>
-      <Title name={this.props.name} style={{color: "red"}} />
+      <Title name={props.name} style={{color: "red"}} />
         <div>
           
           <nav className="navbar navbar-expand-lg justify-content-center bg-light" >
@@ -62,13 +62,16 @@ class App extends React.Component {
           <Route path="/adminedit" element={<Adminedit />} />
        
           <Route path="/locationpage/:index" element={<LocationPage />} />
-         
+          <Route path="/crudevent" element={<CRUDevent />} />
+          <Route path="/create" element={<Create />} />
+        <Route path="/read" element={<Read />} />
+          <Route path="/update" element={<Update />} />
+          <Route path="/delete" element={<Delete />} />
           <Route path="*" element={<NoMatch />} />
         </Routes>
       </BrowserRouter>
     );
   }
-}
 
 
 function NoMatch() {
@@ -84,8 +87,8 @@ function NoMatch() {
 
 
 
-class Home extends React.Component {
-  render() {
+function Home () {
+
     return (
     <>
     <div className="container">
@@ -97,11 +100,10 @@ class Home extends React.Component {
     </>
     );
   }
-}
 
-class Table extends React.Component {
-  render() {
-   
+
+function Table (){
+  
     
   return (
     <div className="container">
@@ -118,7 +120,6 @@ class Table extends React.Component {
     </div>
        );
   }
-}
 
 
 function LocationPage() {
@@ -143,10 +144,12 @@ function LocationPage() {
       <div className="row">
       <section className="col-sm-12 col-md-6 col-log-6" id="fav" style={{background:"lightgoldenrodyellow"}}>
       <h2 style={{background:"rosybrown", color:"white", textAlign:"center"}}>Location Detail</h2>
+      <Link to="/crudevent"><button type="button" class="btn btn-outline-danger"> Edit</button>      </Link>
       <div id="smallermap"><SmallerMaps/></div>
       <p>Location: {data1[index].loc}</p>
       <p>Number of Events: {data1[index].num}</p>
       <button type="button" class="btn btn-outline-danger" onClick={fillheart} ><b>Add to favorite location <i id="nonfill" class="bi bi-heart"></i></b></button>
+      
       </section>
       <section className="col-sm-12 col-md-6 col-log-6" style={{background:"lavenderblush", color:"rosybrown"}}>
       <h2 style={{background:"rosybrown", color:"white", textAlign:"center"}}>Comment</h2>
@@ -160,11 +163,11 @@ function LocationPage() {
 
 
 
-class Map extends React.Component {
-render(){
+function Map (){
+
   return(<section className="justify-content-center" id="map"><Maps /></section>);
 }
-} 
+ 
   
 
 
@@ -172,26 +175,20 @@ render(){
 
 
 
-class Favloc extends React.Component { /*these are REACT Component */
-  render() {
-  return ( /*className instead of class*/
+function Favloc () {
+
+  return ( 
   <div className="container">
   <div className="row">
           <h2><b>Your Favorite Location</b><i class="bi bi-balloon-heart-fill"></i></h2>
           <Tables/>
       </div></div>
       );
-  }
+  
 }
 
-class Adminedit extends React.Component {
+function Adminedit () {
 
-  constructor(props) { 
-          super(props); 
-      
-      }
-
-  render(){
     return (
     <>
     <h2><b>Admin</b></h2>
@@ -202,16 +199,19 @@ class Adminedit extends React.Component {
   
   
   }
-}
 
-class Title extends React.Component { /*these are REACT Component */
-  render() {
-  return ( /*className instead of class*/
+
+function Title (props) { /*these are REACT Component */
+
+  return ( 
       <header> 
-          <h1 className="display-4 text-center">{this.props.name}</h1>
+          <h1 className="display-5 text-md-center">{props.name}</h1>
       </header> 
       );
   }
-}
+
+
+
+
 
 export default App;
