@@ -7,6 +7,7 @@ import Maps from "./components/map.js"
 import Tables from "./components/table.js"
 import SmallerMaps from "./components/smallermap.js"
 import LoginPage from "./components/loginpage.js"
+import LocationPage from "./components/locationpage.js"
 import SearchBox from "./components/searchbox.js"
 import LogOut from "./components/logout.js"
 import Comment from "./components/comment.js"
@@ -179,44 +180,6 @@ const Table = () => {
   }
 
 
-const LocationPage = () => {
-    let {index} = useParams();
-    const fillheart = () => {
-      
-      let special = document.querySelector("#nonfill")
-      if (special.classList.contains("bi-heart")) {
-        special.classList.remove("bi-heart")
-        special.classList.add("bi-heart-fill")
-      } else {
-        special.classList.remove("bi-heart-fill")
-        special.classList.add("bi-heart")
-      }
-    }
-
-    
-   
-    return(
-      <>
-      <div className="container">
-      <div className="row">
-      <section className="col-sm-12 col-md-6 col-log-6" id="fav" style={{background:"lightgoldenrodyellow"}}>
-      <h2 style={{background:"rosybrown", color:"white", textAlign:"center"}}>Location Detail</h2>
-      <Link to="/crudevent"><button type="button" className="btn btn-outline-danger"> Edit</button>      </Link>
-      <div id="smallermap"><Maps mapWidth="500px" mapHeight="500px" coordinates={locData} /></div>
-      <p>Location: {data1[index].loc}</p>
-      <p>Number of Events: {data1[index].num}</p>
-      <button type="button" className="btn btn-outline-danger" onClick={fillheart} ><b>Add to favorite location <i id="nonfill" className="bi bi-heart"></i></b></button>
-      
-      </section>
-      <section className="col-sm-12 col-md-6 col-log-6" style={{background:"lavenderblush", color:"rosybrown"}}>
-      <h2 style={{background:"rosybrown", color:"white", textAlign:"center"}}>Comment</h2>
-      <Comment/>
-      </section>
-      </div></div>
-      </>
-
-    );
-  }
 
 
 
