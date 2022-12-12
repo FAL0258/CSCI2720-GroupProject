@@ -207,19 +207,6 @@ const Favloc = () => {
   
 }
 
-const Adminedit = () => {
-
-    return (
-    <>
-    <h2><b>Admin</b></h2>
-    
-    </>
-    );
-    
-  
-  
-  }
-
 
 const Title = (props) => { /*these are REACT Component */
 
