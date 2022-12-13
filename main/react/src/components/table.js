@@ -184,7 +184,7 @@ const Tables = () => {
             onChange={handleSort}
           />
           <label className="form-check-label" htmlFor="numberSort">
-            Number
+           Ascending Number
           </label>
         </div>
         <div className="form-check form-check-inline">
