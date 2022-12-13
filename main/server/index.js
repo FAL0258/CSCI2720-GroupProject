@@ -8,10 +8,15 @@ app.use(cors());
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 const Bcrypt = require("bcryptjs");
+const fetch = require('node-fetch');
+const XMLconvert = require('xml-js');
+
+
 
 // Global variables and environment variables
 const DATABASE = "mongodb+srv://stu039:p397262W@cluster0.wenbhsm.mongodb.net/stu039";
 const PORT = 4000;
+const XML = "https://www.lcsd.gov.hk/datagovhk/event/events.xml";
 
 // DB Connection
 mongoose.connect(DATABASE);
@@ -87,6 +92,24 @@ db.once('open', function () {
     else{
       res.send(JSON.stringify({ok: 0}));
     }
+  });
+
+  // Parse data from xml
+  app.all('/xml', (req, res) => {
+    fetch(XML, {
+      method: 'GET',
+      headers: {
+      'Content-Type': 'text/xml',
+      'User-Agent': '*'
+      },
+    })
+      .then(response => {return response.text();})
+      .then(xml => {
+        let jsonOutput = XMLconvert.xml2json(xml, {compact: true, spaces: 4});
+        res.set("Content-Type", "application/json");
+        res.send(jsonOutput);
+      })
+      .catch((error) => console.log(error));
   });
 
   app.all('/*', (req, res) => {
