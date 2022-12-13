@@ -1,7 +1,27 @@
-import React, { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import SearchBox from "./searchbox.js";
+/**
+ * refs: https://stackoverflow.com/questions/36837958/how-to-access-one-components-state-from-another-component
+ *       https://stackoverflow.com/questions/71663356/how-to-set-the-value-of-input-from-state-react-app
+ *       https://stackoverflow.com/questions/28329382/understanding-unique-keys-for-array-children-in-react-js
+ *       https://stackoverflow.com/questions/71365134/how-can-i-use-the-state-to-filter-the-data-and-pass-it-to-different-components-i
+ *       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+ *       https://stackoverflow.com/questions/1129216/sort-array-of-objects-by-string-property-value
+ *       https://stackoverflow.com/questions/8993773/contains-case-insensitive
+ *       https://reactjs.org/docs/hooks-effect.html
+ *       https://reactjs.org/docs/lists-and-keys.html
+ *       
+ */
 
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
+/**
+ * Test data but with a few problems:
+ *  - Number of events is string for some reason (and vaguely named)
+ *  - "loc" also too vague for location name
+ *  - Needs location ID, because when referring to /locationpage/, it needs to be ID in the URL like 
+ *    "/locationpage/123" or something and not array index, will change implementation once the
+ *    backend has been set up
+ */
 let data1 = [
   { loc: "Tai Po Public Library", num: "4" },
   { loc: "Sha Tin Town Hall", num: "6" },
@@ -15,6 +35,8 @@ let data1 = [
   { loc: "Emperor Cinemas iSQUARE", num: "8" },
 ];
 
+
+// Obsolete, acts more as an abstract for the rendering below
 const TableRow = (props) => {
   let i = props.i;
   let url = "/locationpage/" + i;
@@ -29,65 +51,85 @@ const TableRow = (props) => {
   );
 };
 
+// Main component
 const Tables = () => {
+  /**
+   * searchQuery is for string in search bar, re-renders when it updates (when typed into)
+   * filtered is for the array that contains the location name and # of events
+   * sortChoice is for whether the user wants to not sort the table, sort by name or by ascending/descending # of events
+   */
   const [searchQuery, setSearchQuery] = useState("");
   const [filtered, setFiltered] = useState([]);
   const [sortChoice, setSortChoice] = useState("");
 
+  // When search bar value changes, change the state of searchQuery to the value inside the search bar
   const handleInput = (e) => {
     setSearchQuery(e.target.value);
   };
 
+  // When the option for the sorting choice changes, change the state of sortChoice to the value chosen
   const handleSort = (e) => {
     setSortChoice(e.target.value);
   };
 
+  // Filtering function, if the searchQuery is a substring of the location name, then that location stays in the array, else it ges filtered out. Case-insensitive (because of .toLowerCase())
   const filterData = (data) => {
     return data.loc.toLowerCase().includes(searchQuery.toLowerCase());
   };
 
-  const sortByName = (item1, item2) => {
-    if (item1.loc < item2.loc) {
-      return -1;
-    }
-    if (item1.loc > item2.loc) {
-      return 1;
-    }
-    return 0;
-  }
+  /**
+   * ref: https://stackoverflow.com/questions/1129216/sort-array-of-objects-by-string-property-value
+   * Reference above is an explanation for what's going on below
+   * Only one choice of sorting allowed at a time 
+   */
+  const sortByChoice = (item1, item2) => {
 
-  const sortByNumber = (item1, item2) => {
-    if (parseInt(item1.num) < parseInt(item2.num)) {
-      return -1;
-    }
-    if (parseInt(item1.num) > parseInt(item2.num)) {
-      return 1;
-    }
-    return 0;
-  }
-
-  const sortByDescendingNumber = (item1, item2) => {
-    if (parseInt(item1.num) < parseInt(item2.num)) {
-      return 1;
-    }
-    if (parseInt(item1.num) > parseInt(item2.num)) {
-      return -1;
-    }
-    return 0;
-  }
-
-  // Debugging
-  useEffect(() => {
-    let results = data1.filter(filterData);
+    // If sort by name
     if (sortChoice == "name") {
-      results.sort(sortByName);
+      if (item1.loc < item2.loc) {
+        return -1;
+      }
+      if (item1.loc > item2.loc) {
+        return 1;
+      }
+      return 0;
     }
+
+    // If sort by number (ascending)
     else if (sortChoice == "number") {
-      results.sort(sortByNumber);
+      if (parseInt(item1.num) < parseInt(item2.num)) {
+        return -1;
+      }
+      if (parseInt(item1.num) > parseInt(item2.num)) {
+        return 1;
+      }
+      return 0;
     }
+
+    // If sort by number (descending)
     else if (sortChoice == "descendingNumber") {
-      results.sort(sortByDescendingNumber);
+      if (parseInt(item1.num) < parseInt(item2.num)) {
+        return 1;
+      }
+      if (parseInt(item1.num) > parseInt(item2.num)) {
+        return -1;
+      }
+      return 0;
     }
+    // If none
+    return 0;
+  }
+
+  // After every render:
+  useEffect(() => {
+
+    // Filters out the information, stores it in a new array
+    let results = data1.filter(filterData);
+
+    // Sort, depending on the selected radio option
+    results.sort(sortByChoice);
+
+    // Update the filtered state to the array of finalized data
     setFiltered(results);
   }, [searchQuery, sortChoice]);
 
@@ -172,6 +214,7 @@ const Tables = () => {
             </tr>
           </thead>
           <tbody>
+            {/** Render each row, using data from the filtered and/or sorted array */}
             {filtered.map((d, index) => {
               let url = "/locationpage/" + index;
               return (
