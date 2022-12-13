@@ -2,7 +2,7 @@
 // Add header by import GLB from "./config.js"
 // Access with GLB.var
 
-const BACKEND_IP = "54.87.45.159";
+const BACKEND_IP = "52.21.204.48";
 const BACKEND_PORT =  "4000";
 
 export default {

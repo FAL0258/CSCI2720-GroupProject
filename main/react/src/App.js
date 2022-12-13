@@ -27,6 +27,8 @@ let data1 = [
   {loc: "North Lamma Public Library", num: "4"},{loc: "Emperor Cinemas iSQUARE", num: "8"}
   ];
 
+
+
 // Test data for map markers
 const locData = [
   { lat: 22.501639, lng: 114.128911 },
@@ -34,6 +36,40 @@ const locData = [
   { lat: 22.35665, lng: 114.12623 },
   { lat: 22.44152, lng: 114.02289 },
 ];
+
+let realData = [];
+let realLoc = [];
+
+function processData(datas, option){
+  if (option == "ev"){
+    let jsonD = JSON.parse(datas);
+    realData = jsonD;
+    console.log(realData);
+  }
+  else if (option == "loc"){
+    let jsonD = JSON.parse(datas);
+    realLoc = jsonD;
+    console.log(realLoc);
+  }
+}
+
+function grabEv(){
+  let api = GLB.BACKEND_API + "/grabEv";
+  //let api = "http://localhost:4000/grabEv";
+  fetch(api)
+  .then(res => res.text())
+  .then(txt => processData(txt, "ev"))
+  .catch(error => console.log(error));
+}
+
+function grabLoc(){
+  let api = GLB.BACKEND_API + "/grabLoc";
+  //let api = "http://localhost:4000/grabLoc";
+  fetch(api)
+  .then(res => res.text())
+  .then(txt => processData(txt, "loc"))
+  .catch(error => console.log(error));
+}
 
 
 function App (props){
@@ -59,6 +95,8 @@ function App (props){
     // Admin page
     if (oisAdmin == 'true'){
       console.log(oisAdmin);
+      grabEv();
+      grabLoc();
       return (
         <BrowserRouter>
         <LogOut name={ouName}/>

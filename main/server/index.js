@@ -111,7 +111,8 @@ db.once('open', function () {
         let jEvent = jsonOutput.events.event;
         let totalC = jEvent.length;
         //console.log(jEvent[1].titlee._cdata);
-        // create every events into database
+
+        // create every events in database
         for( let i = 0; i < totalC; i++ ){
           const query = await Location.findOne({locationId: jEvent[i].venueid._cdata});
           const query2 = await Event.findOne({eventId: jEvent[i]._attributes.id});
@@ -145,6 +146,18 @@ db.once('open', function () {
         //res.send(jEvent[1]);
       })
       .catch((error) => console.log(error));
+  });
+
+  app.all('/grabEv', (req, res) => {
+    Event.find({}, (err, event) => {
+      res.send(event);
+    });
+  });
+
+  app.all('/grabLoc', (req, res) => {
+    Location.find({}, (err, location) => {
+      res.send(location);
+    });
   });
 
   app.all('/*', (req, res) => {
