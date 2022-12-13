@@ -66,6 +66,16 @@ const Tables = () => {
     return 0;
   }
 
+  const sortByDescendingNumber = (item1, item2) => {
+    if (parseInt(item1.num) < parseInt(item2.num)) {
+      return 1;
+    }
+    if (parseInt(item1.num) > parseInt(item2.num)) {
+      return -1;
+    }
+    return 0;
+  }
+
   // Debugging
   useEffect(() => {
     let results = data1.filter(filterData);
@@ -74,6 +84,9 @@ const Tables = () => {
     }
     else if (sortChoice == "number") {
       results.sort(sortByNumber);
+    }
+    else if (sortChoice == "descendingNumber") {
+      results.sort(sortByDescendingNumber);
     }
     setFiltered(results);
   }, [searchQuery, sortChoice]);
@@ -130,6 +143,19 @@ const Tables = () => {
           />
           <label className="form-check-label" for="numberSort">
             Number
+          </label>
+        </div>
+        <div className="form-check form-check-inline">
+          <input
+            className="form-check-input"
+            type="radio"
+            name="sortChoice"
+            id="descendingNumberSort"
+            value="descendingNumber"
+            onChange={handleSort}
+          />
+          <label className="form-check-label" for="descendingNumberSort">
+            Descending Number
           </label>
         </div>
       </div>
