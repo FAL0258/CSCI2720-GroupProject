@@ -39,34 +39,23 @@ const Maps = (props) => {
     googleMapsApiKey: "AIzaSyD0bhHj99UCaw3koa6z2St9AwIJYfn7xHo",
   });
 
-  const [map, setMap] = useState(null);
-
-  const onLoad = useCallback((map) =>{
-    map.setZoom(11);
-    setMap(map);
-  }, []);
-
-  const onUnmount = useCallback((map) => {
-    setMap(null);
-  }, []);
-  
-  // If loaded render the map, if not then don't
-  return isLoaded ? (
-    <GoogleMap
-      mapContainerStyle={containerStyle}
-      center={center}
-      zoom={10}
-      onLoad={onLoad}
-      onUnmount={onUnmount}
-    >
-      {/**
-       * For each coordinate in props.coordinates, render a Marker at that coordinate
-       */}
-      {props.coordinates.map((coordinate, index) => <Marker key={index} position={coordinate} />)};
-    </GoogleMap>
-  ) : (
-    <></>
-  );
+  if (!isLoaded) {
+    return(
+      <div>Loading the map</div>
+    );
+  } else {
+    return(
+      <div>
+        <GoogleMap
+          zoom={11}
+          center={center}
+          mapContainerStyle={containerStyle}
+        >
+          {props.coordinates.map((coordinate, index) => <Marker key={index} position={coordinate} />)}
+        </GoogleMap>
+      </div>
+    );
+  }
 };
 
 export default React.memo(Maps);
