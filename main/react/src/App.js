@@ -222,7 +222,7 @@ const Table = () => {
     <div className="container">
         <div className="row">
       
-        <h2><b>Table</b></h2>
+        <h2><b>Table</b> <i className="bi bi-table"></i></h2>
         
        
     <Tables/>
