@@ -17,6 +17,7 @@ import Update from "./components/update.js"
 import Delete from "./components/delete.js"
 import Read from "./components/read.js"
 import Create from "./components/create.js"
+import LoadingPage from "./components/loadingpage.js"
 //npm i -S @react-google-maps/api
 import "./style.css"   
 import GLB from "./config.js"
@@ -123,7 +124,7 @@ function App (props){
             <Route path="/table" element={<Table />} />
             <Route path="/map" element={<Map />} />
             <Route path="/favloc" element={<Favloc />} />
-                    
+             <Route path="/loadingpage" element={<LoadingPage/>}/>        
             <Route path="/locationpage/:index" element={<LocationPage />} />
              <Route path="/crudevent/:chosen" element={<CRUDevent />} />
           <Route path="/crudevent1" element={<CRUDevent1  />} />
@@ -163,6 +164,7 @@ function App (props){
 
           <Routes>
           <Route path="/" element={<Home />} />
+            <Route path="/loadingpage" element={<LoadingPage/>}/>  
             <Route path="/table" element={<Table />} />
             <Route path="/map" element={<Map />} />
             <Route path="/favloc" element={<Favloc />} />
