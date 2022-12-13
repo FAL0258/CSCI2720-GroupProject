@@ -3,7 +3,8 @@
  * -Modify dataset to accomodate for clickable markers: each coordinate needs to be associated to a certain location ID
  */
 
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useNavigate } from "react";
+import { Link } from "react-router-dom";
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
 
 /**
@@ -12,7 +13,6 @@ import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
  */
 
 const Maps = (props) => {
-
   const filterData = () => {
     // abstract, used for filtering the location coordinates
   }
@@ -33,6 +33,12 @@ const Maps = (props) => {
     lng: 114.1372,
   };
 
+  const addMarker = (coordinate, index) => {
+    return(
+      <Marker key={index} position={coordinate} />
+    );
+  }
+
   // Set whether the map API has loaded or not
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
@@ -51,7 +57,7 @@ const Maps = (props) => {
           center={center}
           mapContainerStyle={containerStyle}
         >
-          {props.coordinates.map((coordinate, index) => <Marker key={index} position={coordinate} />)}
+          {props.coordinates.map((coordinate, index) => addMarker(coordinate, index))}
         </GoogleMap>
       </div>
     );
