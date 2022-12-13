@@ -51,10 +51,10 @@ db.once('open', function () {
     eventId: { type: Number, required: true, unique: true },
     title: { type: String, required: true },
     venue: { type: mongoose.Schema.Types.ObjectId, ref: 'Location' },
-    date: { type: Date, required: true },
+    date: { type: String, required: true },
     description: { type: String },
     presenter: { type: String, required: true },
-    price: { type: Number, required: true }
+    price: { type: String, required: true }
   });
   const Event = mongoose.model('Event', EventSchema);
 
@@ -104,23 +104,50 @@ db.once('open', function () {
       },
     })
       .then(response => {return response.text();})
-      .then(xml => {
+      .then(async (xml) => {
         let jsonOutput = XMLconvert.xml2json(xml, {compact: true, spaces: 4});
+        let better = jsonOutput;
+        jsonOutput = JSON.parse(jsonOutput);
+        let jEvent = jsonOutput.events.event;
+        let totalC = jEvent.length;
+        //console.log(jEvent[1].titlee._cdata);
+        // create every events into database
+        for( let i = 0; i < totalC; i++ ){
+          const query = await Location.findOne({locationId: jEvent[i].venueid._cdata});
+          const query2 = await Event.findOne({eventId: jEvent[i]._attributes.id});
+          // Create the event if not exist
+          if (query != null && query2 == null){
+            console.log(jEvent[i].venueid._cdata, jEvent[i]._attributes.id);
+            // Prevent free event from being created with null value
+            let tempPrice = jEvent[i].pricee._cdata;
+            if (tempPrice == null || tempPrice == undefined){
+              tempPrice = "Free";
+            }
+            Event.create({
+              eventId: jEvent[i]._attributes.id,
+              title: jEvent[i].titlee._cdata,
+              venue: query._id,
+              date: jEvent[i].predateE._cdata,
+              description: jEvent[i].desce._cdata,
+              presenter: jEvent[i].presenterorge._cdata,
+              price: tempPrice
+            });
+          }
+        }
+        console.log("Finished");
         res.set("Content-Type", "application/json");
-        res.send(jsonOutput);
+        res.send(better);
+        //res.send(jEvent[1]);
       })
       .catch((error) => console.log(error));
   });
 
   app.all('/*', (req, res) => {
-    // Create a new User
     /*
-    User.create({
-      userId: 3,
-      userAc: "user2",
-      name: "Jack",
-      password: Bcrypt.hashSync("user2"),
-      isAdmin: false
+    Location.create({
+      locationId: 50110016,
+      name: "Hong Kong Cultural Centre (Studio Theatre)",
+      coordinates: {lat: 22.29386, lng: 114.17053}
     });
     */
     res.send("Backend is running");
