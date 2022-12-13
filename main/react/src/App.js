@@ -195,11 +195,11 @@ const Home = () => {
     <section >
     <div className="container">
       <div className="row">
-    <h2 style={{color:'rosybrown'}}><b>Home<i class="bi bi-house-heart"></i></b></h2>
+    <h2 style={{color:'black'}}><b>Home<i className="bi bi-house-heart"></i></b></h2>
     <h3 style={{color:'rosybrown'}}>Welcome to our cultural events website!</h3>
     <p>Here, you are able to check the cultural events in various locations in Hong Kong</p>
     <p>All locations in tables and maps are linked to single location pages</p>
-    <p>You could view all the details there, as well as bookmark your favorite locations!<i class="bi bi-bookmark-heart"></i></p>
+    <p>You could view all the details there, as well as bookmark your favorite locations!<i className="bi bi-bookmark-heart"></i></p>
     <p>Feel free to navigate around~</p>
     <p>Enjoy your journey! </p>
     
@@ -218,17 +218,19 @@ const Table = () => {
   
     
   return (
+    <section>
     <div className="container">
         <div className="row">
       
         <h2><b>Table</b></h2>
         
-        <section className="col-sm-5 col-md-5 col-lg-5">
+       
     <Tables/>
 
-    </section>
+   
     </div>
     </div>
+     </section>
        );
   }
 
