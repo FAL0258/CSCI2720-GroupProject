@@ -117,26 +117,31 @@ db.once('open', function () {
           const query2 = await Event.findOne({eventId: jEvent[i]._attributes.id});
           // Create the event if not exist
           if (query != null && query2 == null){
-            console.log(jEvent[i].venueid._cdata, jEvent[i]._attributes.id);
-            // Prevent free event from being created with null value
-            let tempPrice = jEvent[i].pricee._cdata;
-            if (tempPrice == null || tempPrice == undefined){
-              tempPrice = "Free";
+            // Find the event count in one location
+            const query3 = await Event.find({venue: query._id});
+            // Prevent making too many records, limited to maximum 7 events per location
+            if(query3.length < 7){
+              // Prevent free event from being created with null value
+              let tempPrice = jEvent[i].pricee._cdata;
+              if (tempPrice == null || tempPrice == undefined){
+                tempPrice = "Free";
+              }
+              Event.create({
+                eventId: jEvent[i]._attributes.id,
+                title: jEvent[i].titlee._cdata,
+                venue: query._id,
+                date: jEvent[i].predateE._cdata,
+                description: jEvent[i].desce._cdata,
+                presenter: jEvent[i].presenterorge._cdata,
+                price: tempPrice
+              });
             }
-            Event.create({
-              eventId: jEvent[i]._attributes.id,
-              title: jEvent[i].titlee._cdata,
-              venue: query._id,
-              date: jEvent[i].predateE._cdata,
-              description: jEvent[i].desce._cdata,
-              presenter: jEvent[i].presenterorge._cdata,
-              price: tempPrice
-            });
           }
         }
         console.log("Finished");
-        res.set("Content-Type", "application/json");
-        res.send(better);
+        //res.set("Content-Type", "application/json");
+        res.send("DONE");
+        //res.send(better);
         //res.send(jEvent[1]);
       })
       .catch((error) => console.log(error));
