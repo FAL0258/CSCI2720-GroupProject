@@ -127,12 +127,17 @@ db.once('open', function () {
               if (tempPrice == null || tempPrice == undefined){
                 tempPrice = "Free";
               }
+              // Prevent empty description
+              let tempDes = jEvent[i].desce._cdata;
+              if (tempDes == null || tempDes == undefined){
+                tempDes = "";
+              }
               Event.create({
                 eventId: jEvent[i]._attributes.id,
                 title: jEvent[i].titlee._cdata,
                 venue: query._id,
                 date: jEvent[i].predateE._cdata,
-                description: jEvent[i].desce._cdata,
+                description: tempDes,
                 presenter: jEvent[i].presenterorge._cdata,
                 price: tempPrice
               });

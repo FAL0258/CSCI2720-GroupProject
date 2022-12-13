@@ -139,6 +139,8 @@ function App (props){
     // Normal User page
     else{
       console.log(oisAdmin);
+      grabEv();
+      grabLoc();
       return (
         <BrowserRouter>
         <LogOut name={ouName}/>
