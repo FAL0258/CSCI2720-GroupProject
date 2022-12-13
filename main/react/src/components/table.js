@@ -36,17 +36,17 @@ let data1 = [
 ];
 
 
-// Obsolete, acts more as an abstract for the rendering below
+// Renders each row
 const TableRow = (props) => {
   let i = props.i;
   let url = "/locationpage/" + i;
   return (
     <tr>
       <td>
-        <Link to={url}> {data1[i].loc}</Link>
+        <Link to={url}> {props.data.loc}</Link>
       </td>
 
-      <td>{data1[i].num}</td>
+      <td>{props.data.num}</td>
     </tr>
   );
 };
@@ -215,18 +215,7 @@ const Tables = () => {
           </thead>
           <tbody>
             {/** Render each row, using data from the filtered and/or sorted array */}
-            {filtered.map((d, index) => {
-              let url = "/locationpage/" + index;
-              return (
-                <tr>
-                  <td>
-                    <Link to={url}> {filtered[index].loc}</Link>
-                  </td>
-
-                  <td>{filtered[index].num}</td>
-                </tr>
-              );
-            })}
+            {filtered.map((data, index) => <TableRow key={index} data={data}/>)}
           </tbody>
         </table>
       </div>
