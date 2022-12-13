@@ -157,7 +157,7 @@ const Tables = () => {
             value="none"
             onChange={handleSort}
           />
-          <label className="form-check-label" for="noSort">
+          <label className="form-check-label" htmlFor="noSort">
             None
           </label>
         </div>
@@ -170,7 +170,7 @@ const Tables = () => {
             value="name"
             onChange={handleSort}
           />
-          <label className="form-check-label" for="nameSort">
+          <label className="form-check-label" htmlFor="nameSort">
             Name
           </label>
         </div>
@@ -183,7 +183,7 @@ const Tables = () => {
             value="number"
             onChange={handleSort}
           />
-          <label className="form-check-label" for="numberSort">
+          <label className="form-check-label" htmlFor="numberSort">
             Number
           </label>
         </div>
@@ -196,7 +196,7 @@ const Tables = () => {
             value="descendingNumber"
             onChange={handleSort}
           />
-          <label className="form-check-label" for="descendingNumberSort">
+          <label className="form-check-label" htmlFor="descendingNumberSort">
             Descending Number
           </label>
         </div>
