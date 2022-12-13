@@ -19,6 +19,7 @@ import Read from "./components/read.js"
 import Create from "./components/create.js"
 //npm i -S @react-google-maps/api
 import "./style.css"   
+import GLB from "./config.js"
 
 let data1 = [
   {loc: "Tai Po Public Library", num: "4"},{loc: "Sha Tin Town Hall", num: "6"},{loc: "Fa Yuen Street Public Library", num: "9"},{loc: "Fanling Public Library", num: "5"},
@@ -34,11 +35,12 @@ const locData = [
   { lat: 22.44152, lng: 114.02289 },
 ];
 
+
 function App (props){
     //const [userData, setUser] = useState();
 
     // Handling session state 
-    /*
+    console.log(GLB.BACKEND_API);
     const ckToken = window.sessionStorage.getItem("fakeCookie");
     let oisAdmin = 'false';
     let ouName = "";
@@ -48,11 +50,11 @@ function App (props){
     }
     oisAdmin = window.sessionStorage.getItem("isAdmin");
     ouName = window.sessionStorage.getItem("userName");
-    */
+    
     
     // Temp session
-    let oisAdmin = 'true';
-    let ouName = 'Admin';
+    //let oisAdmin = 'true';
+    //let ouName = 'Admin';
 
     // Admin page
     if (oisAdmin == 'true'){
@@ -230,28 +232,3 @@ const Title = (props) => { /*these are REACT Component */
 
 
 export default App;
-
-/*
-DB in node js
-  app.post('/validateDB', async (req, res) => {
-    let uid = req.body["uId"];
-    let upw = req.body["uPw"];
-    //let un = req.body["name"];
-    //let enc = Bcrypt.hashSync(upw);
-    //ac&pw: admin admin, user1 user1
-    let validated = false;
-    const result = await User.findOne({ userId: uid});
-    if (result !== null){
-      validated = Bcrypt.compareSync(upw, result.password);
-    }
-    console.log(res.body);
-    console.log(validated);
-    if (validated){
-      let output = {uName: result.name, isAdmin: result.isAdmin, ok: 1};
-      res.send(JSON.stringify(output));
-    }
-    else{
-      res.send(JSON.stringify({ok: 0}));
-    }
-  });
-*/
