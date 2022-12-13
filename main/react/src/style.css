@@ -6,7 +6,12 @@
     margin-bottom:0px;
   }
 
-
+  body{
+    background-image: url('home.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height:100vh;
+  }
 
   footer {
     
@@ -15,14 +20,7 @@
  }
 
 
- #idk{
-  background-image: url('home.png');
-  background-repeat: no-repeat;
-  background-size: cover;
- }
-
-
-  nav {
+ nav {
     margin: 0;
   }
 

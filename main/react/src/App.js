@@ -150,20 +150,26 @@ const Home = () => {
 
     return (
     <>
-    <section id="idk" style={{height:100+'vh'}}>
+    <section >
     <div className="container">
       <div className="row">
-    <h2 style={{color:'rosybrown'}}><b>Home</b></h2>
+    <h2 style={{color:'rosybrown'}}><b>Home<i class="bi bi-house-heart"></i></b></h2>
     <h3 style={{color:'rosybrown'}}>Welcome to our cultural events website!</h3>
+    <p>Here, you are able to check the cultural events in various locations in Hong Kong</p>
+    <p>All locations in tables and maps are linked to single location pages</p>
+    <p>You could view all the details there, as well as bookmark your favorite locations!<i class="bi bi-bookmark-heart"></i></p>
+    <p>Feel free to navigate around~</p>
+    <p>Enjoy your journey! </p>
+    
     <p><i>source: LCSD Cultural Programmes</i></p>
+
     </div></div>
 
     </section>
-    <footer>This webpage is built by CSCI2720 Group 1</footer>
+    
     </>
     );
   }
-
 
 
 const Table = () => {
