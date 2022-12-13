@@ -40,12 +40,12 @@ const LoginPage = () => {
             <div className="row text-center">
                 <br/>
                 <form>
-                    <img className="mb-4" style={{border: '5px dashed rosybrown',borderRadius: 50 + 'px', width:200, height:200}} src={icon} alt="icon" /><br/>
+                    <img className="my-4" style={{border: '5px dashed rosybrown',borderRadius: 50 + 'px', width:200, height:200}} src={icon} alt="icon" /><br/>
                     <label htmlFor="uid" className="d-none">Uid</label>
-                    <input type="text" id="uid" name="uId" className="form-control" style={{width:400, margin:'auto'}} placeholder="Username" required autoFocus/>
+                    <input type="text" id="uid" name="uId" className="form-control" style={{width:50+"%", margin:'auto'}} placeholder="Username" required autoFocus/>
 
                     <label htmlFor="upw" className="d-none">Upw</label>
-                    <input type="text" id="upw" name="uPw" className="form-control" style={{width:400, margin:'auto'}}  placeholder="Password" required/>
+                    <input type="text" id="upw" name="uPw" className="form-control" style={{width:50+"%", margin:'auto'}}  placeholder="Password" required/>
                     <br/>
                     <button className="btn btn-lg btn-block" style={{backgroundColor: 'rosybrown', color:'white'}} type="button" onClick={(e) => getLoginRes(e, document.getElementById('uid').value, document.getElementById('upw').value)}>
                     Login
