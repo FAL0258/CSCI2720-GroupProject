@@ -85,7 +85,7 @@ const Tables = () => {
   const sortByChoice = (item1, item2) => {
 
     // If sort by name
-    if (sortChoice == "name") {
+    if (sortChoice === "name") {
       if (item1.loc < item2.loc) {
         return -1;
       }
@@ -96,7 +96,7 @@ const Tables = () => {
     }
 
     // If sort by number (ascending)
-    else if (sortChoice == "number") {
+    else if (sortChoice === "number") {
       if (parseInt(item1.num) < parseInt(item2.num)) {
         return -1;
       }
@@ -107,7 +107,7 @@ const Tables = () => {
     }
 
     // If sort by number (descending)
-    else if (sortChoice == "descendingNumber") {
+    else if (sortChoice === "descendingNumber") {
       if (parseInt(item1.num) < parseInt(item2.num)) {
         return 1;
       }
