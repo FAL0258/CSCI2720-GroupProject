@@ -216,17 +216,19 @@ const Table = () => {
   
     
   return (
+    <section>
     <div className="container">
         <div className="row">
       
         <h2><b>Table</b></h2>
         
-        <section className="col-sm-5 col-md-5 col-lg-5">
+       
     <Tables/>
 
-    </section>
+   
     </div>
     </div>
+     </section>
        );
   }
 
