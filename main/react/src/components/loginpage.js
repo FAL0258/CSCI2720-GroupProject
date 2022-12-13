@@ -2,9 +2,11 @@ import React from 'react';
 import icon from '../icon.png';
 import PropTypes from 'prop-types';
 import crypto from "crypto-js";
+import GLB from "../config.js"
 
 async function loginUser(datas){
-    let api = "http://localhost:4000/validateDB";
+    //let api = "http://localhost:4000/validateDB";
+    let api = GLB.BACKEND_API + "/validateDB";
     return fetch(api, { method: "post", body: datas})
      .then(data => data.json());
 }
