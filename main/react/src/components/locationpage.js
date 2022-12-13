@@ -4,10 +4,8 @@ import Maps from "./map.js";
 import Comment from "./comment.js";
 
 const locData = [
-  { lat: 22.501639, lng: 114.128911 },
   { lat: 22.39181, lng: 113.976771 },
-  { lat: 22.35665, lng: 114.12623 },
-  { lat: 22.44152, lng: 114.02289 },
+  { lat: 22.35665, lng: 114.12623 }
 ];
 
 let data1 = [
@@ -56,7 +54,11 @@ const LocationPage = () => {
             </h2>
 
             <div id="smallermap">
-              <Maps mapWidth="500px" mapHeight="500px" coordinates={locData} />
+              {/** 
+               * center={locData[0]} is because locData (for loationpage) will only have 
+               * 1 coordinate (the location of the corresponding ID)
+               */}
+              <Maps mapWidth="500px" mapHeight="500px" coordinates={locData} center={locData[0]} />
             </div>
             <p>Location: {data1[index].loc}</p>
             <p>Number of Events: {data1[index].num}</p>

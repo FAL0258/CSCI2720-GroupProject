@@ -36,7 +36,7 @@ const Maps = (props) => {
   };
 
   return (
-    <MapContainer center={center} zoom={11} scrollWheelZoom={true} style={leafletStyle}>
+    <MapContainer center={props.center} zoom={11} scrollWheelZoom={true} style={leafletStyle}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -46,5 +46,13 @@ const Maps = (props) => {
     </MapContainer>
   );
 }
+
+Maps.defaultProps = {
+  center: {
+    //to see the whole HK map
+    lat: 22.3453,
+    lng: 114.1372,
+  }
+};
 
 export default React.memo(Maps);
