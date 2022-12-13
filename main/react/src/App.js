@@ -150,15 +150,20 @@ const Home = () => {
 
     return (
     <>
+    <section id="idk" style={{height:100+'vh'}}>
     <div className="container">
       <div className="row">
-    <h2 id="homes"><b>Home</b></h2>
-    
+    <h2 style={{color:'rosybrown'}}><b>Home</b></h2>
+    <h3 style={{color:'rosybrown'}}>Welcome to our cultural events website!</h3>
+    <p><i>source: LCSD Cultural Programmes</i></p>
     </div></div>
+
+    </section>
     <footer>This webpage is built by CSCI2720 Group 1</footer>
     </>
     );
   }
+
 
 
 const Table = () => {
