@@ -52,8 +52,8 @@ if( chosen==3){
 
 <form action="" method="post">
 
-<label htmlFor="name"  className="d-none">User Name</label>
-<input type="text" className="form-control" style={{width:50+"%", margin:'auto'}} placeholder="User Name" id="name" name="name"/>
+<label htmlFor="userAc"  className="d-none">Account</label>
+<input type="text" className="form-control" style={{width:50+"%", margin:'auto'}} placeholder="Account" id="userAc" name="userAc"/>
 <br/>
 <button className="btn btn-lg btn-block" style={{width:50+"%", margin:'auto', backgroundColor: 'rosybrown', color:'white'}} type="submit">Delete</button>
 </form>
