@@ -310,6 +310,7 @@ app.post('/create/3',(req,res)=>{
         else{
           //not sure what should be updatable
           user.password = req.body['password'];
+          res.set('Content-Type', 'text/plain').send("User updated!");
         }
     })
   });
