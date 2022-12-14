@@ -174,20 +174,20 @@ db.once('open', function () {
         let list = "[\n";
         for (let i = 0; i < comment.length; i++) {
           let str =
-            '{\n"name": ' +
+            '{\n"name": "' +
             comment[i].author.name +
-            "," +
+            '",' +
             '\n"content": "' +
             comment[i].content +
             '",' +
-            '\n"date": ' +
+            '\n"date": "' +
             comment[i].date +
-            "\n}";
+            '"\n}';
           if (i < comment.length - 1) str += "\n,";
           list += str + "\n";
         }
         list += "]";
-        console.log(list);
+        res.send(list);
         //res.send(comment);
     });
    
