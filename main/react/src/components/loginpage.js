@@ -8,7 +8,8 @@ async function loginUser(datas){
     //let api = "http://localhost:4000/validateDB";
     let api = GLB.BACKEND_API + "/validateDB";
     return fetch(api, { method: "post", body: datas})
-     .then(data => data.json());
+     .then(data => data.json())
+     .catch(err => window.alert(err));
 }
 
 const LoginPage = () => {

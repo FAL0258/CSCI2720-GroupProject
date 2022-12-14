@@ -44,13 +44,23 @@ let realLoc = [];
 function processData(datas, option){
   if (option == "ev"){
     let jsonD = JSON.parse(datas);
+    for (let i = 0; i < realLoc.length; i++){
+      let count = 0;
+      for (let j =0; j < jsonD.length; j++){
+        if (jsonD[j].venue == realLoc[i]._id){
+          count++;
+        }
+      }
+      console.log(count);
+      realLoc[i].evCount = count;
+    }
     realData = jsonD;
     console.log(realData);
+    console.log(realLoc);
   }
   else if (option == "loc"){
     let jsonD = JSON.parse(datas);
     realLoc = jsonD;
-    console.log(realLoc);
   }
 }
 
@@ -71,7 +81,6 @@ function grabLoc(){
   .then(txt => processData(txt, "loc"))
   .catch(error => console.log(error));
 }
-
 
 function App (props){
     //const [userData, setUser] = useState();
@@ -96,8 +105,8 @@ function App (props){
     // Admin page
     if (oisAdmin == 'true'){
       console.log(oisAdmin);
-      grabEv();
       grabLoc();
+      grabEv();
       return (
         <BrowserRouter>
         <LogOut name={ouName}/>
@@ -140,8 +149,8 @@ function App (props){
     // Normal User page
     else{
       console.log(oisAdmin);
-      grabEv();
       grabLoc();
+      grabEv();
       return (
         <BrowserRouter>
         <LogOut name={ouName}/>
