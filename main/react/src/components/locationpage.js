@@ -14,28 +14,15 @@ const locData = [
   { lat: 22.35665, lng: 114.12623 }
 ];
 
-let data1 = [
-  { loc: "Tai Po Public Library", num: "4" },
-  { loc: "Sha Tin Town Hall", num: "6" },
-  { loc: "Fa Yuen Street Public Library", num: "9" },
-  { loc: "Fanling Public Library", num: "5" },
-  { loc: "Lek Yuen Public Library", num: "10" },
-  { loc: "Lung Hing Public Library", num: "7" },
-  { loc: "Ngau Chi Wan Public Library", num: "8" },
-  { loc: "Hong Kong Film Archive", num: "3" },
-  { loc: "North Lamma Public Library", num: "4" },
-  { loc: "Emperor Cinemas iSQUARE", num: "8" },
-];
-
 const fillerNumber = 999;
 
 const LocationPage = (props) => {
 
   console.log(props);
   let { locationId } = useParams();
-  
   console.log(locationId);
-  let center = [50,50];
+  
+  
   const fillheart = () => {
     let special = document.querySelector("#nonfill");
     if (special.classList.contains("bi-heart")) {
@@ -46,7 +33,22 @@ const LocationPage = (props) => {
       special.classList.add("bi-heart");
     }
   };
-  console.log(props.locDataSet);
+
+  let center = {
+    lat: 0,
+    lng: 0
+  };
+
+  let index = 0;
+  for (let i = 0; i < props.locDataSet.length; i++) {
+    if (props.locDataSet[i].locationId == locationId) {
+      center = {
+        lat: props.locDataSet[i].coordinates.lat,
+        lng: props.locDataSet[i].coordinates.lng
+      };
+      index = i;
+    }
+  }
   return (
     <>
       <div className="container">
@@ -67,10 +69,10 @@ const LocationPage = (props) => {
             </h2>
 
             <div id="smallermap">
-              <Maps mapWidth="500px" mapHeight="500px" coordinates={locData} center={center} />
+              <Maps mapWidth="500px" mapHeight="500px" coordinates={[props.locDataSet[index].coordinates]} locationIds={[props.locDataSet[index].locationId]} center={center} zoom={15} />
             </div>
-            <p>Location: filler name</p>
-            <p>Number of Events: {fillerNumber}</p>
+            <p>Location: {props.locDataSet[index].name}</p>
+            <p>Number of Events: {props.locDataSet[index].evCount}</p>
             <button
               type="button"
               className="btn btn-outline-danger"

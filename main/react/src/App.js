@@ -249,15 +249,20 @@ const Table = (props) => {
 };
 
 const Map = (props) => {
-  let cords = [];
+  let coords = [];
+  let locationIds = [];
   for( let i = 0; i < props.locDataSet.length; i++ ){
-    cords.push({"lat": props.locDataSet[i].coordinates.lat,
-                "lng": props.locDataSet[i].coordinates.lng})
+    coords.push({
+      lat: props.locDataSet[i].coordinates.lat,
+      lng: props.locDataSet[i].coordinates.lng
+    });
+    locationIds.push({
+      locationId: props.locDataSet[i].locationId
+    });
   }
-  console.log(cords);
   return (
     <section className="justify-content-center" id="map">
-      <Maps mapWidth="800px" mapHeight="600px" coordinates={cords} />
+      <Maps mapWidth="800px" mapHeight="600px" coordinates={coords} locationIds={locationIds} />
     </section>
   );
 };
