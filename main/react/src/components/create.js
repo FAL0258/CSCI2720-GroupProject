@@ -15,15 +15,15 @@ let {chosen} = useParams();
 <form action="" method="post">
 
 <label htmlFor="eventId"  className="d-none">Event Id</label>
-<input type="text" className="form-control" style={{width:50+"%", margin:'auto'}} placeholder="EventID" id="eventId" name="eventId"/>
+<input type="text" className="form-control" style={{width:50+"%", margin:'auto'}} placeholder="Event ID" id="eventId" name="eventId"/>
 <br/>
 
 <label htmlFor="title" className="d-none">Title</label>
 <input type="text" className="form-control" style={{width:50+"%", margin:'auto'}} placeholder="Event Title" id="title" name="title"/>
 <br/>
 
-<label htmlFor="venue" className="d-none">Venue</label>
-<input type="text" className="form-control" style={{width:50+"%", margin:'auto'}} placeholder="Event Venue" id="venue" name="venue"/>
+<label htmlFor="locationid" className="d-none">Location ID</label>
+<input type="text" className="form-control" style={{width:50+"%", margin:'auto'}} placeholder="Location ID" id="locationid" name="locationid"/>
 <br/>
 
 <label htmlFor="date" className="d-none">Date</label>
