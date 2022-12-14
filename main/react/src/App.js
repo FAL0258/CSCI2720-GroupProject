@@ -37,17 +37,10 @@ let data1 = [
   { loc: "Emperor Cinemas iSQUARE", num: "8" },
 ];
 
-// Test data for map markers
-const locData = [
-  { lat: 22.501639, lng: 114.128911 },
-  { lat: 22.39181, lng: 113.976771 },
-  { lat: 22.35665, lng: 114.12623 },
-  { lat: 22.44152, lng: 114.02289 },
-];
 
 function App(props) {
-  const [EvData, setEv] = useState();
-  const [LocData, setLoc] = useState();
+  const [evData, setEv] = useState();
+  const [locData, setLoc] = useState();
   const [end, setEnd] = useState();
 
 
@@ -122,13 +115,13 @@ function App(props) {
   
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/table" element={<Table locDataSet={LocData}/>} />
-            <Route path="/map" element={<Map />} />
-            <Route path="/favloc" element={<Favloc locDataSet={LocData}/>} />
+            <Route path="/table" element={<Table locDataSet={locData}/>} />
+            <Route path="/map" element={<Map locDataSet={locData}/>} />
+            <Route path="/favloc" element={<Favloc locDataSet={locData}/>} />
             <Route path="/loadingpage" element={<LoadingPage />} />
             <Route
               path="/locationpage/:locationId"
-              element={<LocationPage locDataSet={LocData} />}
+              element={<LocationPage locDataSet={locData} />}
             />
             <Route path="/crudevent/:chosen" element={<CRUDevent />} />
             <Route path="/crudevent1" element={<CRUDevent1 />} />
@@ -174,12 +167,12 @@ function App(props) {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/loadingpage" element={<LoadingPage />} />
-            <Route path="/table" element={<Table locDataSet={LocData}/>} />
-            <Route path="/map" element={<Map />} />
-            <Route path="/favloc" element={<Favloc locDataSet={LocData}/>} />
+            <Route path="/table" element={<Table locDataSet={locData}/>} />
+            <Route path="/map" element={<Map locDataSet={locData}/>} />
+            <Route path="/favloc" element={<Favloc locDataSet={locData}/>} />
             <Route
               path="/locationpage/:locationId"
-              element={<LocationPage locDataSet={LocData} />}
+              element={<LocationPage locDataSet={locData} />}
             />
             <Route path="*" element={<NoMatch />} />
           </Routes>
@@ -255,10 +248,16 @@ const Table = (props) => {
   );
 };
 
-const Map = () => {
+const Map = (props) => {
+  let cords = [];
+  for( let i = 0; i < props.locDataSet.length; i++ ){
+    cords.push({"lat": props.locDataSet[i].coordinates.lat,
+                "lng": props.locDataSet[i].coordinates.lng})
+  }
+  console.log(cords);
   return (
     <section className="justify-content-center" id="map">
-      <Maps mapWidth="800px" mapHeight="600px" coordinates={locData} />
+      <Maps mapWidth="800px" mapHeight="600px" coordinates={cords} />
     </section>
   );
 };
