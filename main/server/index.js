@@ -266,6 +266,51 @@ app.post('/create/3',(req,res)=>{
    
   });
 
+  app.post('/delete/1',(req,res)=>{  
+    let req_eventId = req.body['eventId'];
+    Event.findOne({eventId: req_eventId}).exec(function(err,e){
+        if (err || e==null) {
+            res.status(404).set('Content-Type', 'text/plain').send('Cannot find event with ID '+req_eventId);
+            return;
+          }        
+        e.remove();
+        res.status(200).set('Content-Type', 'text/plain').send("Event Deleted!");
+       
+    });
+
+
+  });
+
+  app.post('/delete/2',(req,res)=>{  
+    let req_locationId = req.body['locationId'];
+    Location.findOne({locationId: req_locationId}).exec(function(err,loc){
+        if (err || loc==null) {
+            res.status(404).set('Content-Type', 'text/plain').send('Cannot find location with ID '+req_locationId);
+            return;
+          }        
+        loc.remove();
+        res.status(200).set('Content-Type', 'text/plain').send("Location Deleted!");
+       
+    });
+
+
+  });
+
+  app.post('/delete/3',(req,res)=>{  
+    let req_userAc = req.body['userAc'];
+    User.findOne({userAc: req_userAc}).exec(function(err,user){
+        if (err || user==null) {
+            res.status(404).set('Content-Type', 'text/plain').send('Cannot find user with ID '+req_userAc);
+            return;
+          }        
+        user.remove();
+        res.status(200).set('Content-Type', 'text/plain').send("User Deleted!");
+       
+    });
+
+
+  });
+
 
   app.all('/*', (req, res) => {
     /*
