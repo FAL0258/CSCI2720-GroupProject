@@ -21,6 +21,7 @@ import LoadingPage from "./components/loadingpage.js";
 //npm i -S @react-google-maps/api
 import "./style.css";
 import GLB from "./config.js";
+import * as grab from "./components/grab.js";
 
 let data1 = [
   { loc: "Tai Po Public Library", num: "4" },
@@ -46,49 +47,9 @@ const locData = [
 let realData = [];
 let realLoc = [];
 
-function processData(datas, option) {
-  if (option == "ev") {
-    let jsonD = JSON.parse(datas);
-    for (let i = 0; i < realLoc.length; i++){
-      let count = 0;
-      for (let j =0; j < jsonD.length; j++){
-        if (jsonD[j].venue == realLoc[i]._id){
-          count++;
-        }
-      }
-      console.log(count);
-      realLoc[i].evCount = count;
-    }
-    realData = jsonD;
-    console.log(realData);
-    console.log(realLoc);
-  }
-  else if (option == "loc"){
-    let jsonD = JSON.parse(datas);
-    realLoc = jsonD;
-  }
-}
-
-function grabEv() {
-  let api = GLB.BACKEND_API + "/grabEv";
-  //let api = "http://localhost:4000/grabEv";
-  fetch(api)
-    .then((res) => res.text())
-    .then((txt) => processData(txt, "ev"))
-    .catch((error) => console.log(error));
-}
-
-function grabLoc() {
-  let api = GLB.BACKEND_API + "/grabLoc";
-  //let api = "http://localhost:4000/grabLoc";
-  fetch(api)
-    .then((res) => res.text())
-    .then((txt) => processData(txt, "loc"))
-    .catch((error) => console.log(error));
-}
 function App(props) {
   //const [userData, setUser] = useState();
-
+  grab.grabAll();
   // Handling session state
   console.log(GLB.BACKEND_API);
   const ckToken = window.sessionStorage.getItem("fakeCookie");
@@ -108,8 +69,6 @@ function App(props) {
     // Admin page
     if (oisAdmin == 'true'){
       console.log(oisAdmin);
-      grabLoc();
-      grabEv();
       return (
         <BrowserRouter>
         <LogOut name={ouName}/>
@@ -139,7 +98,7 @@ function App(props) {
           <Route path="/loadingpage" element={<LoadingPage />} />
           <Route
             path="/locationpage/:locationId"
-            element={<LocationPage locDataSet={realLoc} />}
+            element={<LocationPage />}
           />
           <Route path="/crudevent/:chosen" element={<CRUDevent />} />
           <Route path="/crudevent1" element={<CRUDevent1 />} />
@@ -155,8 +114,7 @@ function App(props) {
     // Normal User page
     else{
       console.log(oisAdmin);
-      grabLoc();
-      grabEv();
+      grab.grabAll();
       return (
         <BrowserRouter>
         <LogOut name={ouName}/>
@@ -193,7 +151,7 @@ function App(props) {
           <Route path="/favloc" element={<Favloc />} />
           <Route
             path="/locationpage/:locationId"
-            element={<LocationPage locDataSet={realLoc} />}
+            element={<LocationPage />}
           />
           <Route path="*" element={<NoMatch />} />
         </Routes>
@@ -261,7 +219,7 @@ const Table = () => {
             <b>Table</b> <i className="bi bi-table"></i>
           </h2>
 
-          <Tables locDataSet={realLoc} />
+          <Tables />
         </div>
       </div>
     </section>
@@ -284,7 +242,7 @@ const Favloc = () => {
           <b>Your Favorite Location</b>
           <i className="bi bi-balloon-heart-fill"></i>
         </h2>
-        <Tables locDataSet={realLoc} />
+        <Tables />
       </div>
     </div>
   );
