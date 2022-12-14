@@ -35,7 +35,7 @@ let data1 = [
   { loc: "Emperor Cinemas iSQUARE", num: "8" },
 ];
 
-const fillerNumber = 999;
+
 
 // Renders each row
 const TableRow = (props) => {
@@ -47,7 +47,7 @@ const TableRow = (props) => {
         <Link to={url}> {props.locDataSet[i].name}</Link>
       </td>
 
-      <td>{fillerNumber}</td>
+      <td>{props.locDataSet[i].evCount}</td>
     </tr>
   );
 };
@@ -98,10 +98,10 @@ const Tables = (props) => {
 
     // If sort by number (ascending)
     else if (sortChoice === "number") {
-      if (parseInt(item1.num) < parseInt(item2.num)) {
+      if (parseInt(item1.evCount) < parseInt(item2.evCount)) {
         return -1;
       }
-      if (parseInt(item1.num) > parseInt(item2.num)) {
+      if (parseInt(item1.evCount) > parseInt(item2.evCount)) {
         return 1;
       }
       return 0;
@@ -109,10 +109,10 @@ const Tables = (props) => {
 
     // If sort by number (descending)
     else if (sortChoice === "descendingNumber") {
-      if (parseInt(item1.num) < parseInt(item2.num)) {
+      if (parseInt(item1.evCount) < parseInt(item2.evCount)) {
         return 1;
       }
-      if (parseInt(item1.num) > parseInt(item2.num)) {
+      if (parseInt(item1.evCount) > parseInt(item2.evCount)) {
         return -1;
       }
       return 0;
