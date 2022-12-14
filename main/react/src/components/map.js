@@ -12,11 +12,23 @@ import { Link } from "react-router-dom";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 
 const Maps = (props) => {
-  const center = {
-    //to see the whole HK map
-    lat: 22.3453,
-    lng: 114.1372,
-  };
+  let zoom;
+  if (props.zoom === undefined) {
+    zoom = 11; 
+  } else {
+    zoom = props.zoom;
+  }
+  let center;
+
+  if (props.center === undefined) {
+    center = {
+      //to see the whole HK map
+      lat: 22.3453,
+      lng: 114.1372,
+    };
+  } else {
+    center = props.center;
+  }
 
   const leafletStyle = {
     width: props.mapWidth,
@@ -25,9 +37,10 @@ const Maps = (props) => {
 
   const addMarker = (coordinate, index) => {
     // Text in popup will be link to corresponding /locationpage/:locID, index needs to be changed to locationID once backend is connected
-    const url = "/locationpage/" + index;
+    const locationId = props.locationIds[index].locationId;
+    const url = "/locationpage/" + locationId;
     return(
-      <Marker key={index} position={coordinate}>
+      <Marker key={locationId} position={coordinate}>
         <Popup>
           <Link to={url}>View details</Link>
         </Popup>
@@ -36,7 +49,7 @@ const Maps = (props) => {
   };
 
   return (
-    <MapContainer center={props.center} zoom={11} scrollWheelZoom={true} style={leafletStyle}>
+    <MapContainer center={center} zoom={zoom} scrollWheelZoom={true} style={leafletStyle}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -46,13 +59,5 @@ const Maps = (props) => {
     </MapContainer>
   );
 }
-
-Maps.defaultProps = {
-  center: {
-    //to see the whole HK map
-    lat: 22.3453,
-    lng: 114.1372,
-  }
-};
 
 export default React.memo(Maps);
