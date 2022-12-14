@@ -171,7 +171,24 @@ db.once('open', function () {
     Location.findOne({locationId:req_locationId}).exec(function(err, loc) {
       Comment.find({location:loc._id}).exec(function(err, comment) {
         //console.log(comment);
-        res.send(comment);
+        let list = "[\n";
+        for (let i = 0; i < comment.length; i++) {
+          let str =
+            '{\n"name": ' +
+            comment.author.name +
+            "," +
+            '\n"content": "' +
+            comment.content +
+            '",' +
+            '\n"date": ' +
+            comment.date +
+            "\n}";
+          if (i < comment.length - 1) str += "\n,";
+          list += str + "\n";
+        }
+        list += "]";
+        console.log(list);
+        //res.send(comment);
     });
    
 
