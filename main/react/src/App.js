@@ -161,7 +161,7 @@ function App(props) {
             <Route path="/favloc" element={<Favloc locDataSet={locData}/>} />
             <Route
               path="/locationpage/:locationId"
-              element={<LocationPage locDataSet={LocData} />}
+              element={<LocationPage locDataSet={locData} />}
             />
             <Route path="*" element={<NoMatch />} />
           </Routes>
