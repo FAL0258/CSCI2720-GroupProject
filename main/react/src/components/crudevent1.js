@@ -8,7 +8,7 @@ function CRUDevent1 (){
       <div className="container">
       <div className="row">
       
-      <h2 className="my-3" style={{background:"#DEC7C7", color:"#5E4747", textAlign:"center", borderRadius:20}}>Choose one to edit:<i class="bi bi-pencil-square"></i></h2>
+      <h2 className="my-3" style={{background:"#DEC7C7", color:"#5E4747", textAlign:"center", borderRadius:20}}>Choose one to edit:<i className="bi bi-pencil-square"></i></h2>
       </div></div>
         
      <div className="container">
