@@ -11,7 +11,7 @@ function Delete(){
 <div className="text-center">
 <h2 style={{background:"rosybrown", color:"white", textAlign:"center"}}>Delete Event</h2>
 
-<form action="" method="post">
+<form action="http://localhost:4000/delete/1" method="post">
 
 <label htmlFor="eventId"  className="d-none">Event Id</label>
 <input type="text" className="form-control" style={{width:50+"%", margin:'auto'}} placeholder="EventID" id="eventId" name="eventId"/>
@@ -30,7 +30,7 @@ function Delete(){
     <div className="text-center">
     <h2 style={{background:"rosybrown", color:"white", textAlign:"center"}}>Delete Location</h2>
     
-    <form action="" method="post">
+    <form action="http://localhost:4000/delete/2" method="post">
     
     <label htmlFor="locationId"  className="d-none">Location ID</label>
     <input type="text" className="form-control" style={{width:50+"%", margin:'auto'}} placeholder="Location ID" id="locationId" name="locationId"/>
@@ -50,7 +50,7 @@ if( chosen==3){
 <div className="text-center">
 <h2 style={{background:"rosybrown", color:"white", textAlign:"center"}}>Delete User</h2>
 
-<form action="" method="post">
+<form action="http://localhost:4000/delete/3" method="post">
 
 <label htmlFor="userAc"  className="d-none">Account</label>
 <input type="text" className="form-control" style={{width:50+"%", margin:'auto'}} placeholder="Account" id="userAc" name="userAc"/>
