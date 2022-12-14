@@ -8,6 +8,7 @@ const LogOut = (props) => {
             window.sessionStorage.removeItem("fakeCookie");
             window.sessionStorage.removeItem("userName");
             window.sessionStorage.removeItem("isAdmin");
+            window.sessionStorage.removeItem("userAc");
             window.location.replace("/");
         }
     }

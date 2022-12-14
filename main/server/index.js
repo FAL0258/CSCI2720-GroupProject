@@ -86,7 +86,7 @@ db.once('open', function () {
     console.log(res.body);
     console.log(validated);
     if (validated){
-      let output = {uName: result.name, isAdmin: result.isAdmin, ok: 1};
+      let output = {uName: result.name, isAdmin: result.isAdmin, uAc: result.userAc, ok: 1};
       res.send(JSON.stringify(output));
     }
     else{
