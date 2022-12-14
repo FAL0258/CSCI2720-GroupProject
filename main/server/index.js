@@ -165,6 +165,10 @@ db.once('open', function () {
     });
   });
 
+  app.all('/getCm/:locId', (req, res) => {
+
+  });
+
   app.all('/*', (req, res) => {
     /*
     Location.create({

@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import Maps from "./map.js";
 import Comment from "./comment.js";
 import GLB from "../config.js"
+import * as grab from "./grab.js";
 
 const locData = [
   { lat: 22.39181, lng: 113.976771 },
