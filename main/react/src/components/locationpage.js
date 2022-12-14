@@ -1,7 +1,12 @@
+/**
+ * refs: https://stackoverflow.com/questions/12462318/find-a-value-in-an-array-of-objects-in-javascript
+ */
+
 import React from "react";
 import { useParams } from "react-router-dom";
 import Maps from "./map.js";
 import Comment from "./comment.js";
+import GLB from "../config.js"
 
 const locData = [
   { lat: 22.39181, lng: 113.976771 },
@@ -21,8 +26,15 @@ let data1 = [
   { loc: "Emperor Cinemas iSQUARE", num: "8" },
 ];
 
-const LocationPage = () => {
-  let { index } = useParams();
+const fillerNumber = 999;
+
+const LocationPage = (props) => {
+
+  console.log(props);
+  let { locationId } = useParams();
+  
+  console.log(locationId);
+  let center = [50,50];
   const fillheart = () => {
     let special = document.querySelector("#nonfill");
     if (special.classList.contains("bi-heart")) {
@@ -33,7 +45,7 @@ const LocationPage = () => {
       special.classList.add("bi-heart");
     }
   };
-
+  console.log(props.locDataSet);
   return (
     <>
       <div className="container">
@@ -54,14 +66,10 @@ const LocationPage = () => {
             </h2>
 
             <div id="smallermap">
-              {/** 
-               * center={locData[0]} is because locData (for loationpage) will only have 
-               * 1 coordinate (the location of the corresponding ID)
-               */}
-              <Maps mapWidth="500px" mapHeight="500px" coordinates={locData} center={locData[0]} />
+              <Maps mapWidth="500px" mapHeight="500px" coordinates={locData} center={center} />
             </div>
-            <p>Location: {data1[index].loc}</p>
-            <p>Number of Events: {data1[index].num}</p>
+            <p>Location: filler name</p>
+            <p>Number of Events: {fillerNumber}</p>
             <button
               type="button"
               className="btn btn-outline-danger"
