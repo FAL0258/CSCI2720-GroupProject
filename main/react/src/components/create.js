@@ -12,7 +12,7 @@ let {chosen} = useParams();
 <div className="text-center">
 <h2 style={{background:"rosybrown", color:"white", textAlign:"center"}}>Create Event</h2>
 
-<form action="" method="post">
+<form action="/create/1" method="post">
 
 <label htmlFor="eventId"  className="d-none">Event Id</label>
 <input type="text" className="form-control" style={{width:50+"%", margin:'auto'}} placeholder="Event ID" id="eventId" name="eventId"/>

@@ -169,6 +169,10 @@ db.once('open', function () {
 
   });
 
+  app.post('/create/1',(req,res))=>{
+    Location.findOne({locationId:req.body['locationid']}).exec(function(err,loc){
+  }
+
   app.all('/*', (req, res) => {
     /*
     Location.create({
