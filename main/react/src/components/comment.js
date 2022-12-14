@@ -5,7 +5,7 @@ const Comment = (props) => {
     let username1=props.username;
     function savefile(){ //save the comment, and send to the server
         let url="http://localhost:4000/getCm/"+props.locId;
-        let obj={ author: username1, location: props.locId, content: document.querySelector("#new-comment").value, date: Date.now};
+        let obj={ author: username1, location: props.locId, content: document.querySelector("#new-comment").value};
         fetch(url,{
             method:"PUT",
             headers:{
@@ -18,20 +18,23 @@ const Comment = (props) => {
             else console.log("PUT NO")
             return res
            })
-           .then (res=>res.json())
-           .then(data=>console.log(JSON.stringify(obj)))
            .catch(error=>console.log(error))
         
         console.log("done!")    
       }
     function loadfile(){ //fetch the comment from server
         let url="http://localhost:4000/getCm/"+props.locId;
-        fetch(url).then(res=>res.text()).then (txt=>document.querySelector("#comments").innerHTML=txt);
+        fetch(url).then(res=>res.json()).then (txt=>{
+            document.querySelector("#comments").innerHTML=txt[0].content;
+            txt.map
+            console.log("DIU", txt);
+        })
+        .catch(error=>console.log(error))
      }
       
-      window.onload = function () { //load the comment everytime the page is loaded
+     //load the comment everytime the page is loaded
         loadfile();
-      }
+      
     return(
         <div className="container">
             <div className="row">
