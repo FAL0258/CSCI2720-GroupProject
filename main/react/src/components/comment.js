@@ -25,7 +25,7 @@ const Comment = (props) => {
     function loadfile(){ //fetch the comment from server
         let url="http://localhost:4000/getCm/"+props.locId;
         fetch(url).then(res=>res.json()).then (txt=>{
-            document.querySelector("#comments").innerHTML=txt[0].content;
+            document.querySelector("#comments").innerHTML=txt;
            
             console.log("DIU", txt);
         })

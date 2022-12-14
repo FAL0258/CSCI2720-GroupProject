@@ -42,7 +42,7 @@ db.once('open', function () {
     commentId: { type: Number, required: true, unique: true },
     location: { type: mongoose.Schema.Types.ObjectId, ref: 'Location' },
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    date: { type: Date, Default: Date.now },
+    date: { type: Date, Default: new Date() },
     content: { type: String, required: true },
   });
   const Comment = mongoose.model('Comment', CommentSchema);
@@ -167,9 +167,10 @@ db.once('open', function () {
 
   app.get('/getCm/:locId', (req, res) => { //load comment
     let req_locationId= req.params['locId'];
+    console.log(req_locationId);
     Location.findOne({locationId:req_locationId}).exec(function(err, loc) {
-      Comment.find({venue:loc._id}).exec(function(err, comment) {
-        console.log(comment);
+      Comment.find({location:loc._id}).exec(function(err, comment) {
+        //console.log(comment);
         res.send(comment);
     });
    
@@ -201,7 +202,8 @@ db.once('open', function () {
             commentId:new_commentId,
             location: loc._id,
             author: user._id,
-            content: req_content
+            content: req_content,
+            date: new Date()
           })
 
         res.send("OK!");
