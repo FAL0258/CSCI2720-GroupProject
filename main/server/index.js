@@ -207,9 +207,9 @@ db.once('open', function () {
 app.post('/create/2',(req,res)=>{
   
   Location.findOne({locationId:req.body['locationId']}).exec(function(err, loc) {
-    console.log(loc);
+    
     if (err || loc!=null){ //make sure locationId is unique
-      console.log(loc);
+      
     
     res.status(400).set('Content-Type', 'text/plain').send('Location ID '+req.body['locationId']+' already exists.');
     return;}
@@ -228,6 +228,44 @@ app.post('/create/2',(req,res)=>{
       });});
   
 });
+
+app.post('/create/3',(req,res)=>{  
+  let new_userId;
+  User.findOne().sort('-userId').exec(function(err, user) { //find the maximum userId
+    if (err) { res.status(404).set('Content-Type', 'text/plain').send("Error"); return;}
+    else if (user == null){ //there is no user currently
+        new_userId = 1; //first user id is 1
+    } 
+    else {
+      new_userId = user.userId + 1;                            //new userID equals to the maximum userId plus 1
+    }
+  });
+  User.findOne({userAc:req.body['userAc']}).exec(function(err, user) {
+
+    if (err || user!=null){ //make sure userAc is unique
+      res.status(400).set('Content-Type', 'text/plain').send('Account Name '+req.body['userAc']+' already exists.');
+      return;}
+    
+    let new_user = new User({
+
+        userId: new_userId,
+        userAc: req.body['userAc'], 
+        password: req.body['password'],
+        name:req.body['userAc'], //just assume the initialize name equals to the userAc 
+        isAdmin: false //user is not admin
+      
+      });
+       new_user.save(function (err){
+        
+          if (err) {res.status(404).set('Content-Type', 'text/plain').send('Error: cannot save');return;}      
+      
+          res.set('Content-Type', 'text/plain').status(201).send("User Created!"); //send the user the address
+      });
+    });
+
+   
+  });
+
 
   app.all('/*', (req, res) => {
     /*
