@@ -171,15 +171,15 @@ db.once('open', function () {
 
   app.post('/create/1',(req,res)=>{
   
-    Event.findOne({eventId:req.body['eventId']}).exec(function(err, e) {
+    Event.findOne({eventId:req.body['eventId']}).exec(function(err, e) { //make sure eventId is unique
       
       if (err || e!=null){ 
       
       res.status(400).set('Content-Type', 'text/plain').send('Event ID '+req.body['eventId']+' already exists.');
       return;}
-    Location.findOne({locationId:req.body['locationid']}).exec(function(err,loc){
+    Location.findOne({locationId:req.body['locationId']}).exec(function(err,loc){
       if (err || loc==null) {
-        res.status(404).set('Content-Type', 'text/plain').send('Location with this ID '+req.body['locationid']+' is not found.');
+        res.status(404).set('Content-Type', 'text/plain').send('Location with this ID '+req.body['locationId']+' is not found.');
         return;
       }
       else {
@@ -198,11 +198,36 @@ db.once('open', function () {
             if (err) {res.status(404).set('Content-Type', 'text/plain').send('Error: cannot save');return;}      
        
         
-            res.set('Content-Type', 'text/plain').status(201).send("Created!"); //send the user the address
+            res.set('Content-Type', 'text/plain').status(201).send("Event Created!"); //send the user the address
         });
   }
 })
 });});
+
+app.post('/create/2',(req,res)=>{
+  
+  Location.findOne({locationId:req.body['locationId']}).exec(function(err, loc) {
+    console.log(loc);
+    if (err || loc!=null){ //make sure locationId is unique
+      console.log(loc);
+    
+    res.status(400).set('Content-Type', 'text/plain').send('Location ID '+req.body['locationId']+' already exists.');
+    return;}
+  
+      let new_location = new Location({
+
+        locationId: req.body['locationId'],
+        name: req.body['name'],
+        coordinates: {lat: req.body['latitude'],lng: req.body['longitude']}
+             
+      });
+       new_location.save(function (err){
+          if (err) {res.status(404).set('Content-Type', 'text/plain').send('Error: cannot save');return;}      
+      
+          res.set('Content-Type', 'text/plain').status(201).send("Location Created!"); //send the user the address
+      });});
+  
+});
 
   app.all('/*', (req, res) => {
     /*

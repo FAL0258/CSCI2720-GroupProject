@@ -22,8 +22,8 @@ let {chosen} = useParams();
 <input type="text" className="form-control" style={{width:50+"%", margin:'auto'}} placeholder="Event Title" id="title" name="title"/>
 <br/>
 
-<label htmlFor="locationid" className="d-none">Location ID</label>
-<input type="text" className="form-control" style={{width:50+"%", margin:'auto'}} placeholder="Location ID" id="locationid" name="locationid"/>
+<label htmlFor="locationId" className="d-none">Location ID</label>
+<input type="text" className="form-control" style={{width:50+"%", margin:'auto'}} placeholder="Location ID" id="locationId" name="locationId"/>
 <br/>
 
 <label htmlFor="date" className="d-none">Date</label>
@@ -56,7 +56,7 @@ if( chosen==2){   return(
 <div className="text-center">
 <h2 style={{background:"rosybrown", color:"white", textAlign:"center"}}>Create Location</h2>
 
-<form action="" method="post">
+<form action="http://localhost:4000/create/2" method="post">
 
 <label htmlFor="locationId"  className="d-none">Location ID</label>
 <input type="text" className="form-control" style={{width:50+"%", margin:'auto'}} placeholder="Location ID" id="locationId" name="locationId"/>
@@ -87,7 +87,7 @@ if( chosen==2){   return(
          <div className="text-center">
 <h2 style={{background:"rosybrown", color:"white", textAlign:"center"}}>Create User</h2>
 
-<form action="" method="post">
+<form action="http://localhost:4000/create/3" method="post">
 
 <label htmlFor="name"  className="d-none">User Name</label>
 <input type="text" className="form-control" style={{width:50+"%", margin:'auto'}} placeholder="User Name" id="name" name="name"/>
