@@ -26,7 +26,7 @@ const Comment = (props) => {
         let url="http://localhost:4000/getCm/"+props.locId;
         fetch(url).then(res=>res.json()).then (txt=>{
             document.querySelector("#comments").innerHTML=txt[0].content;
-            txt.map
+           
             console.log("DIU", txt);
         })
         .catch(error=>console.log(error))
