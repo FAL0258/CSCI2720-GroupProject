@@ -1,51 +1,64 @@
+import { resolvePath } from "react-router";
 import GLB from "../config.js";
 
-let realData = [];
-let realLoc = [];
-
 function processData(datas, option) {
+  let realData = [];
+  let realLoc = [];
   if (option == "ev") {
     let jsonD = JSON.parse(datas);
-    for (let i = 0; i < realLoc.length; i++){
-      let count = 0;
-      for (let j =0; j < jsonD.length; j++){
-        if (jsonD[j].venue == realLoc[i]._id){
-          count++;
-        }
-      }
-      console.log(count);
-      realLoc[i].evCount = count;
-    }
     realData = jsonD;
-    console.log(realData);
-    console.log(realLoc);
+    return realData;
   }
   else if (option == "loc"){
     let jsonD = JSON.parse(datas);
     realLoc = jsonD;
+    return realLoc;
   }
 }
 
-export function grabEv() {
+function evCount(ev, loc){
+    let tempLoc = loc;
+    for (let i = 0; i < loc.length; i++){
+        let count = 0;
+        for (let j =0; j < ev.length; j++){
+            if (ev[j].venue == loc[i]._id){
+            count++;
+            }
+        }
+        //console.log(count);
+        tempLoc[i].evCount = count;
+    }
+    return tempLoc;
+}
+
+function grabEv() {
   let api = GLB.BACKEND_API + "/grabEv";
   //let api = "http://localhost:4000/grabEv";
-  fetch(api)
+  return new Promise( resolve => {
+    fetch(api)
     .then((res) => res.text())
-    .then((txt) => processData(txt, "ev"))
+    .then((txt) => {
+        let result = processData(txt, "ev");
+        resolve(result);
+    })
     .catch((error) => console.log(error));
+  });
 }
 
-export function grabLoc() {
+function grabLoc() {
   let api = GLB.BACKEND_API + "/grabLoc";
   //let api = "http://localhost:4000/grabLoc";
-  fetch(api)
-    .then((res) => res.text())
-    .then((txt) => processData(txt, "loc"))
-    .catch((error) => console.log(error));
+  return new Promise( resolve => {
+    fetch(api)
+        .then((res) => res.text())
+        .then((txt) => {
+            txt = processData(txt, "loc");
+            resolve(txt);
+        })
+        .catch((error) => console.log(error));
+  });
 }
 
-export function grabAll(){
-  grabLoc();
-  grabEv();
-}
+
+export {grabEv, grabLoc, evCount, processData}
 

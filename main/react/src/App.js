@@ -21,7 +21,7 @@ import LoadingPage from "./components/loadingpage.js";
 //npm i -S @react-google-maps/api
 import "./style.css";
 import GLB from "./config.js";
-import * as grab from "./components/grab.js";
+import {evCount, grabEv, grabLoc} from "./components/grab.js";
 
 let data1 = [
   { loc: "Tai Po Public Library", num: "4" },
@@ -44,12 +44,28 @@ const locData = [
   { lat: 22.44152, lng: 114.02289 },
 ];
 
-let realData = [];
-let realLoc = [];
+function App (props) {
 
-function App(props) {
+  /*
+  let ev = grabEv();
+  ev
+   .then(evD =>{
+    console.log(evD);
+    let loc = grabLoc();
+    loc
+     .then(locD =>{
+      console.log(locD);
+      let rLoc = evCount(evD, locD);
+      console.log(rLoc);
+      // User evD, rLoc as received data
+      
+     });
+   });
+  */
+
+  //console.log(bb);
   //const [userData, setUser] = useState();
-  grab.grabAll();
+  //console.log(realDATA);
   // Handling session state
   console.log(GLB.BACKEND_API);
   const ckToken = window.sessionStorage.getItem("fakeCookie");
@@ -114,7 +130,6 @@ function App(props) {
     // Normal User page
     else{
       console.log(oisAdmin);
-      grab.grabAll();
       return (
         <BrowserRouter>
         <LogOut name={ouName}/>
