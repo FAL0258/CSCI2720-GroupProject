@@ -43,7 +43,7 @@ function App(props) {
   oisAdmin = window.sessionStorage.getItem("isAdmin");
   ouName = window.sessionStorage.getItem("userName");
   ouAc = window.sessionStorage.getItem("userAc");
-
+  
 
   // Temp session
   //let oisAdmin = 'true';
@@ -110,7 +110,7 @@ function App(props) {
             <Route path="/loadingpage" element={<LoadingPage />} />
             <Route
               path="/locationpage/:locationId"
-              element={<LocationPage locDataSet={locData} username={ouName}/>}
+              element={<LocationPage locDataSet={locData} username={ouAc}/>}
             />
             <Route path="/crudevent/:chosen" element={<CRUDevent />} />
             <Route path="/crudevent1" element={<CRUDevent1 />} />
@@ -161,7 +161,7 @@ function App(props) {
             <Route path="/favloc" element={<Favloc locDataSet={locData}/>} />
             <Route
               path="/locationpage/:locationId"
-              element={<LocationPage locDataSet={LocData} />}
+              element={<LocationPage locDataSet={locData} username={ouAc}/>}
             />
             <Route path="*" element={<NoMatch />} />
           </Routes>

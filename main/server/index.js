@@ -42,7 +42,7 @@ db.once('open', function () {
     commentId: { type: Number, required: true, unique: true },
     location: { type: mongoose.Schema.Types.ObjectId, ref: 'Location' },
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    date: { type: Date, Default: Date.now, required: true },
+    date: { type: Date, Default: Date.now },
     content: { type: String, required: true },
   });
   const Comment = mongoose.model('Comment', CommentSchema);
@@ -165,9 +165,9 @@ db.once('open', function () {
     });
   });
 
-  app.get('/getCm/:locId', (req, res) => {
-    let loc_locId= req.params['locId'];
-    Location.findOne({locId:loc_locId}).exec(function(err, loc) {
+  app.get('/getCm/:locId', (req, res) => { //load comment
+    let req_locationId= req.params['locId'];
+    Location.findOne({locationId:req_locationId}).exec(function(err, loc) {
       Comment.find({venue:loc._id}).exec(function(err, comment) {
         console.log(comment);
         res.send(comment);
@@ -176,27 +176,35 @@ db.once('open', function () {
 
     })});
 
-  app.put('/getCm/:locId', (req, res) => {
+  app.put('/getCm/:locId', (req, res) => { //save comment
 
-    console.log(req.body['author']);
-    console.log(req.body['content']);
     let req_author =req.body['author']; //this is the username
     let req_location =req.body['location']; //this is the location id
     let req_content=req.body['content']; //this is the comment content
     
+    let new_commentId;
+        Comment.findOne().sort('-commentId').exec(function(err, cm) { //find the maximum commentId
+          if (err) { res.status(404).set('Content-Type', 'text/plain').send("Error"); return;}
+          else if (cm == null){ //there is no user currently
+              new_commentId = 1; //first commentId is 1
+          } 
+          else {
+            new_commentId = cm.commentId + 1;                            //new userID equals to the maximum commentId plus 1
+          }
+        });
+
     User.findOne({userAc:req_author}).exec(function(err, user) { 
       Location.findOne({locationId:req_location}).exec(function(err,loc){
-          let new_comment = new Comment({
-            commentId:1,
+        
+        
+          Comment.create({
+            commentId:new_commentId,
             location: loc._id,
             author: user._id,
             content: req_content
           })
 
-          new_comment.save(function(err){
-            if (err) {res.status(404).set('Content-Type', 'text/plain').send('Error: cannot save');return;}      
-            res.set('Content-Type', 'text/plain').status(201).send("Comment Saved!");
-          })
+        res.send("OK!");
       });
 
     });    
