@@ -128,7 +128,7 @@ function App(props) {
             <Route path="/loadingpage" element={<LoadingPage />} />
             <Route
               path="/locationpage/:locationId"
-              element={<LocationPage locDataSet={LocData} />}
+              element={<LocationPage locDataSet={LocData} username={ouName} />}
             />
             <Route path="/crudevent/:chosen" element={<CRUDevent />} />
             <Route path="/crudevent1" element={<CRUDevent1 />} />
@@ -179,7 +179,7 @@ function App(props) {
             <Route path="/favloc" element={<Favloc locDataSet={LocData}/>} />
             <Route
               path="/locationpage/:locationId"
-              element={<LocationPage locDataSet={LocData} />}
+              element={<LocationPage locDataSet={LocData} username={ouName}/>}
             />
             <Route path="*" element={<NoMatch />} />
           </Routes>
