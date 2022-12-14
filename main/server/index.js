@@ -165,9 +165,27 @@ db.once('open', function () {
     });
   });
 
-  app.all('/getCm/:locId', (req, res) => {
+  app.get('/getCm/:locId', (req, res) => {
+    let loc_locId= req.params['locId'];
+    Location.findOne({locId:loc_locId}).exec(function(err, loc) {
+      Comment.find({venue:loc._id}).exec(function(err, comment) {
+        console.log(comment);
+        res.send(comment);
+    });
+   
 
-  });
+    })});
+
+  app.put('/getCm/:locId', (req, res) => {
+    let loc_locId= req.params['locId'];
+    Location.findOne({locId:loc_locId}).exec(function(err, loc) {
+      Comment.find({venue:loc._id}).exec(function(err, comment) {
+        console.log(comment);
+        res.send(comment);
+    });
+   
+
+    })});
 
   app.post('/create/1',(req,res)=>{
   
