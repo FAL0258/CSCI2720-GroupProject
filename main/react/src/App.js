@@ -24,30 +24,9 @@ import GLB from "./config.js";
 import {evCount, grabEv, grabLoc} from "./components/grab.js";
 
 
-let data1 = [
-  { loc: "Tai Po Public Library", num: "4" },
-  { loc: "Sha Tin Town Hall", num: "6" },
-  { loc: "Fa Yuen Street Public Library", num: "9" },
-  { loc: "Fanling Public Library", num: "5" },
-  { loc: "Lek Yuen Public Library", num: "10" },
-  { loc: "Lung Hing Public Library", num: "7" },
-  { loc: "Ngau Chi Wan Public Library", num: "8" },
-  { loc: "Hong Kong Film Archive", num: "3" },
-  { loc: "North Lamma Public Library", num: "4" },
-  { loc: "Emperor Cinemas iSQUARE", num: "8" },
-];
-
-// Test data for map markers
-const locData = [
-  { lat: 22.501639, lng: 114.128911 },
-  { lat: 22.39181, lng: 113.976771 },
-  { lat: 22.35665, lng: 114.12623 },
-  { lat: 22.44152, lng: 114.02289 },
-];
-
 function App(props) {
-  const [EvData, setEv] = useState();
-  const [LocData, setLoc] = useState();
+  const [evData, setEv] = useState();
+  const [locData, setLoc] = useState();
   const [end, setEnd] = useState();
 
 
@@ -56,12 +35,15 @@ function App(props) {
   const ckToken = window.sessionStorage.getItem("fakeCookie");
   let oisAdmin = "false";
   let ouName = "";
+  let ouAc = "";
   if (ckToken == null) {
     //return (<LoginPage setToken={setToken} setUser={setUser}/>)
     return <LoginPage />;
   }
   oisAdmin = window.sessionStorage.getItem("isAdmin");
   ouName = window.sessionStorage.getItem("userName");
+  ouAc = window.sessionStorage.getItem("userAc");
+
 
   // Temp session
   //let oisAdmin = 'true';
@@ -122,13 +104,13 @@ function App(props) {
   
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/table" element={<Table locDataSet={LocData}/>} />
-            <Route path="/map" element={<Map />} />
-            <Route path="/favloc" element={<Favloc locDataSet={LocData}/>} />
+            <Route path="/table" element={<Table locDataSet={locData}/>} />
+            <Route path="/map" element={<Map locDataSet={locData}/>} />
+            <Route path="/favloc" element={<Favloc locDataSet={locData}/>} />
             <Route path="/loadingpage" element={<LoadingPage />} />
             <Route
               path="/locationpage/:locationId"
-              element={<LocationPage locDataSet={LocData} username={ouName} />}
+              element={<LocationPage locDataSet={locData} username={ouName}/>}
             />
             <Route path="/crudevent/:chosen" element={<CRUDevent />} />
             <Route path="/crudevent1" element={<CRUDevent1 />} />
@@ -174,12 +156,12 @@ function App(props) {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/loadingpage" element={<LoadingPage />} />
-            <Route path="/table" element={<Table locDataSet={LocData}/>} />
-            <Route path="/map" element={<Map />} />
-            <Route path="/favloc" element={<Favloc locDataSet={LocData}/>} />
+            <Route path="/table" element={<Table locDataSet={locData}/>} />
+            <Route path="/map" element={<Map locDataSet={locData}/>} />
+            <Route path="/favloc" element={<Favloc locDataSet={locData}/>} />
             <Route
               path="/locationpage/:locationId"
-              element={<LocationPage locDataSet={LocData} username={ouName}/>}
+              element={<LocationPage locDataSet={LocData} />}
             />
             <Route path="*" element={<NoMatch />} />
           </Routes>
@@ -255,10 +237,16 @@ const Table = (props) => {
   );
 };
 
-const Map = () => {
+const Map = (props) => {
+  let cords = [];
+  for( let i = 0; i < props.locDataSet.length; i++ ){
+    cords.push({"lat": props.locDataSet[i].coordinates.lat,
+                "lng": props.locDataSet[i].coordinates.lng})
+  }
+  console.log(cords);
   return (
     <section className="justify-content-center" id="map">
-      <Maps mapWidth="800px" mapHeight="600px" coordinates={locData} />
+      <Maps mapWidth="800px" mapHeight="600px" coordinates={cords} />
     </section>
   );
 };
