@@ -169,9 +169,40 @@ db.once('open', function () {
 
   });
 
-  app.post('/create/1',(req,res))=>{
+  app.post('/create/1',(req,res)=>{
+  
+    Event.findOne({eventId:req.body['eventId']}).exec(function(err, e) {
+      
+      if (err || e!=null){ 
+      
+      res.status(400).set('Content-Type', 'text/plain').send('Event ID '+req.body['eventId']+' already exists.');
+      return;}
     Location.findOne({locationId:req.body['locationid']}).exec(function(err,loc){
+      if (err || loc==null) {
+        res.status(404).set('Content-Type', 'text/plain').send('Location with this ID '+req.body['locationid']+' is not found.');
+        return;
+      }
+      else {
+        let new_event = new Event({
+
+          eventId: req.body['eventId'], //still need to check if it is unique?
+            title: req.body['title'],
+            venue: loc._id,
+            date: req.body['date'],
+            description: req.body['description'],
+            presenter: req.body['presenter'],
+            price: req.body['price'],
+           
+        });
+         new_event.save(function (err){
+            if (err) {res.status(404).set('Content-Type', 'text/plain').send('Error: cannot save');return;}      
+       
+        
+            res.set('Content-Type', 'text/plain').status(201).send("Created!"); //send the user the address
+        });
   }
+})
+});});
 
   app.all('/*', (req, res) => {
     /*
