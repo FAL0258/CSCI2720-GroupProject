@@ -44,24 +44,40 @@ const locData = [
   { lat: 22.44152, lng: 114.02289 },
 ];
 
+let realLoc = [];
+
 function App (props) {
 
   /*
-  let ev = grabEv();
-  ev
-   .then(evD =>{
-    console.log(evD);
-    let loc = grabLoc();
-    loc
-     .then(locD =>{
-      console.log(locD);
-      let rLoc = evCount(evD, locD);
-      console.log(rLoc);
-      // User evD, rLoc as received data
-      
-     });
-   });
+
+  const [EvData, setEv] = useState();
+  const [LocData, setLoc] = useState();
+  const [end, setEnd] = useState();
+
+  if (end == undefined || end == null){
+    let ev = grabEv();
+    ev
+    .then(evD =>{
+      //console.log(evD);
+      let loc = grabLoc();
+      loc
+      .then(locD =>{
+        //console.log(locD);
+        let rLoc = evCount(evD, locD);
+        setLoc(rLoc);
+        setEv(evD);
+        setEnd(1); 
+      });
+    });
+  }
+  else{
+    // Start your code here
+
+  }
+
   */
+  
+   //console.log("Real", realLoc);
 
   //console.log(bb);
   //const [userData, setUser] = useState();
