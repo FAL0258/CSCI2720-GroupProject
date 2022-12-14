@@ -35,24 +35,25 @@ let data1 = [
   { loc: "Emperor Cinemas iSQUARE", num: "8" },
 ];
 
+const fillerNumber = 999;
 
 // Renders each row
 const TableRow = (props) => {
-  let i = props.i;
-  let url = "/locationpage/" + i;
+  let i = props.index;
+  let url = "/locationpage/" + props.locDataSet[i].locationId;
   return (
     <tr>
       <td>
-        <Link to={url}> {props.data.loc}</Link>
+        <Link to={url}> {props.locDataSet[i].name}</Link>
       </td>
 
-      <td>{props.data.num}</td>
+      <td>{fillerNumber}</td>
     </tr>
   );
 };
 
 // Main component
-const Tables = () => {
+const Tables = (props) => {
   /**
    * searchQuery is for string in search bar, re-renders when it updates (when typed into)
    * filtered is for the array that contains the location name and # of events
@@ -74,7 +75,7 @@ const Tables = () => {
 
   // Filtering function, if the searchQuery is a substring of the location name, then that location stays in the array, else it ges filtered out. Case-insensitive (because of .toLowerCase())
   const filterData = (data) => {
-    return data.loc.toLowerCase().includes(searchQuery.toLowerCase());
+    return data.name.toLowerCase().includes(searchQuery.toLowerCase());
   };
 
   /**
@@ -86,10 +87,10 @@ const Tables = () => {
 
     // If sort by name
     if (sortChoice === "name") {
-      if (item1.loc < item2.loc) {
+      if (item1.name < item2.name) {
         return -1;
       }
-      if (item1.loc > item2.loc) {
+      if (item1.name > item2.name) {
         return 1;
       }
       return 0;
@@ -124,11 +125,11 @@ const Tables = () => {
   useEffect(() => {
 
     // Filters out the information, stores it in a new array
-    let results = data1.filter(filterData);
-
+    let results = props.locDataSet.filter(filterData);
+    console.log(results);
     // Sort, depending on the selected radio option
     results.sort(sortByChoice);
-
+    console.log(results);
     // Update the filtered state to the array of finalized data
     setFiltered(results);
   }, [searchQuery, sortChoice]);
@@ -215,7 +216,7 @@ const Tables = () => {
           </thead>
           <tbody>
             {/** Render each row, using data from the filtered and/or sorted array */}
-            {filtered.map((data, index) => <TableRow key={index} data={data}/>)}
+            {filtered.map((data, index) => <TableRow key={index} index={index} locDataSet={filtered}/>)}
           </tbody>
         </table>
       </div>
