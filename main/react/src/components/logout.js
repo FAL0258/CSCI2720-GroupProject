@@ -15,7 +15,7 @@ const LogOut = (props) => {
     return(
         <div>
             <div id="topright">
-                <i>{props.name}</i>
+                <i>{props.name} </i>
                 <button type="button" id="idid" style={{backgroundColor: 'rosybrown', color:'white'}} className="btn" onClick={confirmLogOut}> logout</button>
             </div>
         </div>
