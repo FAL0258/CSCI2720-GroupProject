@@ -169,19 +169,19 @@ db.once('open', function () {
     let req_locationId= req.params['locId'];
     console.log(req_locationId);
     Location.findOne({locationId:req_locationId}).exec(function(err, loc) {
-      Comment.find({location:loc._id}).exec(function(err, comment) {
+      Comment.find({location:loc._id}).populate('author').exec(function(err, comment) {
         //console.log(comment);
         let list = "[\n";
         for (let i = 0; i < comment.length; i++) {
           let str =
             '{\n"name": ' +
-            comment.author.name +
+            comment[i].author.name +
             "," +
             '\n"content": "' +
-            comment.content +
+            comment[i].content +
             '",' +
             '\n"date": ' +
-            comment.date +
+            comment[i].date +
             "\n}";
           if (i < comment.length - 1) str += "\n,";
           list += str + "\n";
