@@ -283,7 +283,56 @@ app.post('/create/3',(req,res)=>{
 
    
   });
+  //Update Event
+  app.post('/update/1', (req, res)=>{
+      Location.findOne({locationId:req.body['locationId']}).exec(function(err, loc){
+          if (err || loc == null) 
+              res.status(404).set('Content-Type', 'text/plain').send('Location ID '+req.body['locationID'] +' does not exist.');
+          else Event.findOne({eventId:req.body['eventId']}).exec(function(err, e){
+              if(err || e == null)
+                  res.status(404).set('Content-Type', 'text/plain').send('Event ID '+req.body['eventId'] +' does not exist.');
+              else {
+                  e.title = req.body['title'];
+                  e.venue = loc._id;
+                  e.date = req.body['date'];
+                  e.description = req.body['description'];
+                  e.presenter = req.body['presenter'];
+                  e.price = req.body['price'];
+                  e.save();
+                  res.set('Content-Type', 'text/plain').send("Event Updated!");
+              }
+          })
+      })
+  });
 
+  //Update Location 
+  app.post('/update/2', (req,res)=>{
+    Location.findOne({locationId:req.body['locationId']}).exec(function(err,loc){
+      if(err || loc == null)
+        res.status(404).set('Content-Type', 'text/plain').send('Location ID '+ req.body['locationId'] +' does not exist.');
+      else{
+        loc.locationId = req.body['locationId'];
+        loc.name = req.body['name'];
+        loc.coordinates = {lat: req.body['latitude'],lng: req.body['longitude']};
+        loc.save();
+        res.set('Content-Type', 'text/plain').send("Location Updated!");
+      }
+    })
+  });
+
+  //Update User
+  app.post('/update/3', (req,res)=>{
+    User.findOne({userAc:req.body['userAc']}).exec(function(err,user){
+      if(err || user == null)
+        res.status(404).set('Content-Type', 'text/plain').send("Account does not exist.");
+        else{
+          //not sure what should be updatable
+          user.password = req.body['password'];
+          res.set('Content-Type', 'text/plain').send("User updated!");
+        }
+    })
+  });
+  
   app.post('/delete/1',(req,res)=>{  
     let req_eventId = req.body['eventId'];
     Event.findOne({eventId: req_eventId}).exec(function(err,e){

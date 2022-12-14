@@ -24,8 +24,6 @@ import * as grab from "./grab.js";
  *    backend has been set up
  */
 
-let realLoc = [];
-grab.grabLoc();
 
 // Renders each row
 const TableRow = (props) => {

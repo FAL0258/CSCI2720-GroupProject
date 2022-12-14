@@ -23,6 +23,7 @@ import "./style.css";
 import GLB from "./config.js";
 import {evCount, grabEv, grabLoc} from "./components/grab.js";
 
+
 let data1 = [
   { loc: "Tai Po Public Library", num: "4" },
   { loc: "Sha Tin Town Hall", num: "6" },
@@ -44,15 +45,28 @@ const locData = [
   { lat: 22.44152, lng: 114.02289 },
 ];
 
-let realLoc = [];
-
-function App (props) {
-
-  /*
-
+function App(props) {
   const [EvData, setEv] = useState();
   const [LocData, setLoc] = useState();
   const [end, setEnd] = useState();
+
+
+  // Handling session state
+  console.log(GLB.BACKEND_API);
+  const ckToken = window.sessionStorage.getItem("fakeCookie");
+  let oisAdmin = "false";
+  let ouName = "";
+  if (ckToken == null) {
+    //return (<LoginPage setToken={setToken} setUser={setUser}/>)
+    return <LoginPage />;
+  }
+  oisAdmin = window.sessionStorage.getItem("isAdmin");
+  ouName = window.sessionStorage.getItem("userName");
+
+  // Temp session
+  //let oisAdmin = 'true';
+  //let ouName = 'Admin';
+
 
   if (end == undefined || end == null){
     let ev = grabEv();
@@ -72,122 +86,106 @@ function App (props) {
   }
   else{
     // Start your code here
-
-  }
-
-  */
-  
-   //console.log("Real", realLoc);
-
-  //console.log(bb);
-  //const [userData, setUser] = useState();
-  //console.log(realDATA);
-  // Handling session state
-  console.log(GLB.BACKEND_API);
-  const ckToken = window.sessionStorage.getItem("fakeCookie");
-  let oisAdmin = "false";
-  let ouName = "";
-  if (ckToken == null) {
-    //return (<LoginPage setToken={setToken} setUser={setUser}/>)
-    return <LoginPage />;
-  }
-  oisAdmin = window.sessionStorage.getItem("isAdmin");
-  ouName = window.sessionStorage.getItem("userName");
-
-  // Temp session
-  //let oisAdmin = 'true';
-  //let ouName = 'Admin';
-
     // Admin page
-    if (oisAdmin == 'true'){
-      console.log(oisAdmin);
+    if (oisAdmin == "true") {
+      console.log("Admin: ", oisAdmin);
       return (
         <BrowserRouter>
-        <LogOut name={ouName}/>
-        <Title name={props.name} style={{color: "red"}} />
+          <LogOut name={ouName} />
+          <Title name={props.name} style={{ color: "red" }} />
           <div>
-            
-            <nav className="navbar navbar-expand-lg justify-content-center bg-light" >
-            <ul className="navbar-nav"> 
-            
-            <Link to="/"> <li className="nav-item text-dark">Home</li></Link>
-            <Link to="/table"> <li className="nav-item text-dark">Table</li></Link>
-            <Link to="/map"> <li className="nav-item text-dark">Map</li></Link>
-            <Link to="/favloc"> <li className="nav-item text-dark">Favorite Location</li></Link>
-            <Link to="/crudevent1"> <li className="nav-item text-dark">Admin Edit</li></Link>
-            
+            <nav className="navbar navbar-expand-lg justify-content-center bg-light">
+              <ul className="navbar-nav">
+                <Link to="/">
+                  {" "}
+                  <li className="nav-item text-dark">Home</li>
+                </Link>
+                <Link to="/table">
+                  {" "}
+                  <li className="nav-item text-dark">Table</li>
+                </Link>
+                <Link to="/map">
+                  {" "}
+                  <li className="nav-item text-dark">Map</li>
+                </Link>
+                <Link to="/favloc">
+                  {" "}
+                  <li className="nav-item text-dark">Favorite Location</li>
+                </Link>
+                <Link to="/crudevent1">
+                  {" "}
+                  <li className="nav-item text-dark">Admin Edit</li>
+                </Link>
               </ul>
             </nav>
           </div>
-
-          
-
+  
           <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/table" element={<Table />} />
-          <Route path="/map" element={<Map />} />
-          <Route path="/favloc" element={<Favloc />} />
-          <Route path="/loadingpage" element={<LoadingPage />} />
-          <Route
-            path="/locationpage/:locationId"
-            element={<LocationPage username={ouName}/>}
-          />
-          <Route path="/crudevent/:chosen" element={<CRUDevent />} />
-          <Route path="/crudevent1" element={<CRUDevent1 />} />
-          <Route path="/create/:chosen" element={<Create />} />
-          <Route path="/read/:chosen" element={<Read />} />
-          <Route path="/update/:chosen" element={<Update />} />
-          <Route path="/delete/:chosen" element={<Delete />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/table" element={<Table locDataSet={LocData}/>} />
+            <Route path="/map" element={<Map />} />
+            <Route path="/favloc" element={<Favloc locDataSet={LocData}/>} />
+            <Route path="/loadingpage" element={<LoadingPage />} />
+            <Route
+              path="/locationpage/:locationId"
+              element={<LocationPage locDataSet={LocData} />}
+            />
+            <Route path="/crudevent/:chosen" element={<CRUDevent />} />
+            <Route path="/crudevent1" element={<CRUDevent1 />} />
+            <Route path="/create/:chosen" element={<Create />} />
+            <Route path="/read/:chosen" element={<Read />} />
+            <Route path="/update/:chosen" element={<Update />} />
+            <Route path="/delete/:chosen" element={<Delete />} />
             <Route path="*" element={<NoMatch />} />
           </Routes>
         </BrowserRouter>
       );
     }
     // Normal User page
-    else{
-      console.log(oisAdmin);
+    else {
+      console.log("Admin: ", oisAdmin);
       return (
         <BrowserRouter>
-        <LogOut name={ouName}/>
-        <Title name={props.name} style={{color: "red"}} />
+          <LogOut name={ouName} />
+          <Title name={props.name} style={{ color: "red" }} />
           <div>
-            
-            <nav className="navbar navbar-expand-lg justify-content-center bg-light" >
-            <ul className="navbar-nav">
-              <Link to="/">
-                {" "}
-                <li className="nav-item text-dark">Home</li>
-              </Link>
-              <Link to="/table">
-                {" "}
-                <li className="nav-item text-dark">Table</li>
-              </Link>
-              <Link to="/map">
-                {" "}
-                <li className="nav-item text-dark">Map</li>
-              </Link>
-              <Link to="/favloc">
-                {" "}
-                <li className="nav-item text-dark">Favorite Location</li>
-              </Link>
-            </ul>
-          </nav>
-        </div>
-
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/loadingpage" element={<LoadingPage />} />
-          <Route path="/table" element={<Table />} />
-          <Route path="/map" element={<Map />} />
-          <Route path="/favloc" element={<Favloc />} />
-          <Route
-            path="/locationpage/:locationId"
-            element={<LocationPage />}
-          />
-          <Route path="*" element={<NoMatch />} />
-        </Routes>
-      </BrowserRouter>
-    );
+            <nav className="navbar navbar-expand-lg justify-content-center bg-light">
+              <ul className="navbar-nav">
+                <Link to="/">
+                  {" "}
+                  <li className="nav-item text-dark">Home</li>
+                </Link>
+                <Link to="/table">
+                  {" "}
+                  <li className="nav-item text-dark">Table</li>
+                </Link>
+                <Link to="/map">
+                  {" "}
+                  <li className="nav-item text-dark">Map</li>
+                </Link>
+                <Link to="/favloc">
+                  {" "}
+                  <li className="nav-item text-dark">Favorite Location</li>
+                </Link>
+              </ul>
+            </nav>
+          </div>
+  
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/loadingpage" element={<LoadingPage />} />
+            <Route path="/table" element={<Table locDataSet={LocData}/>} />
+            <Route path="/map" element={<Map />} />
+            <Route path="/favloc" element={<Favloc locDataSet={LocData}/>} />
+            <Route
+              path="/locationpage/:locationId"
+              element={<LocationPage locDataSet={LocData} />}
+            />
+            <Route path="*" element={<NoMatch />} />
+          </Routes>
+        </BrowserRouter>
+      );
+    }
   }
 }
 
@@ -241,7 +239,7 @@ const Home = () => {
   );
 };
 
-const Table = () => {
+const Table = (props) => {
   return (
     <section>
       <div className="container">
@@ -250,7 +248,7 @@ const Table = () => {
             <b>Table</b> <i className="bi bi-table"></i>
           </h2>
 
-          <Tables />
+          <Tables locDataSet={props.locDataSet} />
         </div>
       </div>
     </section>
@@ -265,7 +263,7 @@ const Map = () => {
   );
 };
 
-const Favloc = () => {
+const Favloc = (props) => {
   return (
     <div className="container">
       <div className="row">
@@ -273,7 +271,7 @@ const Favloc = () => {
           <b>Your Favorite Location</b>
           <i className="bi bi-balloon-heart-fill"></i>
         </h2>
-        <Tables />
+        <Tables locDataSet={props.locDataSet} />
       </div>
     </div>
   );
