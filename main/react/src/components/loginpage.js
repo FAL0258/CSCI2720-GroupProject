@@ -28,6 +28,7 @@ const LoginPage = () => {
             window.sessionStorage.setItem("fakeCookie", crypto.SHA256(identity.uName).toString());
             window.sessionStorage.setItem("userName", identity.uName);
             window.sessionStorage.setItem("isAdmin", identity.isAdmin);
+            window.sessionStorage.setItem("userAc", identity.uAc);
             window.location.replace("/");
         }
         else{

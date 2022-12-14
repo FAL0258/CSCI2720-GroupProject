@@ -86,7 +86,7 @@ db.once('open', function () {
     console.log(res.body);
     console.log(validated);
     if (validated){
-      let output = {uName: result.name, isAdmin: result.isAdmin, ok: 1};
+      let output = {uName: result.name, isAdmin: result.isAdmin, uAc: result.userAc, ok: 1};
       res.send(JSON.stringify(output));
     }
     else{
@@ -177,15 +177,33 @@ db.once('open', function () {
     })});
 
   app.put('/getCm/:locId', (req, res) => {
-    let loc_locId= req.params['locId'];
-    Location.findOne({locId:loc_locId}).exec(function(err, loc) {
-      Comment.find({venue:loc._id}).exec(function(err, comment) {
-        console.log(comment);
-        res.send(comment);
-    });
+
+    console.log(req.body['author']);
+    console.log(req.body['content']);
+    let req_author =req.body['author']; //this is the username
+    let req_location =req.body['location']; //this is the location id
+    let req_content=req.body['content']; //this is the comment content
+    
+    User.findOne({userAc:req_author}).exec(function(err, user) { 
+      Location.findOne({locationId:req_location}).exec(function(err,loc){
+          let new_comment = new Comment({
+            commentId:1,
+            location: loc._id,
+            author: user._id,
+            content: req_content
+          })
+
+          new_comment.save(function(err){
+            if (err) {res.status(404).set('Content-Type', 'text/plain').send('Error: cannot save');return;}      
+            res.set('Content-Type', 'text/plain').status(201).send("Comment Saved!");
+          })
+      });
+
+    });    
+});
    
 
-    })});
+    
 
   app.post('/create/1',(req,res)=>{
   

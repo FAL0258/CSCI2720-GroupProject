@@ -1,13 +1,11 @@
 import React from 'react';
 
 const Comment = (props) => {
+    console.log(props.username);
+    let username1=props.username;
     function savefile(){ //save the comment, and send to the server
         let url="http://localhost:4000/getCm/"+props.locId;
-        let obj;
-        obj.author=props.username;
-        obj.location=props.locId;
-        obj.content=document.querySelector("#new-comment").value;
-        obj.date= Date.now;
+        let obj={ author: username1, location: props.locId, content: document.querySelector("#new-comment").value, date: Date.now};
         fetch(url,{
             method:"PUT",
             headers:{
@@ -46,7 +44,7 @@ const Comment = (props) => {
                             <label htmlFor="new-comment" className="form-label">Comment</label>
                             <textarea className="form-control" id="new-comment" rows="3" required></textarea>
                         </div>
-                    <button type="button" className="btn" style={{backgroundColor: 'rosybrown', color:'white'}} onCLick={savefile}>Add comment</button>
+                    <button type="button" className="btn" style={{backgroundColor: 'rosybrown', color:'white'}} onClick={savefile}>Add comment</button>
                  
                     </form>
                 </section>

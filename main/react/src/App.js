@@ -24,20 +24,6 @@ import GLB from "./config.js";
 import {evCount, grabEv, grabLoc} from "./components/grab.js";
 
 
-let data1 = [
-  { loc: "Tai Po Public Library", num: "4" },
-  { loc: "Sha Tin Town Hall", num: "6" },
-  { loc: "Fa Yuen Street Public Library", num: "9" },
-  { loc: "Fanling Public Library", num: "5" },
-  { loc: "Lek Yuen Public Library", num: "10" },
-  { loc: "Lung Hing Public Library", num: "7" },
-  { loc: "Ngau Chi Wan Public Library", num: "8" },
-  { loc: "Hong Kong Film Archive", num: "3" },
-  { loc: "North Lamma Public Library", num: "4" },
-  { loc: "Emperor Cinemas iSQUARE", num: "8" },
-];
-
-
 function App(props) {
   const [evData, setEv] = useState();
   const [locData, setLoc] = useState();
@@ -49,12 +35,15 @@ function App(props) {
   const ckToken = window.sessionStorage.getItem("fakeCookie");
   let oisAdmin = "false";
   let ouName = "";
+  let ouAc = "";
   if (ckToken == null) {
     //return (<LoginPage setToken={setToken} setUser={setUser}/>)
     return <LoginPage />;
   }
   oisAdmin = window.sessionStorage.getItem("isAdmin");
   ouName = window.sessionStorage.getItem("userName");
+  ouAc = window.sessionStorage.getItem("userAc");
+
 
   // Temp session
   //let oisAdmin = 'true';
@@ -121,7 +110,7 @@ function App(props) {
             <Route path="/loadingpage" element={<LoadingPage />} />
             <Route
               path="/locationpage/:locationId"
-              element={<LocationPage locDataSet={locData} />}
+              element={<LocationPage locDataSet={locData} username={ouName}/>}
             />
             <Route path="/crudevent/:chosen" element={<CRUDevent />} />
             <Route path="/crudevent1" element={<CRUDevent1 />} />
@@ -172,7 +161,7 @@ function App(props) {
             <Route path="/favloc" element={<Favloc locDataSet={locData}/>} />
             <Route
               path="/locationpage/:locationId"
-              element={<LocationPage locDataSet={locData} />}
+              element={<LocationPage locDataSet={LocData} />}
             />
             <Route path="*" element={<NoMatch />} />
           </Routes>
