@@ -94,7 +94,7 @@ const LocationPage = (props) => {
             >
               Comment
             </h2>
-            <Comment />
+            <Comment locId={locationId} />
           </section>
         </div>
       </div>
