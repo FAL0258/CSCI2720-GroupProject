@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Comment = () => {
+const Comment = (props) => {
     return(
         <div className="container">
             <div className="row">
@@ -13,6 +13,7 @@ const Comment = () => {
                             <textarea className="form-control" id="new-comment" rows="3" required></textarea>
                         </div>
                     <button type="button" className="btn" style={{backgroundColor: 'rosybrown', color:'white'}}>Add comment</button>
+                      <h1>Location ID: {props.locId}</h1> 
                     </form>
                 </section>
             </div>
