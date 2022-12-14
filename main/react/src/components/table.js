@@ -126,10 +126,10 @@ const Tables = (props) => {
 
     // Filters out the information, stores it in a new array
     let results = props.locDataSet.filter(filterData);
-    console.log(results);
+
     // Sort, depending on the selected radio option
     results.sort(sortByChoice);
-    console.log(results);
+    
     // Update the filtered state to the array of finalized data
     setFiltered(results);
   }, [searchQuery, sortChoice]);
