@@ -28,6 +28,7 @@ const LocationPage = (props) => {
   let eventId =props.evDataSet[0].eventId; 
   
   if (isFav == null || isFav == undefined){
+    setisFav("bi-heart");
     for(let i=0; i<props.favDataSet.length; i++) {
       setisFav("bi-heart");
       if(props.favDataSet[i].locationId == locationId){
