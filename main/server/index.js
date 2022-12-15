@@ -304,38 +304,62 @@ app.post('/create/3',(req,res)=>{
     else {
       new_userId = user.userId + 1;                            //new userID equals to the maximum userId plus 1
     }
-  });
-  User.findOne({userAc:req.body['userAc']}).exec(function(err, user) {
+    User.findOne({userAc:req.body['userAc']}).exec(function(err, user) {
 
-    if (err || user!=null){ //make sure userAc is unique
-
-      res.status(400).set('Content-Type', 'text/plain').send('Account Name '+req.body['userAc']+' already exists.');
-      return;}
-    
-    let new_user = new User({
-
-        userId: new_userId,
-        userAc: req.body['userAc'], 
-        password: req.body['password'],
-        name: req.body['userName'],
-        isAdmin: false //user is not admin
+      if (err || user!=null){ //make sure userAc is unique
+  
+        res.status(400).set('Content-Type', 'text/plain').send('Account Name '+req.body['userAc']+' already exists.');
+        return;}
       
-      });
-       new_user.save(function (err){
+      let new_user = new User({
+  
+          userId: new_userId,
+          userAc: req.body['userAc'], 
+          password: req.body['password'],
+          name: req.body['userName'],
+          isAdmin: false //user is not admin
         
-          if (err) {res.status(404).set('Content-Type', 'text/plain').send('Error: cannot save');return;}      
-      
-          res.set('Content-Type', 'text/plain').status(201).send("User Created!"); //send the user the address
+        });
+         new_user.save(function (err){
+          
+            if (err) {res.status(404).set('Content-Type', 'text/plain').send('Error: cannot save');return;}      
+        
+            res.set('Content-Type', 'text/plain').status(201).send("User Created!"); //send the user the address
+        });
       });
-    });
+  });
 
    
+  });
+    //READ Event
+  app.get('/read/1/:eventId', (req,res) =>{
+    Event.findOne({eventId:req.params['eventId']}).exec(function(err,event){
+      if(err || event == null || event == undefined)
+        res.status(404).set('Content-Type', 'text/plain').send("Event ID " + req.params['EventId'] +" not found!");
+      else res.set('Content-Type', 'text/plain').send(event);
+    })
+  });
+  //READ Location
+  app.get('/read/2/:locationId', (req,res)=>{
+    Location.findOne({locationId:req.params['locationId']}).exec(function(err,loc){
+      if(err || loc == null || loc == undefined)
+        res.status(404).set('Content-Type', 'text/plain').send("Location ID " + req.params['locationId'] + " not found!");
+      else res.set('Content-Type', 'text/plain').send(loc);
+    })
+  });
+  //READ User
+  app.get('/read/3/:userAc', (req,res)=>{
+    User.findOne({userAc:req.params['userAc']}).exec(function(err,user){
+      if(err||user==null||user==undefined)
+        res.status(404).set('Content-Type', 'text/plain').send("User not found!");
+      else res.set('Content-Type', 'text-plain').send(user);
+    })
   });
   //Update Event
   app.post('/update/1', (req, res)=>{
       Location.findOne({locationId:req.body['locationId']}).exec(function(err, loc){
           if (err || loc == null) 
-              res.status(404).set('Content-Type', 'text/plain').send('Location ID '+req.body['locationID'] +' does not exist.');
+              res.status(404).set('Content-Type', 'text/plain').send('Location ID '+req.body['locationId'] +' does not exist.');
           else Event.findOne({eventId:req.body['eventId']}).exec(function(err, e){
               if(err || e == null)
                   res.status(404).set('Content-Type', 'text/plain').send('Event ID '+req.body['eventId'] +' does not exist.');
@@ -370,11 +394,11 @@ app.post('/create/3',(req,res)=>{
 
   //Update User
   app.post('/update/3', (req,res)=>{
-    User.findOne({userAc:req.body['userAc']}).exec(function(err,user){
+    User.findOne({userAc:req.body['userId']}).exec(function(err,user){
       if(err || user == null)
-        res.status(404).set('Content-Type', 'text/plain').send("Account does not exist.");
+        res.status(404).set('Content-Type', 'text/plain').send("User ID " + req.body['userId'] + " does not exist.");
         else{
-          //not sure what should be updatable
+          user.userAc = req.body['userAc'];
           user.password = req.body['password'];
           res.set('Content-Type', 'text/plain').send("User updated!");
         }
