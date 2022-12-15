@@ -47,7 +47,7 @@ const LoginPage = () => {
                     <input type="text" id="uid" name="uId" className="form-control" style={{width:50+"%", margin:'auto'}} placeholder="Username" required autoFocus/>
 
                     <label htmlFor="upw" className="d-none">Upw</label>
-                    <input type="text" id="upw" name="uPw" className="form-control" style={{width:50+"%", margin:'auto'}}  placeholder="Password" required/>
+                    <input type="password" id="upw" name="uPw" className="form-control" style={{width:50+"%", margin:'auto'}}  placeholder="Password" required/>
                     <br/>
                     <button className="btn btn-lg btn-block" style={{backgroundColor: 'rosybrown', color:'white'}} type="button" onClick={(e) => getLoginRes(e, document.getElementById('uid').value, document.getElementById('upw').value)}>
                     Login

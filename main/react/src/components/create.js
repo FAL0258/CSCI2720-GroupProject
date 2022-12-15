@@ -186,7 +186,7 @@ if( chosen==2){
 <br/>
 
 <label htmlFor="password" className="d-none">Password</label>
-<input type="text" className="form-control" style={{width:50+"%", margin:'auto'}} placeholder="Password" id="password" name="password"/>
+<input type="password" className="form-control" style={{width:50+"%", margin:'auto'}} placeholder="Password" id="password" name="password"/>
 <br/>
 
 <button className="btn btn-lg btn-block" style={{width:50+"%", margin:'auto', backgroundColor: 'rosybrown', color:'white'}} type="button" onClick={e => createUser(
