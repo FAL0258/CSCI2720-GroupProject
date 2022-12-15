@@ -310,9 +310,10 @@ app.post('/create/3',(req,res)=>{
   
           userId: new_userId,
           userAc: req.body['userAc'], 
-          password: req.body['password'],
+          password: Bcrypt.hashSync(req.body['password']),
           name: req.body['userName'],
-          isAdmin: false //user is not admin
+          isAdmin: false, //user is not admin
+          favorites: [""]
         
         });
          new_user.save(function (err){
