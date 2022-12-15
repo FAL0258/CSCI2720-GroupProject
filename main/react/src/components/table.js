@@ -116,7 +116,7 @@ const Tables = (props) => {
 
     // Sort, depending on the selected radio option
     results.sort(sortByChoice);
-    
+
     // Update the filtered state to the array of finalized data
     setFiltered(results);
   }, [searchQuery, sortChoice]);
@@ -172,7 +172,7 @@ const Tables = (props) => {
             onChange={handleSort}
           />
           <label className="form-check-label" htmlFor="numberSort">
-           Ascending Number
+            Ascending Number
           </label>
         </div>
         <div className="form-check form-check-inline">
@@ -203,7 +203,7 @@ const Tables = (props) => {
           </thead>
           <tbody>
             {/** Render each row, using data from the filtered and/or sorted array */}
-            {filtered.map((data, index) => <TableRow key={index} index={index} locDataSet={filtered}/>)}
+            {filtered.map((data, index) => <TableRow key={index} index={index} locDataSet={filtered} />)}
           </tbody>
         </table>
       </div>

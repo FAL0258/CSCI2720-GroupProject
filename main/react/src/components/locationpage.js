@@ -2,7 +2,7 @@
  * refs: https://stackoverflow.com/questions/12462318/find-a-value-in-an-array-of-objects-in-javascript
  */
 
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import Maps from "./map.js";
 import Comment from "./comment.js";
@@ -10,7 +10,7 @@ import EventButton from "./eventbutton.js";
 import GLB from "../config.js"
 import * as grab from "./grab.js";
 
-const locData = [ 
+const locData = [
   { lat: 22.39181, lng: 113.976771 },
   { lat: 22.35665, lng: 114.12623 }
 ];
@@ -19,56 +19,56 @@ const fillerNumber = 999;
 
 const LocationPage = (props) => {
   const [isFav, setisFav] = useState(null);
-  let ouAc=props.userAc;
-  let ouName=props.username;
-  console.log(props);
+  let ouAc = props.userAc;
+  let ouName = props.username;
+  // console.log(props);
   let { locationId } = useParams();
-  console.log(locationId);
-  let locId=locationId; 
-  let eventId =props.evDataSet[0].eventId; 
-  
-  if (isFav == null || isFav == undefined){
+  // console.log(locationId);
+  let locId = locationId;
+  let eventId = props.evDataSet[0].eventId;
+
+  if (isFav == null || isFav == undefined) {
     setisFav("bi-heart");
-    for(let i=0; i<props.favDataSet.length; i++) {
+    for (let i = 0; i < props.favDataSet.length; i++) {
       setisFav("bi-heart");
-      if(props.favDataSet[i].locationId == locationId){
+      if (props.favDataSet[i].locationId == locationId) {
         setisFav("bi-heart-fill");
         break;
       }
     }
   }
 
-  
+
   const fillheart = () => {
     let special = document.querySelector("#nonfill");
     //let url="http://localhost:4000/addFav/"+locId;
-      let url=GLB.BACKEND_API + "/addFav/" +locId;
-      let obj={ userAc: ouAc, locationId: locId};
-        fetch(url,{
-            method:"PUT",
-            headers:{
-                "Content-type":  'application/x-www-form-urlencoded; charset=utf-8'
-            },
-            body:new URLSearchParams(obj)
-           })
-           .then (res=>{
-            if(res.ok){
-              console.log("PUT ok");
-              props.setEnd(null);
-            }
-            else console.log("PUT NO")
-            return res;
-           })
-           .catch(error=>console.log(error))
+    let url = GLB.BACKEND_API + "/addFav/" + locId;
+    let obj = { userAc: ouAc, locationId: locId };
+    fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-type": 'application/x-www-form-urlencoded; charset=utf-8'
+      },
+      body: new URLSearchParams(obj)
+    })
+      .then(res => {
+        if (res.ok) {
+          console.log("PUT ok");
+          props.setEnd(null);
+        }
+        else console.log("PUT NO")
+        return res;
+      })
+      .catch(error => console.log(error))
     if (special.classList.contains("bi-heart")) { //if it is not filled yet, which means the heart should be filled when onClick; Added to fav
       special.classList.remove("bi-heart");
       special.classList.add("bi-heart-fill");
 
-      
+
     } else {
       special.classList.remove("bi-heart-fill"); //heart is not filled, delete favloc
       special.classList.add("bi-heart");
-      
+
     }
   };
 
@@ -88,41 +88,41 @@ const LocationPage = (props) => {
     }
   }
 
-  const [passEventButton, setEventButton] = useState([]); 
-  const [eventName, setEventName] = useState([]); 
-  const [noBtn, setnoBtn] = useState();
+  const [passEventId, setPassEventId] = useState([]);
+  const [passEventName, setPassEventName] = useState([]);
+  const [triggerButton, setTriggerButton] = useState();
 
   const eventButton = () => {
-    let url= GLB.BACKEND_API + "/read/5/" + locId;
+    let url = GLB.BACKEND_API + "/read/5/" + locId;
 
     fetch(url)
-    .then(response => response.json())
-    .then(json => {
-      let str="";
-      let eventButtonArray=[];
-      let eventNameArray=[];
-      for (let i=0;i<json.length;i++){
-        eventButtonArray.push(json[i].eventId);
-        eventNameArray.push(json[i].title);
-        // str+=<Event evId={eventId} evDataSet={props.evDataSet} setEnd={props.setEnd}/> 
-        // str+='<button onClick={showEventDetail}>' +  json[i].title + '</button><br>';
-      }
-      console.log(json);
-      
-      setEventButton(eventButtonArray);
-      setEventName(eventNameArray);
-      console.log(eventName);
-      
-      // document.querySelector("#eventlist").innerHTML=str;
-    })
-    .catch(err => console.log(err));
+      .then(response => response.json())
+      .then(json => {
+        let str = "";
+        let eventButtonArray = [];
+        let eventNameArray = [];
+        for (let i = 0; i < json.length; i++) {
+          eventButtonArray.push(json[i].eventId);
+          eventNameArray.push(json[i].title);
+          // str+=<Event evId={eventId} evDataSet={props.evDataSet} setEnd={props.setEnd}/> 
+          // str+='<button onClick={showEventDetail}>' +  json[i].title + '</button><br>';
+        }
+        // console.log(json);
+
+        setPassEventId(eventButtonArray);
+        setPassEventName(eventNameArray);
+        // console.log(passEventName);
+
+        // document.querySelector("#eventlist").innerHTML=str;
+      })
+      .catch(err => console.log(err));
     console.log("Done");
   }
-  if (noBtn == null){
+  if (triggerButton == null) {
     eventButton();
-    setnoBtn(1);
+    setTriggerButton(1);
   }
-  console.log(passEventButton);
+  // console.log(passEventId);
   return (
     <>
       <div className="container">
@@ -148,7 +148,7 @@ const LocationPage = (props) => {
             <p>Location: {props.locDataSet[index].name}</p>
             <p>Number of Events: {props.locDataSet[index].evCount}</p>
             <div id="eventlist"> </div>
-            {passEventButton.map((xeventId,i) => ( <EventButton evId={xeventId} evName={eventName[i]} evDataSet={props.evDataSet} setEnd={props.setEnd}/> ))} 
+            {passEventId.map((xeventId, i) => (<EventButton evId={xeventId} evName={passEventName[i]} evDataSet={props.evDataSet} setEnd={props.setEnd} />))}
             <button
               type="button"
               className="btn btn-outline-danger"
@@ -174,7 +174,7 @@ const LocationPage = (props) => {
             >
               Comment
             </h2>
-            <Comment locId={locationId} userAc={ouAc} username={ouName} setEnd={props.setEnd}/>
+            <Comment locId={locationId} userAc={ouAc} username={ouName} setEnd={props.setEnd} />
             <div id="showevent"> </div>
             {/* <Event evId={eventId} evDataSet={props.evDataSet} setEnd={props.setEnd}/> */}
           </section>

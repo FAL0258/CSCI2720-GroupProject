@@ -2,20 +2,17 @@ import React, { useState, useEffect } from 'react';
 import GLB from "../config.js";
 
 const EventButton = (props) => {
-    console.log(props.evName);
-    console.log(props.evId);
+    // console.log(props.evName);
+    // console.log(props.evId);
 
-    const [temp, setEventButton] = useState([]);
     const [trigger, setTrigger] = useState(0);
 
     const eventButton = () => {
         // Want to see event
         if (trigger == 0) {
-            let tempCon = [];
-            tempCon.push(props.evId);
-            setEventButton(tempCon);
-            console.log(temp);
-            console.log(props.evName);
+            let eventIdArray = [];
+            eventIdArray.push(props.evId);
+            // console.log(props.evName);
 
             let index = 0;
             for (let i = 0; i < props.evDataSet.length; i++) {
@@ -35,10 +32,10 @@ const EventButton = (props) => {
                 console.log(error);
             }
             document.querySelector("#rightTitle").innerText = "Event Detail";
-            document.querySelector("#commentArea").style.display = "none";    
+            document.querySelector("#commentArea").style.display = "none";
 
             setTrigger(1);
-        }else{
+        } else {
             // Want to see comment
             setTrigger(0);
             document.querySelector("#rightTitle").innerText = "Comment";
@@ -50,7 +47,6 @@ const EventButton = (props) => {
     return (
         <>
             <button type="button" onClick={eventButton}>{props.evName}</button><br></br>
-            {/* {temp.map((xeventId) => ( <Event evId={xeventId} evDataSet={props.evDataSet} setEnd={props.setEnd}/> ))} */}
         </>
     );
 }

@@ -14,7 +14,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 const Maps = (props) => {
   let zoom;
   if (props.zoom === undefined) {
-    zoom = 11; 
+    zoom = 11;
   } else {
     zoom = props.zoom;
   }
@@ -39,7 +39,7 @@ const Maps = (props) => {
     // Text in popup will be link to corresponding /locationpage/:locID, index needs to be changed to locationID once backend is connected
     const locationId = props.locationIds[index].locationId;
     const url = "/locationpage/" + locationId;
-    return(
+    return (
       <Marker key={locationId} position={coordinate}>
         <Popup>
           <Link to={url}>View details</Link>
@@ -55,7 +55,7 @@ const Maps = (props) => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       {/** Create marker for each location */}
-      {props.coordinates.map((coordinate, index) => addMarker(coordinate,index))}
+      {props.coordinates.map((coordinate, index) => addMarker(coordinate, index))}
     </MapContainer>
   );
 }

@@ -1,10 +1,10 @@
-#topright{
-   position: absolute;
-   right: 1%;
-   top: 1%;
-   
+#topright {
+    position: absolute;
+    right: 1%;
+    top: 1%;
+
 }
 
-#idid:hover{
+#idid:hover {
     font-weight: bold;
 }

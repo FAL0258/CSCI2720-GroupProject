@@ -32,7 +32,7 @@ db.once('open', function () {
     userId: { type: Number, required: true, unique: true },
     userAc: { type: String, required: true, unique: true },
     name: { type: String, required: true },
-    password: { type: String, required: true},
+    password: { type: String, required: true },
     isAdmin: { type: Boolean, required: true },
     favourites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Location' }]
   });
@@ -63,7 +63,7 @@ db.once('open', function () {
     name: { type: String, required: true },
     coordinates: {
       lat: { type: Number, required: true },
-      lng: { type: Number, required: true}
+      lng: { type: Number, required: true }
     }
   });
   const Location = mongoose.model('Location', LocationSchema);
@@ -79,18 +79,18 @@ db.once('open', function () {
     //let enc = Bcrypt.hashSync(upw);
     //ac&pw: admin admin, user1 user1
     let validated = false;
-    const result = await User.findOne({ userAc: uid});
-    if (result !== null){
+    const result = await User.findOne({ userAc: uid });
+    if (result !== null) {
       validated = Bcrypt.compareSync(upw, result.password);
     }
     console.log(res.body);
     console.log(validated);
-    if (validated){
-      let output = {uName: result.name, isAdmin: result.isAdmin, uAc: result.userAc, ok: 1};
+    if (validated) {
+      let output = { uName: result.name, isAdmin: result.isAdmin, uAc: result.userAc, ok: 1 };
       res.send(JSON.stringify(output));
     }
-    else{
-      res.send(JSON.stringify({ok: 0}));
+    else {
+      res.send(JSON.stringify({ ok: 0 }));
     }
   });
 
@@ -99,13 +99,13 @@ db.once('open', function () {
     fetch(XML, {
       method: 'GET',
       headers: {
-      'Content-Type': 'text/xml',
-      'User-Agent': '*'
+        'Content-Type': 'text/xml',
+        'User-Agent': '*'
       },
     })
-      .then(response => {return response.text();})
+      .then(response => { return response.text(); })
       .then(async (xml) => {
-        let jsonOutput = XMLconvert.xml2json(xml, {compact: true, spaces: 4});
+        let jsonOutput = XMLconvert.xml2json(xml, { compact: true, spaces: 4 });
         let better = jsonOutput;
         jsonOutput = JSON.parse(jsonOutput);
         let jEvent = jsonOutput.events.event;
@@ -113,23 +113,23 @@ db.once('open', function () {
         //console.log(jEvent[1].titlee._cdata);
 
         // create every events in database
-        for( let i = 0; i < totalC; i++ ){
-          const query = await Location.findOne({locationId: jEvent[i].venueid._cdata});
-          const query2 = await Event.findOne({eventId: jEvent[i]._attributes.id});
+        for (let i = 0; i < totalC; i++) {
+          const query = await Location.findOne({ locationId: jEvent[i].venueid._cdata });
+          const query2 = await Event.findOne({ eventId: jEvent[i]._attributes.id });
           // Create the event if not exist
-          if (query != null && query2 == null){
+          if (query != null && query2 == null) {
             // Find the event count in one location
-            const query3 = await Event.find({venue: query._id});
+            const query3 = await Event.find({ venue: query._id });
             // Prevent making too many records, limited to maximum 7 events per location
-            if(query3.length < 7){
+            if (query3.length < 7) {
               // Prevent free event from being created with null value
               let tempPrice = jEvent[i].pricee._cdata;
-              if (tempPrice == null || tempPrice == undefined){
+              if (tempPrice == null || tempPrice == undefined) {
                 tempPrice = "Free";
               }
               // Prevent empty description
               let tempDes = jEvent[i].desce._cdata;
-              if (tempDes == null || tempDes == undefined){
+              if (tempDes == null || tempDes == undefined) {
                 tempDes = "";
               }
               Event.create({
@@ -167,31 +167,31 @@ db.once('open', function () {
 
   app.all('/grabFav/:userAc', (req, res) => {
     console.log(req.params['userAc']);
-    User.findOne({userAc: req.params['userAc']})
-    .populate("favourites")
-    .exec( (err, datas) => {
-      //console.log(datas);
-      //console.log(datas.favourites.length);
-      let str = [];
-      for(let i = 0; i < datas.favourites.length; i++){
-        let key = datas.favourites[i].locationId;
-        let obj = {};
-        obj[key] = datas.favourites[i].name;
-        obj["locationId"] = datas.favourites[i].locationId;
-        obj["name"] = datas.favourites[i].name;
-        obj["_id"] = datas.favourites[i]._id;
-        //console.log(obj);
-        str.push(obj);
-      }
-      res.send(str);
-    });
+    User.findOne({ userAc: req.params['userAc'] })
+      .populate("favourites")
+      .exec((err, datas) => {
+        //console.log(datas);
+        //console.log(datas.favourites.length);
+        let str = [];
+        for (let i = 0; i < datas.favourites.length; i++) {
+          let key = datas.favourites[i].locationId;
+          let obj = {};
+          obj[key] = datas.favourites[i].name;
+          obj["locationId"] = datas.favourites[i].locationId;
+          obj["name"] = datas.favourites[i].name;
+          obj["_id"] = datas.favourites[i]._id;
+          //console.log(obj);
+          str.push(obj);
+        }
+        res.send(str);
+      });
   });
 
   app.get('/getCm/:locId', (req, res) => { //load comment
-    let req_locationId= req.params['locId'];
+    let req_locationId = req.params['locId'];
     console.log(req_locationId);
-    Location.findOne({locationId:req_locationId}).exec(function(err, loc) {
-      Comment.find({location:loc._id}).populate('author').exec(function(err, comment) {
+    Location.findOne({ locationId: req_locationId }).exec(function (err, loc) {
+      Comment.find({ location: loc._id }).populate('author').exec(function (err, comment) {
         //console.log(comment);
         let list = "[\n";
         for (let i = 0; i < comment.length; i++) {
@@ -211,256 +211,261 @@ db.once('open', function () {
         list += "]";
         res.send(list);
         //res.send(comment);
-    });
-   
+      });
 
-    })});
+
+    })
+  });
 
   app.put('/getCm/:locId', (req, res) => { //save comment
 
-    let req_author =req.body['author']; //this is the username
-    let req_location =req.body['location']; //this is the location id
-    let req_content=req.body['content']; //this is the comment content
-    
+    let req_author = req.body['author']; //this is the username
+    let req_location = req.body['location']; //this is the location id
+    let req_content = req.body['content']; //this is the comment content
+
     let new_commentId;
-        Comment.findOne().sort('-commentId').exec(function(err, cm) { //find the maximum commentId
-          if (err) { res.status(404).set('Content-Type', 'text/plain').send("Error"); return;}
-          else if (cm == null){ //there is no user currently
-              new_commentId = 1; //first commentId is 1
-          } 
-          else {
-            new_commentId = cm.commentId + 1;                            //new userID equals to the maximum commentId plus 1
-          }
-          User.findOne({userAc:req_author}).exec(function(err, user) { 
-            Location.findOne({locationId:req_location}).exec(function(err,loc){
-                Comment.create({
-                  commentId:new_commentId,
-                  location: loc._id,
-                  author: user._id,
-                  content: req_content,
-                  date: new Date()
-                })
-      
-              res.send("OK!");
-            });
-          });      
-        });
-});
-   
-
-    
-
-  app.post('/create/1',(req,res)=>{
-  
-    Event.findOne({eventId:req.body['eventId']}).exec(function(err, e) { //make sure eventId is unique
-      
-      if (err || e!=null){ 
-      
-      res.status(400).set('Content-Type', 'text/plain').send('Event ID '+req.body['eventId']+' already exists.');
-      return;}
-    Location.findOne({locationId:req.body['locationId']}).exec(function(err,loc){
-      if (err || loc==null) {
-        res.status(404).set('Content-Type', 'text/plain').send('Location with this ID '+req.body['locationId']+' is not found.');
-        return;
+    Comment.findOne().sort('-commentId').exec(function (err, cm) { //find the maximum commentId
+      if (err) { res.status(404).set('Content-Type', 'text/plain').send("Error"); return; }
+      else if (cm == null) { //there is no user currently
+        new_commentId = 1; //first commentId is 1
       }
       else {
-        let new_event = new Event({
+        new_commentId = cm.commentId + 1;                            //new userID equals to the maximum commentId plus 1
+      }
+      User.findOne({ userAc: req_author }).exec(function (err, user) {
+        Location.findOne({ locationId: req_location }).exec(function (err, loc) {
+          Comment.create({
+            commentId: new_commentId,
+            location: loc._id,
+            author: user._id,
+            content: req_content,
+            date: new Date()
+          })
 
-          eventId: req.body['eventId'], //still need to check if it is unique?
+          res.send("OK!");
+        });
+      });
+    });
+  });
+
+
+
+
+  app.post('/create/1', (req, res) => {
+
+    Event.findOne({ eventId: req.body['eventId'] }).exec(function (err, e) { //make sure eventId is unique
+
+      if (err || e != null) {
+
+        res.status(400).set('Content-Type', 'text/plain').send('Event ID ' + req.body['eventId'] + ' already exists.');
+        return;
+      }
+      Location.findOne({ locationId: req.body['locationId'] }).exec(function (err, loc) {
+        if (err || loc == null) {
+          res.status(404).set('Content-Type', 'text/plain').send('Location with this ID ' + req.body['locationId'] + ' is not found.');
+          return;
+        }
+        else {
+          let new_event = new Event({
+
+            eventId: req.body['eventId'], //still need to check if it is unique?
             title: req.body['title'],
             venue: loc._id,
             date: req.body['date'],
             description: req.body['description'],
             presenter: req.body['presenter'],
             price: req.body['price'],
-           
-        });
-         new_event.save(function (err){
-            if (err) {res.status(404).set('Content-Type', 'text/plain').send('Error: cannot save');return;}      
-       
-        
-            res.set('Content-Type', 'text/plain').status(201).send("Event Created!"); //send the user the address
-        });
-  }
-})
-});});
 
-app.post('/create/2',(req,res)=>{
-  
-  Location.findOne({locationId:req.body['locationId']}).exec(function(err, loc) {
-    
-    if (err || loc!=null){ //make sure locationId is unique
-      
-    
-    res.status(400).set('Content-Type', 'text/plain').send('Location ID '+req.body['locationId']+' already exists.');
-    return;}
-  
+          });
+          new_event.save(function (err) {
+            if (err) { res.status(404).set('Content-Type', 'text/plain').send('Error: cannot save'); return; }
+
+
+            res.set('Content-Type', 'text/plain').status(201).send("Event Created!"); //send the user the address
+          });
+        }
+      })
+    });
+  });
+
+  app.post('/create/2', (req, res) => {
+
+    Location.findOne({ locationId: req.body['locationId'] }).exec(function (err, loc) {
+
+      if (err || loc != null) { //make sure locationId is unique
+
+
+        res.status(400).set('Content-Type', 'text/plain').send('Location ID ' + req.body['locationId'] + ' already exists.');
+        return;
+      }
+
       let new_location = new Location({
 
         locationId: req.body['locationId'],
         name: req.body['name'],
-        coordinates: {lat: req.body['latitude'],lng: req.body['longitude']}
-             
+        coordinates: { lat: req.body['latitude'], lng: req.body['longitude'] }
+
       });
-       new_location.save(function (err){
-          if (err) {res.status(404).set('Content-Type', 'text/plain').send('Error: cannot save');return;}      
-      
-          res.set('Content-Type', 'text/plain').status(201).send("Location Created!"); //send the user the address
-      });});
-  
-});
+      new_location.save(function (err) {
+        if (err) { res.status(404).set('Content-Type', 'text/plain').send('Error: cannot save'); return; }
 
-app.post('/create/3',(req,res)=>{  
-  let new_userId;
-  User.findOne().sort('-userId').exec(function(err, user) { //find the maximum userId
-    console.log(err, user);
-    if (err) { res.status(404).set('Content-Type', 'text/plain').send("Error"); return;}
-    else if (user == null){ //there is no user currently
+        res.set('Content-Type', 'text/plain').status(201).send("Location Created!"); //send the user the address
+      });
+    });
+
+  });
+
+  app.post('/create/3', (req, res) => {
+    let new_userId;
+    User.findOne().sort('-userId').exec(function (err, user) { //find the maximum userId
+      console.log(err, user);
+      if (err) { res.status(404).set('Content-Type', 'text/plain').send("Error"); return; }
+      else if (user == null) { //there is no user currently
         new_userId = 1; //first user id is 1
-    } 
-    else {
-      new_userId = user.userId + 1;                            //new userID equals to the maximum userId plus 1
-    }
-    User.findOne({userAc:req.body['userAc']}).exec(function(err, user) {
+      }
+      else {
+        new_userId = user.userId + 1;                            //new userID equals to the maximum userId plus 1
+      }
+      User.findOne({ userAc: req.body['userAc'] }).exec(function (err, user) {
 
-      if (err || user!=null){ //make sure userAc is unique
-  
-        res.status(400).set('Content-Type', 'text/plain').send('Account Name '+req.body['userAc']+' already exists.');
-        return;}
-      
-      let new_user = new User({
-  
+        if (err || user != null) { //make sure userAc is unique
+
+          res.status(400).set('Content-Type', 'text/plain').send('Account Name ' + req.body['userAc'] + ' already exists.');
+          return;
+        }
+
+        let new_user = new User({
+
           userId: new_userId,
-          userAc: req.body['userAc'], 
+          userAc: req.body['userAc'],
           password: Bcrypt.hashSync(req.body['password']),
           name: req.body['userName'],
           isAdmin: false, //user is not admin
           favorites: [""]
-        
+
         });
-         new_user.save(function (err){
-          
-            if (err) {res.status(404).set('Content-Type', 'text/plain').send('Error: cannot save');return;}      
-        
-            res.set('Content-Type', 'text/plain').status(201).send("User Created!"); //send the user the address
+        new_user.save(function (err) {
+
+          if (err) { res.status(404).set('Content-Type', 'text/plain').send('Error: cannot save'); return; }
+
+          res.set('Content-Type', 'text/plain').status(201).send("User Created!"); //send the user the address
         });
       });
+    });
+
+
   });
 
-   
-  });
-  
   //READ Event
-  app.get('/read/1/:eventId', (req,res) =>{
-    Event.findOne({eventId:req.params['eventId']}).populate('venue').exec(function(err,event){
-      if(err || event == null || event == undefined)
-        res.status(404).set('Content-Type', 'text/plain').send("Event ID " + req.params['EventId'] +" not found!");
-      else{ 
+  app.get('/read/1/:eventId', (req, res) => {
+    Event.findOne({ eventId: req.params['eventId'] }).populate('venue').exec(function (err, event) {
+      if (err || event == null || event == undefined)
+        res.status(404).set('Content-Type', 'text/plain').send("Event ID " + req.params['EventId'] + " not found!");
+      else {
         //console.log(event);
         let escapeStr = event.presenter.replaceAll('“', '\\“');
         let str =
-                '{\n"title": "' +
-                event.title.replaceAll('"', '\\"') +
-                '",' +
-                '\n"venue": "' +
-                event.venue.name.replaceAll('"', '\\"') +
-                '",' +
-                '\n"date": "' +
-                event.date +
-                '",' +
-                '\n"des": "' +
-                event.description.replaceAll('"', '\\"') +
-                '",' +
-                '\n"pre": "' +
-                escapeStr.replaceAll('”', '\\”') +
-                '",' +
-                '\n"price": "' +
-                event.price +
-                '"\n}';
+          '{\n"title": "' +
+          event.title.replaceAll('"', '\\"') +
+          '",' +
+          '\n"venue": "' +
+          event.venue.name.replaceAll('"', '\\"') +
+          '",' +
+          '\n"date": "' +
+          event.date +
+          '",' +
+          '\n"des": "' +
+          event.description.replaceAll('"', '\\"') +
+          '",' +
+          '\n"pre": "' +
+          escapeStr.replaceAll('”', '\\”') +
+          '",' +
+          '\n"price": "' +
+          event.price +
+          '"\n}';
         console.log(str);
         res.set('Content-Type', 'text/plain').send(str);
       }
     })
   });
   //READ Location
-  app.get('/read/2/:locationId', (req,res)=>{
-    Location.findOne({locationId:req.params['locationId']}).exec(function(err,loc){
-      if(err || loc == null || loc == undefined)
+  app.get('/read/2/:locationId', (req, res) => {
+    Location.findOne({ locationId: req.params['locationId'] }).exec(function (err, loc) {
+      if (err || loc == null || loc == undefined)
         res.status(404).set('Content-Type', 'text/plain').send("Location ID " + req.params['locationId'] + " not found!");
       else res.set('Content-Type', 'text/plain').send(loc);
     })
   });
   //READ User
-  app.get('/read/3/:userAc', (req,res)=>{
-    User.findOne({userAc:req.params['userAc']}).exec(function(err,user){
-      if(err||user==null||user==undefined)
+  app.get('/read/3/:userAc', (req, res) => {
+    User.findOne({ userAc: req.params['userAc'] }).exec(function (err, user) {
+      if (err || user == null || user == undefined)
         res.status(404).set('Content-Type', 'text/plain').send("User not found!");
-      else{
+      else {
         res.set('Content-Type', 'text/plain').send(user);
       }
     })
   });
   //READ Venue
-  app.get('/read/4/:eventId', (req,res) =>{
-    Event.findOne({eventId:req.params['eventId']})
-    .populate("venue")
-    .exec(function(err,event){
-      if(err || event == null || event == undefined)
-        res.status(404).set('Content-Type', 'text/plain').send("Event ID " + req.params['EventId'] +" not found!");
-      else res.set('Content-Type', 'text/plain').send(event.venue);
-    })
+  app.get('/read/4/:eventId', (req, res) => {
+    Event.findOne({ eventId: req.params['eventId'] })
+      .populate("venue")
+      .exec(function (err, event) {
+        if (err || event == null || event == undefined)
+          res.status(404).set('Content-Type', 'text/plain').send("Event ID " + req.params['EventId'] + " not found!");
+        else res.set('Content-Type', 'text/plain').send(event.venue);
+      })
   });
   //READ related events with locationId
-  app.get('/read/5/:locationId', (req,res)=>{
-    Location.findOne({locationId: req.params['locationId']})
-    .exec(function(err,loc){
-      if(err||loc==null||loc==undefined)
-        res.status(404).set('Content-Type', 'text/plain').send("User not found!");
-      else 
-      {
-        Event.find({ venue: loc._id})
-        .exec(function(err,ev){
-          if(err||ev==null||ev==undefined)
-              res.status(404).set('Content-Type', 'text/plain').send("User not found!");
-          else 
-              res.set('Content-Type', 'text/plain').send(ev);
-        })
-      }
-      
-    })
-  });
-  
-  //Update Event
-  app.post('/update/1', (req, res)=>{
-      Location.findOne({locationId:req.body['locationId']}).exec(function(err, loc){
-          if (err || loc == null) 
-              res.status(404).set('Content-Type', 'text/plain').send('Location ID '+req.body['locationId'] +' does not exist.');
-          else Event.findOne({eventId:req.body['eventId']}).exec(function(err, e){
-              if(err || e == null)
-                  res.status(404).set('Content-Type', 'text/plain').send('Event ID '+req.body['eventId'] +' does not exist.');
-              else {
-                  e.title = req.body['title'];
-                  e.venue = loc._id;
-                  e.date = req.body['date'];
-                  e.description = req.body['description'];
-                  e.presenter = req.body['presenter'];
-                  e.price = req.body['price'];
-                  e.save();
-                  res.set('Content-Type', 'text/plain').send("Event Updated!");
-              }
-          })
+  app.get('/read/5/:locationId', (req, res) => {
+    Location.findOne({ locationId: req.params['locationId'] })
+      .exec(function (err, loc) {
+        if (err || loc == null || loc == undefined)
+          res.status(404).set('Content-Type', 'text/plain').send("User not found!");
+        else {
+          Event.find({ venue: loc._id })
+            .exec(function (err, ev) {
+              if (err || ev == null || ev == undefined)
+                res.status(404).set('Content-Type', 'text/plain').send("User not found!");
+              else
+                res.set('Content-Type', 'text/plain').send(ev);
+            })
+        }
+
       })
   });
 
+  //Update Event
+  app.post('/update/1', (req, res) => {
+    Location.findOne({ locationId: req.body['locationId'] }).exec(function (err, loc) {
+      if (err || loc == null)
+        res.status(404).set('Content-Type', 'text/plain').send('Location ID ' + req.body['locationId'] + ' does not exist.');
+      else Event.findOne({ eventId: req.body['eventId'] }).exec(function (err, e) {
+        if (err || e == null)
+          res.status(404).set('Content-Type', 'text/plain').send('Event ID ' + req.body['eventId'] + ' does not exist.');
+        else {
+          e.title = req.body['title'];
+          e.venue = loc._id;
+          e.date = req.body['date'];
+          e.description = req.body['description'];
+          e.presenter = req.body['presenter'];
+          e.price = req.body['price'];
+          e.save();
+          res.set('Content-Type', 'text/plain').send("Event Updated!");
+        }
+      })
+    })
+  });
+
   //Update Location 
-  app.post('/update/2', (req,res)=>{
-    Location.findOne({locationId:req.body['locationId']}).exec(function(err,loc){
-      if(err || loc == null)
-        res.status(404).set('Content-Type', 'text/plain').send('Location ID '+ req.body['locationId'] +' does not exist.');
-      else{
+  app.post('/update/2', (req, res) => {
+    Location.findOne({ locationId: req.body['locationId'] }).exec(function (err, loc) {
+      if (err || loc == null)
+        res.status(404).set('Content-Type', 'text/plain').send('Location ID ' + req.body['locationId'] + ' does not exist.');
+      else {
         loc.locationId = req.body['locationId'];
         loc.name = req.body['name'];
-        loc.coordinates = {lat: req.body['latitude'],lng: req.body['longitude']};
+        loc.coordinates = { lat: req.body['latitude'], lng: req.body['longitude'] };
         loc.save();
         res.set('Content-Type', 'text/plain').send("Location Updated!");
       }
@@ -468,124 +473,125 @@ app.post('/create/3',(req,res)=>{
   });
 
   //Update User
-  app.post('/update/3', (req,res)=>{
-    User.findOne({userAc:req.body['userAc']}).exec(function(err,user){
-      if(err || user == null)
+  app.post('/update/3', (req, res) => {
+    User.findOne({ userAc: req.body['userAc'] }).exec(function (err, user) {
+      if (err || user == null)
         res.status(404).set('Content-Type', 'text/plain').send("User ID " + req.body['userAc'] + " does not exist.");
-        else{
-          user.userAc = req.body['userAc'];
-          user.name = req.body['name'];
-          user.password = Bcrypt.hashSync(req.body['password']);
-          user.save();
-          res.set('Content-Type', 'text/plain').send("User updated!");
-        }
+      else {
+        user.userAc = req.body['userAc'];
+        user.name = req.body['name'];
+        user.password = Bcrypt.hashSync(req.body['password']);
+        user.save();
+        res.set('Content-Type', 'text/plain').send("User updated!");
+      }
     })
   });
-  
-  app.post('/delete/1',(req,res)=>{  
+
+  app.post('/delete/1', (req, res) => {
     let req_eventId = req.body['eventId'];
-    Event.findOne({eventId: req_eventId}).exec(function(err,e){
-        if (err || e==null) {
-            res.status(404).set('Content-Type', 'text/plain').send('Cannot find event with ID '+req_eventId);
-            return;
-          }        
-        e.remove();
-        res.status(200).set('Content-Type', 'text/plain').send("Event Deleted!");
-       
+    Event.findOne({ eventId: req_eventId }).exec(function (err, e) {
+      if (err || e == null) {
+        res.status(404).set('Content-Type', 'text/plain').send('Cannot find event with ID ' + req_eventId);
+        return;
+      }
+      e.remove();
+      res.status(200).set('Content-Type', 'text/plain').send("Event Deleted!");
+
     });
 
 
   });
 
-  app.post('/delete/2',(req,res)=>{  
+  app.post('/delete/2', (req, res) => {
     let req_locationId = req.body['locationId'];
-    Location.findOne({locationId: req_locationId}).exec(function(err,loc){
-        if (err || loc==null) {
-            res.status(404).set('Content-Type', 'text/plain').send('Cannot find location with ID '+req_locationId);
-            return;
-          }        
-        loc.remove();
-        res.status(200).set('Content-Type', 'text/plain').send("Location Deleted!");
-       
+    Location.findOne({ locationId: req_locationId }).exec(function (err, loc) {
+      if (err || loc == null) {
+        res.status(404).set('Content-Type', 'text/plain').send('Cannot find location with ID ' + req_locationId);
+        return;
+      }
+      loc.remove();
+      res.status(200).set('Content-Type', 'text/plain').send("Location Deleted!");
+
     });
 
 
   });
 
-  app.post('/delete/3',(req,res)=>{  
+  app.post('/delete/3', (req, res) => {
     let req_userAc = req.body['userAc'];
-    User.findOne({userAc: req_userAc}).exec(function(err,user){
-        if (err || user==null) {
-            res.status(404).set('Content-Type', 'text/plain').send('Cannot find user with ID '+req_userAc);
-            return;
-          }        
-        user.remove();
-        res.status(200).set('Content-Type', 'text/plain').send("User Deleted!");
-       
+    User.findOne({ userAc: req_userAc }).exec(function (err, user) {
+      if (err || user == null) {
+        res.status(404).set('Content-Type', 'text/plain').send('Cannot find user with ID ' + req_userAc);
+        return;
+      }
+      user.remove();
+      res.status(200).set('Content-Type', 'text/plain').send("User Deleted!");
+
     });
 
 
   });
 
 
-  app.put('/addFav/:locId', async(req,res)=>{
-    let req_userAc =req.body['userAc']; //this is the username
-    let req_locId =req.body['locationId']; //this is the location id
-    const locResult = await Location.findOne({locationId:req_locId}).exec();
-    
-    const userResult = await User.findOne({userAc:req_userAc, favourites: locResult._id});
+  app.put('/addFav/:locId', async (req, res) => {
+    let req_userAc = req.body['userAc']; //this is the username
+    let req_locId = req.body['locationId']; //this is the location id
+    const locResult = await Location.findOne({ locationId: req_locId }).exec();
+
+    const userResult = await User.findOne({ userAc: req_userAc, favourites: locResult._id });
     // The user doesnot have this favourite location
     console.log(locResult._id);
-    if (userResult == null || userResult == undefined){
-      User.findOneAndUpdate({userAc: req_userAc}, {$push: {favourites: [locResult._id.toString()]}},
-       (err, ok) => {
-        console.log(err);
-       });
+    if (userResult == null || userResult == undefined) {
+      User.findOneAndUpdate({ userAc: req_userAc }, { $push: { favourites: [locResult._id.toString()] } },
+        (err, ok) => {
+          console.log(err);
+        });
       console.log("Added");
       res.send("Add");
     }
-    else{
-      await User.findOneAndUpdate({ userAc: req_userAc }, { $pull: { favourites:  locResult._id.toString()}});
-      
+    else {
+      await User.findOneAndUpdate({ userAc: req_userAc }, { $pull: { favourites: locResult._id.toString() } });
+
       console.log("delete");
       res.send("Del");
     }
     //console.log(userResult);
   });
 
-  app.get('/checkFav', (req, res) =>{
+  app.get('/checkFav', (req, res) => {
 
   });
 
 
-app.get('/addFav/:locId', (req, res) => { //load comment
-  let req_locationId= req.params['locId'];
-  console.log(req_locationId);
-  Location.findOne({locationId:req_locationId}).exec(function(err, loc) {
-    Comment.find({location:loc._id}).populate('author').exec(function(err, comment) {
-      //console.log(comment);
-      let list = "[\n";
-      for (let i = 0; i < comment.length; i++) {
-        let str =
-          '{\n"name": "' +
-          comment[i].author.name +
-          '",' +
-          '\n"content": "' +
-          comment[i].content +
-          '",' +
-          '\n"date": "' +
-          comment[i].date +
-          '"\n}';
-        if (i < comment.length - 1) str += "\n,";
-        list += str + "\n";
-      }
-      list += "]";
-      res.send(list);
-      //res.send(comment);
-  });
- 
+  app.get('/addFav/:locId', (req, res) => { //load comment
+    let req_locationId = req.params['locId'];
+    console.log(req_locationId);
+    Location.findOne({ locationId: req_locationId }).exec(function (err, loc) {
+      Comment.find({ location: loc._id }).populate('author').exec(function (err, comment) {
+        //console.log(comment);
+        let list = "[\n";
+        for (let i = 0; i < comment.length; i++) {
+          let str =
+            '{\n"name": "' +
+            comment[i].author.name +
+            '",' +
+            '\n"content": "' +
+            comment[i].content +
+            '",' +
+            '\n"date": "' +
+            comment[i].date +
+            '"\n}';
+          if (i < comment.length - 1) str += "\n,";
+          list += str + "\n";
+        }
+        list += "]";
+        res.send(list);
+        //res.send(comment);
+      });
 
-  })});
+
+    })
+  });
 
 
 

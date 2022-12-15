@@ -21,7 +21,7 @@ import LoadingPage from "./components/loadingpage.js";
 //npm i -S @react-google-maps/api
 import "./style.css";
 import GLB from "./config.js";
-import {evCount, grabEv, grabLoc, grabFav} from "./components/grab.js";
+import { evCount, grabEv, grabLoc, grabFav } from "./components/grab.js";
 
 
 function App(props) {
@@ -44,41 +44,41 @@ function App(props) {
   oisAdmin = window.sessionStorage.getItem("isAdmin");
   ouName = window.sessionStorage.getItem("userName");
   ouAc = window.sessionStorage.getItem("userAc");
-  
+
 
   // Temp session
   //let oisAdmin = 'true';
   //let ouName = 'Admin';
 
 
-  if (end == undefined || end == null){
+  if (end == undefined || end == null) {
     let ev = grabEv();
     ev
-    .then(evD =>{
-      //console.log(evD);
-      let loc = grabLoc();
-      loc
-      .then(locD =>{
-        //console.log(locD);
-        let rLoc = evCount(evD, locD);
-        setLoc(rLoc);
-        setEv(evD);
-        let rFav = grabFav(ouAc);
-        rFav
-        .then(favD =>{
-          let finalFav = evCount(evD, favD);
-          setFav(finalFav);
-          setEnd(1); 
-        });
+      .then(evD => {
+        //console.log(evD);
+        let loc = grabLoc();
+        loc
+          .then(locD => {
+            //console.log(locD);
+            let rLoc = evCount(evD, locD);
+            setLoc(rLoc);
+            setEv(evD);
+            let rFav = grabFav(ouAc);
+            rFav
+              .then(favD => {
+                let finalFav = evCount(evD, favD);
+                setFav(finalFav);
+                setEnd(1);
+              });
+          });
       });
-    });
   }
-  else{
+  else {
     // Start your code here
     // Admin page
     if (oisAdmin == "true") {
       console.log("Admin: ", oisAdmin);
-      console.log(evData);
+      // console.log(evData);
       return (
         <BrowserRouter>
           <LogOut name={ouName} />
@@ -109,23 +109,23 @@ function App(props) {
               </ul>
             </nav>
           </div>
-  
+
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/table" element={<Table locDataSet={locData}/>} />
-            <Route path="/map" element={<Map locDataSet={locData}/>} />
-            <Route path="/favloc" element={<Favloc favDataSet={favData}/>} />
+            <Route path="/table" element={<Table locDataSet={locData} />} />
+            <Route path="/map" element={<Map locDataSet={locData} />} />
+            <Route path="/favloc" element={<Favloc favDataSet={favData} />} />
             <Route path="/loadingpage" element={<LoadingPage />} />
             <Route
               path="/locationpage/:locationId"
-              element={<LocationPage locDataSet={locData} evDataSet={evData} favDataSet={favData} username={ouName} userAc={ouAc} setEnd={setEnd}/>}
+              element={<LocationPage locDataSet={locData} evDataSet={evData} favDataSet={favData} username={ouName} userAc={ouAc} setEnd={setEnd} />}
             />
             <Route path="/crudevent/:chosen" element={<CRUDevent />} />
             <Route path="/crudevent1" element={<CRUDevent1 />} />
-            <Route path="/create/:chosen" element={<Create setEnd={setEnd}/>} />
+            <Route path="/create/:chosen" element={<Create setEnd={setEnd} />} />
             <Route path="/read/:chosen" element={<Read evDataSet={evData} locDataSet={locData} />} />
-            <Route path="/update/:chosen" element={<Update evDataSet={evData} locDataSet={locData} setEnd={setEnd}/>} />
-            <Route path="/delete/:chosen" element={<Delete setEnd={setEnd}/>} />
+            <Route path="/update/:chosen" element={<Update evDataSet={evData} locDataSet={locData} setEnd={setEnd} />} />
+            <Route path="/delete/:chosen" element={<Delete setEnd={setEnd} />} />
             <Route path="*" element={<NoMatch />} />
           </Routes>
         </BrowserRouter>
@@ -160,16 +160,16 @@ function App(props) {
               </ul>
             </nav>
           </div>
-  
+
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/loadingpage" element={<LoadingPage />} />
-            <Route path="/table" element={<Table locDataSet={locData}/>} />
-            <Route path="/map" element={<Map locDataSet={locData}/>} />
-            <Route path="/favloc" element={<Favloc favDataSet={favData}/>} />
+            <Route path="/table" element={<Table locDataSet={locData} />} />
+            <Route path="/map" element={<Map locDataSet={locData} />} />
+            <Route path="/favloc" element={<Favloc favDataSet={favData} />} />
             <Route
               path="/locationpage/:locationId"
-              element={<LocationPage locDataSet={locData} evDataSet={evData} favDataSet={favData} userAc={ouAc} username={ouName} setEnd={setEnd}/>}
+              element={<LocationPage locDataSet={locData} evDataSet={evData} favDataSet={favData} userAc={ouAc} username={ouName} setEnd={setEnd} />}
             />
             <Route path="*" element={<NoMatch />} />
           </Routes>
@@ -248,7 +248,7 @@ const Table = (props) => {
 const Map = (props) => {
   let coords = [];
   let locationIds = [];
-  for( let i = 0; i < props.locDataSet.length; i++ ){
+  for (let i = 0; i < props.locDataSet.length; i++) {
     coords.push({
       lat: props.locDataSet[i].coordinates.lat,
       lng: props.locDataSet[i].coordinates.lng
