@@ -348,8 +348,8 @@ app.post('/create/3',(req,res)=>{
     })
   });
   //READ User
-  app.get('/read/3/:userAc', (req,res)=>{
-    User.findOne({userAc:req.params['userAc']}).exec(function(err,user){
+  app.get('/read/3/:userId', (req,res)=>{
+    User.findOne({userId:req.params['userId']}).exec(function(err,user){
       if(err||user==null||user==undefined)
         res.status(404).set('Content-Type', 'text/plain').send("User not found!");
       else res.set('Content-Type', 'text-plain').send(user);
