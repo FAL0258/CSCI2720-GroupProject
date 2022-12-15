@@ -327,8 +327,8 @@ app.post('/create/3',(req,res)=>{
 
    
   });
-  /*
-    //READ Event
+  
+  //READ Event
   app.get('/read/1/:eventId', (req,res) =>{
     Event.findOne({eventId:req.params['eventId']}).populate('venue').exec(function(err,event){
       if(err || event == null || event == undefined)
@@ -376,7 +376,7 @@ app.post('/create/3',(req,res)=>{
       else res.set('Content-Type', 'text/plain').send(user);
     })
   });
-  */
+  
   //Update Event
   app.post('/update/1', (req, res)=>{
       Location.findOne({locationId:req.body['locationId']}).exec(function(err, loc){
