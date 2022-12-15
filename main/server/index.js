@@ -472,38 +472,46 @@ app.post('/create/3',(req,res)=>{
 
   });
 
+  //READ Venue
+  app.get('/read/4/:eventId', (req,res) =>{
+    Event.findOne({eventId:req.params['eventId']})
+    .populate("venue")
+    .exec(function(err,event){
+      if(err || event == null || event == undefined)
+        res.status(404).set('Content-Type', 'text/plain').send("Event ID " + req.params['EventId'] +" not found!");
+      else res.set('Content-Type', 'text/plain').send(event.venue);
+    })
+  });
 
   app.put('/addFav/:locId', async(req,res)=>{
-    let count=0;
     let req_userAc =req.body['userAc']; //this is the username
     let req_locId =req.body['locationId']; //this is the location id
     const locResult = await Location.findOne({locationId:req_locId}).exec();
-    console.log(locResult._id);
-    console.log("HIHIHIHI", req_locId);
     
-    const userResult = await User.findOne({userAc:req_userAc});
-   
-  
-    console.log(userResult.favourites);
-
-    for( let i = 0; i < userResult.favourites.length; i++){ //delete the location object id from favourite
-     
-      if ( userResult.favourites[i].toString() == locResult._id.toString()) { 
-      
-        userResult.favourites.splice(i, 1); 
-        count=1;
-        console.log("after del",userResult.favourites);
-      }
+    const userResult = await User.findOne({userAc:req_userAc, favourites: locResult._id});
+    // The user doesnot have this favourite location
+    console.log(locResult._id);
+    if (userResult == null || userResult == undefined){
+      User.findOneAndUpdate({userAc: req_userAc}, {$push: {favourites: [locResult._id.toString()]}},
+       (err, ok) => {
+        console.log(err);
+       });
+      console.log("Added");
+      res.send("Add");
     }
+    else{
+      await User.findOneAndUpdate({ userAc: req_userAc }, { $pull: { favourites:  locResult._id.toString()}});
       
-    if (count==0){
-    userResult.favourites.push(locResult._id);   
-    console.log("add",userResult.favourites);
+      console.log("delete");
+      res.send("Del");
     }
+    //console.log(userResult);
+  });
 
-await userResult.save();
-console.log("after save",userResult.favourites);
-});
+  app.get('/checkFav', (req, res) =>{
+
+  });
+
 
 app.get('/addFav/:locId', (req, res) => { //load comment
   let req_locationId= req.params['locId'];

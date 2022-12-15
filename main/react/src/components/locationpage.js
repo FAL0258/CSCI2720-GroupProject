@@ -29,7 +29,8 @@ const LocationPage = (props) => {
   
   const fillheart = () => {
     let special = document.querySelector("#nonfill");
-    let url="http://localhost:4000/addFav/"+locId;
+    //let url="http://localhost:4000/addFav/"+locId;
+      let url=GLB.BACKEND_API + "/addFav/" +locId;
       let obj={ userAc: ouAc, locationId: locId};
         fetch(url,{
             method:"PUT",

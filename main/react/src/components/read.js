@@ -11,9 +11,20 @@ function Read(props){
         //console.log(evId);
         for (let i = 0; i < props.evDataSet.length; i++){
             if (props.evDataSet[i].eventId.toString() == evId.toString()){
+                let api = GLB.BACKEND_API + "/read/4/" + props.evDataSet[i].eventId;
+                fetch(api)
+                .then(response => response.json())
+                .then(json => {
+                    console.log(json);
+                    console.log(props.evDataSet[i]);
+                    document.getElementById('title').value = props.evDataSet[i].title;
+                    document.getElementById('venue').value = json.name;
+                    document.getElementById('date').value = props.evDataSet[i].date;
+                    document.getElementById('description').value = props.evDataSet[i].description;
+                    document.getElementById('presenter').value = props.evDataSet[i].presenter;
+                    document.getElementById('price').value = props.evDataSet[i].price;
+                });
                 
-                console.log(props.evDataSet[i]);
-                document.getElementById('title').value = props.evDataSet[i].title;
                 break;
             }
         }

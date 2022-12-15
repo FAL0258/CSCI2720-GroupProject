@@ -60,6 +60,7 @@ function App(props) {
       .then(locD =>{
         //console.log(locD);
         let rLoc = evCount(evD, locD);
+
         setLoc(rLoc);
         setEv(evD);
         setEnd(1); 
