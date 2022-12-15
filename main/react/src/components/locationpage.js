@@ -17,7 +17,8 @@ const locData = [
 const fillerNumber = 999;
 
 const LocationPage = (props) => {
-  let ouAc=props.username;
+  let ouAc=props.userAc;
+  let ouName=props.username;
   console.log(props);
   let { locationId } = useParams();
   console.log(locationId);
@@ -114,7 +115,7 @@ const LocationPage = (props) => {
             >
               Comment
             </h2>
-            <Comment locId={locationId} username={ouAc} setEnd={props.setEnd}/>
+            <Comment locId={locationId} userAc={ouAc} username={ouName} setEnd={props.setEnd}/>
           </section>
         </div>
       </div>
