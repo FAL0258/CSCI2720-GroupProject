@@ -331,6 +331,30 @@ app.post('/create/3',(req,res)=>{
 
    
   });
+    //READ Event
+  app.get('/read/1/:eventId', (req,res) =>{
+    Event.findOne({eventId:req.params['eventId']}).exec(function(err,event){
+      if(err || event == null || event == undefined)
+        res.status(404).set('Content-Type', 'text/plain').send("Event ID " + req.params['EventId'] +" not found!");
+      else res.set('Content-Type', 'text/plain').send(event);
+    })
+  });
+  //READ Location
+  app.get('/read/2/:locationId', (req,res)=>{
+    Location.findOne({locationId:req.params['locationId']}).exec(function(err,loc){
+      if(err || loc == null || loc == undefined)
+        res.status(404).set('Content-Type', 'text/plain').send("Location ID " + req.params['locationId'] + " not found!");
+      else res.set('Content-Type', 'text/plain').send(loc);
+    })
+  });
+  //READ User
+  app.get('/read/3/:userAc', (req,res)=>{
+    User.findOne({userAc:req.params['userAc']}).exec(function(err,user){
+      if(err||user==null||user==undefined)
+        res.status(404).set('Content-Type', 'text/plain').send("User not found!");
+      else res.set('Content-Type', 'text-plain').send(user);
+    })
+  });
   //Update Event
   app.post('/update/1', (req, res)=>{
       Location.findOne({locationId:req.body['locationId']}).exec(function(err, loc){
