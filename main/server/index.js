@@ -461,7 +461,8 @@ app.post('/create/3',(req,res)=>{
     User.findOne({userAcd:req_locationId}).exec(function(err, loc) {
       Comment.find({location:loc._id}).populate('author').exec(function(err, comment) {
 
-  });
+  })
+});
 
   app.all('/*', (req, res) => {
     /*
