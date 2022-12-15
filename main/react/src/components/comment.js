@@ -5,6 +5,7 @@ const Comment = (props) => {
     console.log(props.userAc);
     let userAc1=props.userAc;
     let username1=props.username;
+    const regex = /GMT.*\)$/;
     function savefile(){ //save the comment, and send to the server
         //let url="http://localhost:4000/getCm/"+props.locId;
         let url = GLB.BACKEND_API + "/getCm/" + props.locId;
@@ -32,7 +33,7 @@ const Comment = (props) => {
         str+='<h2><b>'+username1+'</b></h2>';           
         str+='<h5 style="color:black">'+cmContent+' </h5>';
         //str+='<p style="color:grey; text-align: right">'+"Just Now"+'</p>';
-        str+='<p style="color:grey; text-align: right">'+currentDate.replace("GMT+0800 (Hong Kong Standard Time)", "")+'</p>';
+        str+='<p style="color:grey; text-align: right">'+currentDate.replace(regex, "")+'</p>';
         str+="<hr/>";
         str+="<br/>";
         document.querySelector("#comments").innerHTML+=str;
@@ -50,7 +51,7 @@ const Comment = (props) => {
             for (let i=0;i<txt.length;i++){
                 str+='<h2><b>'+txt[i].name+'</b></h2>';           
                 str+='<h5 style="color:black">'+txt[i].content+' </h5>';
-                str+='<p style="color:grey; text-align: right">'+txt[i].date.replace("GMT+0800 (Hong Kong Standard Time)", "")+'</p>';
+                str+='<p style="color:grey; text-align: right">'+txt[i].date.replace(regex, "")+'</p>';
                 str+="<hr/>";
                 str+="<br/>";
             }
