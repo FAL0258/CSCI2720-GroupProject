@@ -2,7 +2,7 @@
  * refs: https://stackoverflow.com/questions/12462318/find-a-value-in-an-array-of-objects-in-javascript
  */
 
-import React from "react";
+import React, {useState} from "react";
 import { useParams } from "react-router-dom";
 import Maps from "./map.js";
 import Comment from "./comment.js";
@@ -18,6 +18,7 @@ const locData = [
 const fillerNumber = 999;
 
 const LocationPage = (props) => {
+  const [isFav, setisFav] = useState(null);
   let ouAc=props.userAc;
   let ouName=props.username;
   console.log(props);
@@ -26,6 +27,16 @@ const LocationPage = (props) => {
   let locId=locationId; 
   let eventId =props.evDataSet[0].eventId; 
   
+  if (isFav == null || isFav == undefined){
+    for(let i=0; i<props.favDataSet.length; i++) {
+      setisFav("bi-heart");
+      if(props.favDataSet[i].locationId == locationId){
+        setisFav("bi-heart-fill");
+        break;
+      }
+    }
+  }
+
   
   const fillheart = () => {
     let special = document.querySelector("#nonfill");
@@ -40,7 +51,10 @@ const LocationPage = (props) => {
             body:new URLSearchParams(obj)
            })
            .then (res=>{
-            if(res.ok){console.log("PUT ok")}
+            if(res.ok){
+              console.log("PUT ok");
+              props.setEnd(null);
+            }
             else console.log("PUT NO")
             return res;
            })
@@ -103,7 +117,7 @@ const LocationPage = (props) => {
             >
               <b>
                 Add to favorite location{" "}
-                <i id="nonfill" className="bi bi-heart"></i>
+                <i id="nonfill" className={isFav}></i>
               </b>
             </button>
           </section>
