@@ -110,7 +110,7 @@ function App(props) {
             <Route path="/loadingpage" element={<LoadingPage />} />
             <Route
               path="/locationpage/:locationId"
-              element={<LocationPage locDataSet={locData} username={ouAc}/>}
+              element={<LocationPage locDataSet={locData} username={ouAc} setEnd={setEnd}/>}
             />
             <Route path="/crudevent/:chosen" element={<CRUDevent />} />
             <Route path="/crudevent1" element={<CRUDevent1 />} />

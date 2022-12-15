@@ -2,21 +2,20 @@ import React from 'react';
 import { useParams} from 'react-router-dom';
 
 
-
-
 function Update(){
     let {chosen} = useParams();
-    //form 1
-
-    const load = (event) => {
-        event.preventDefault();
-        
-    }
-
-    const update = (event) => {
-        event.preventDefault();
-    }
+    //form 1 = update events
      if( chosen==1){ 
+        const load = (event, evId) => {
+            event.preventDefault();
+            
+        }
+    
+        const update = (event, evTitle, evVenue, evDate, dse, pre, price) => {
+            event.preventDefault();
+
+        }
+
     return(
         <>
 
@@ -31,7 +30,7 @@ function Update(){
         <input type="text" className="form-control" style={{width:50+"%", margin:'auto'}} placeholder="EventID" id="eventId" name="eventId" required/>
     <br/>
         
-       <button className="btn btn-lg btn-block" style={{width:50+"%", margin:'auto', backgroundColor: 'rosybrown', color:'white'}} type="button" onClick={e => load(e)}>Load Information</button>
+       <button className="btn btn-lg btn-block" style={{width:50+"%", margin:'auto', backgroundColor: 'rosybrown', color:'white'}} type="button" onClick={""}>Load Information</button>
        <br/> <br/> 
 
        <label htmlFor="title" className="d-none">Title</label>
@@ -64,8 +63,16 @@ function Update(){
        </form></div>
        </>
     );}
-    //form 2  
+    //form 2  = update location
     else if( chosen==2){ 
+        const load = (event) => {
+            event.preventDefault();
+            
+        }
+    
+        const update = (event) => {
+            event.preventDefault();
+        }
         return(
             <>
             <div className="text-center">
@@ -97,7 +104,7 @@ function Update(){
            </form></div>
            </>
         );}
-     //form 3  
+     //form 3 = update users
      else if( chosen==3){ 
         return(
             <>
@@ -107,19 +114,19 @@ function Update(){
             
             <form action="" method="post">
 
-            <label htmlFor="name"  className="d-none">User Name</label>
-            <input type="text" className="form-control" style={{width:50+"%", margin:'auto'}} placeholder="User Name" id="name" name="name"/>
+            <label htmlFor="userAc"  className="d-none">Account</label>
+            <input type="text" className="form-control" style={{width:50+"%", margin:'auto'}} placeholder="Account" id="userAc" name="userAc"/>
             <br/>
 
            
-            <button className="btn btn-lg btn-block" style={{width:50+"%", margin:'auto', backgroundColor: 'rosybrown', color:'white'}} type="button" onClick={e => load(e)}>Load Information</button>
+            <button className="btn btn-lg btn-block" style={{width:50+"%", margin:'auto', backgroundColor: 'rosybrown', color:'white'}} type="button" onClick={""}>Load Information</button>
        <br/> <br/> 
             
          <label htmlFor="password" className="d-none">User Password</label>
             <input type="text" className="form-control" style={{width:50+"%", margin:'auto'}} placeholder="User Password" id="password" name="password"/>
             <br/>
                       
-            <button className="btn btn-lg btn-block" style={{width:50+"%", margin:'auto', backgroundColor: 'rosybrown', color:'white'}} type="button"   onClick={e => update(e)}>Update</button>
+            <button className="btn btn-lg btn-block" style={{width:50+"%", margin:'auto', backgroundColor: 'rosybrown', color:'white'}} type="button"   onClick={""}>Update</button>
            </form></div>
            </>
         );

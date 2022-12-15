@@ -8,7 +8,7 @@ function Create(props){
 let {chosen} = useParams();
 //form 1
  if( chosen==1){   
-      
+     
      const createEv = (event, evId, evTitle, locId, evDate, des, pre, price) => {
           event.preventDefault();
           //console.log("RRRR", evId, evTitle, locId, evDate, des, pre, price);

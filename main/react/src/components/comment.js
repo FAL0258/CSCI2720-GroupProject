@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Comment = (props) => {
     console.log(props.username);
     let username1=props.username;
     function savefile(){ //save the comment, and send to the server
         let url="http://localhost:4000/getCm/"+props.locId;
-        let obj={ author: username1, location: props.locId, content: document.querySelector("#new-comment").value};
+        let cmContent = document.querySelector("#new-comment").value;
+        let obj={ author: username1, location: props.locId, content: cmContent};
         fetch(url,{
             method:"PUT",
             headers:{
@@ -16,13 +17,27 @@ const Comment = (props) => {
            .then (res=>{
             if(res.ok){console.log("PUT ok")}
             else console.log("PUT NO")
-            return res
+            return res;
            })
            .catch(error=>console.log(error))
         
-        console.log("done!")    
+        console.log("done!");
+        let currentDate = new Date();
+        currentDate = currentDate.toString();
+        // Add temp string to show in the html first
+        let str="";
+        str+='<h2><b>'+username1+'</b></h2>';           
+        str+='<h5 style="color:black">'+cmContent+' </h5>';
+        //str+='<p style="color:grey; text-align: right">'+"Just Now"+'</p>';
+        str+='<p style="color:grey; text-align: right">'+currentDate.replace("GMT+0800 (Hong Kong Standard Time)", "")+'</p>';
+        str+="<hr/>";
+        str+="<br/>";
+        document.querySelector("#comments").innerHTML+=str;
+        document.querySelector("#new-comment").value = "";
+        //props.setEnd(null);
       }
-    function loadfile(){ //fetch the comment from server
+
+      function loadfile(){ //fetch the comment from server
         let url="http://localhost:4000/getCm/"+props.locId;
         fetch(url).then(res=>res.json()).then (txt=>{
             
@@ -40,10 +55,8 @@ const Comment = (props) => {
         })
         .catch(error=>console.log(error))
      }
-      
-     //load the comment everytime the page is loaded
-        loadfile();
-      
+    //load the comment everytime the page is loaded
+    loadfile();
     return(
         <div className="container">
             <div className="row">
