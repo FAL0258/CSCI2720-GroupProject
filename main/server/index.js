@@ -378,6 +378,35 @@ app.post('/create/3',(req,res)=>{
       }
     })
   });
+  //READ Venue
+  app.get('/read/4/:eventId', (req,res) =>{
+    Event.findOne({eventId:req.params['eventId']})
+    .populate("venue")
+    .exec(function(err,event){
+      if(err || event == null || event == undefined)
+        res.status(404).set('Content-Type', 'text/plain').send("Event ID " + req.params['EventId'] +" not found!");
+      else res.set('Content-Type', 'text/plain').send(event.venue);
+    })
+  });
+  //READ related events with locationId
+  app.get('/read/5/:locationId', (req,res)=>{
+    Location.findOne({locationId: req.params['locationId']})
+    .exec(function(err,loc){
+      if(err||loc==null||loc==undefined)
+        res.status(404).set('Content-Type', 'text/plain').send("User not found!");
+      else 
+      {
+        Event.find({ venue: loc._id})
+        .exec(function(err,ev){
+          if(err||ev==null||ev==undefined)
+              res.status(404).set('Content-Type', 'text/plain').send("User not found!");
+          else 
+              res.set('Content-Type', 'text/plain').send(ev);
+        })
+      }
+      
+    })
+  });
   
   //Update Event
   app.post('/update/1', (req, res)=>{
@@ -474,16 +503,6 @@ app.post('/create/3',(req,res)=>{
 
   });
 
-  //READ Venue
-  app.get('/read/4/:eventId', (req,res) =>{
-    Event.findOne({eventId:req.params['eventId']})
-    .populate("venue")
-    .exec(function(err,event){
-      if(err || event == null || event == undefined)
-        res.status(404).set('Content-Type', 'text/plain').send("Event ID " + req.params['EventId'] +" not found!");
-      else res.set('Content-Type', 'text/plain').send(event.venue);
-    })
-  });
 
   app.put('/addFav/:locId', async(req,res)=>{
     let req_userAc =req.body['userAc']; //this is the username

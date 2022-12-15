@@ -1,0 +1,14 @@
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Committer: Tam Chi Hong <panda@Pandade-MacBook-Pro.local>
+#
+# On branch main
+# Your branch is up to date with 'origin/main'.
+#
+# Changes to be committed:
+#	modified:   main/react/src/components/event.js
+#	modified:   main/react/src/components/locationpage.js
+#	modified:   main/server/index.js
+#
