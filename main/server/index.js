@@ -446,18 +446,68 @@ app.post('/create/3',(req,res)=>{
   });
 
 
-  app.put('/addFav/:locId', (req,res)=>{
-   
+  app.put('/addFav/:locId', async(req,res)=>{
+    let count=0;
     let req_userAc =req.body['userAc']; //this is the username
     let req_locId =req.body['locationId']; //this is the location id
+    const locResult = await Location.findOne({locationId:req_locId}).exec();
+    console.log(locResult._id);
+    console.log("HIHIHIHI", req_locId);
+    
+    const userResult = await User.findOne({userAc:req_userAc});
+   
+  
+    console.log(userResult.favourites);
 
-    console.log(req_locId);
-    User.findOne({userAc:req_userAc}).populate('favorites').exec(function(err, user) {
-      Location.findOne({locationId:req_locId}).exec(function(err,loc){
-        console.log(user.favorites);
-      })
-  })
+    for( let i = 0; i < userResult.favourites.length; i++){ //delete the location object id from favourite
+     
+      if ( userResult.favourites[i].toString() == locResult._id.toString()) { 
+      
+        userResult.favourites.splice(i, 1); 
+        count=1;
+        console.log("after del",userResult.favourites);
+      }
+    }
+      
+    if (count==0){
+    userResult.favourites.push(locResult._id);   
+    console.log("add",userResult.favourites);
+    }
+
+await userResult.save();
+console.log("after save",userResult.favourites);
 });
+
+app.get('/addFav/:locId', (req, res) => { //load comment
+  let req_locationId= req.params['locId'];
+  console.log(req_locationId);
+  Location.findOne({locationId:req_locationId}).exec(function(err, loc) {
+    Comment.find({location:loc._id}).populate('author').exec(function(err, comment) {
+      //console.log(comment);
+      let list = "[\n";
+      for (let i = 0; i < comment.length; i++) {
+        let str =
+          '{\n"name": "' +
+          comment[i].author.name +
+          '",' +
+          '\n"content": "' +
+          comment[i].content +
+          '",' +
+          '\n"date": "' +
+          comment[i].date +
+          '"\n}';
+        if (i < comment.length - 1) str += "\n,";
+        list += str + "\n";
+      }
+      list += "]";
+      res.send(list);
+      //res.send(comment);
+  });
+ 
+
+  })});
+
+
 
   app.all('/*', (req, res) => {
     /*

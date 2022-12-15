@@ -27,11 +27,7 @@ const LocationPage = (props) => {
   
   const fillheart = () => {
     let special = document.querySelector("#nonfill");
-    if (special.classList.contains("bi-heart")) { //if it is not filled yet, which means the heart should be filled when onClick; Added to fav
-      special.classList.remove("bi-heart");
-      special.classList.add("bi-heart-fill");
-
-      let url="http://localhost:4000/addFav"+locationId;
+    let url="http://localhost:4000/addFav/"+locId;
       let obj={ userAc: ouAc, locationId: locId};
         fetch(url,{
             method:"PUT",
@@ -46,9 +42,15 @@ const LocationPage = (props) => {
             return res;
            })
            .catch(error=>console.log(error))
+    if (special.classList.contains("bi-heart")) { //if it is not filled yet, which means the heart should be filled when onClick; Added to fav
+      special.classList.remove("bi-heart");
+      special.classList.add("bi-heart-fill");
+
+      
     } else {
-      special.classList.remove("bi-heart-fill");
+      special.classList.remove("bi-heart-fill"); //heart is not filled, delete favloc
       special.classList.add("bi-heart");
+      
     }
   };
 
