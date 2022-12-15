@@ -359,7 +359,7 @@ app.post('/create/3',(req,res)=>{
   app.post('/update/1', (req, res)=>{
       Location.findOne({locationId:req.body['locationId']}).exec(function(err, loc){
           if (err || loc == null) 
-              res.status(404).set('Content-Type', 'text/plain').send('Location ID '+req.body['locationID'] +' does not exist.');
+              res.status(404).set('Content-Type', 'text/plain').send('Location ID '+req.body['locationId'] +' does not exist.');
           else Event.findOne({eventId:req.body['eventId']}).exec(function(err, e){
               if(err || e == null)
                   res.status(404).set('Content-Type', 'text/plain').send('Event ID '+req.body['eventId'] +' does not exist.');
@@ -394,11 +394,11 @@ app.post('/create/3',(req,res)=>{
 
   //Update User
   app.post('/update/3', (req,res)=>{
-    User.findOne({userAc:req.body['userAc']}).exec(function(err,user){
+    User.findOne({userAc:req.body['userId']}).exec(function(err,user){
       if(err || user == null)
-        res.status(404).set('Content-Type', 'text/plain').send("Account does not exist.");
+        res.status(404).set('Content-Type', 'text/plain').send("User ID " + req.body['userId'] + " does not exist.");
         else{
-          //not sure what should be updatable
+          user.userAc = req.body['userAc'];
           user.password = req.body['password'];
           res.set('Content-Type', 'text/plain').send("User updated!");
         }
