@@ -304,30 +304,30 @@ app.post('/create/3',(req,res)=>{
     else {
       new_userId = user.userId + 1;                            //new userID equals to the maximum userId plus 1
     }
-  });
-  User.findOne({userAc:req.body['userAc']}).exec(function(err, user) {
+    User.findOne({userAc:req.body['userAc']}).exec(function(err, user) {
 
-    if (err || user!=null){ //make sure userAc is unique
-
-      res.status(400).set('Content-Type', 'text/plain').send('Account Name '+req.body['userAc']+' already exists.');
-      return;}
-    
-    let new_user = new User({
-
-        userId: new_userId,
-        userAc: req.body['userAc'], 
-        password: req.body['password'],
-        name: req.body['userName'],
-        isAdmin: false //user is not admin
+      if (err || user!=null){ //make sure userAc is unique
+  
+        res.status(400).set('Content-Type', 'text/plain').send('Account Name '+req.body['userAc']+' already exists.');
+        return;}
       
-      });
-       new_user.save(function (err){
+      let new_user = new User({
+  
+          userId: new_userId,
+          userAc: req.body['userAc'], 
+          password: req.body['password'],
+          name: req.body['userName'],
+          isAdmin: false //user is not admin
         
-          if (err) {res.status(404).set('Content-Type', 'text/plain').send('Error: cannot save');return;}      
-      
-          res.set('Content-Type', 'text/plain').status(201).send("User Created!"); //send the user the address
+        });
+         new_user.save(function (err){
+          
+            if (err) {res.status(404).set('Content-Type', 'text/plain').send('Error: cannot save');return;}      
+        
+            res.set('Content-Type', 'text/plain').status(201).send("User Created!"); //send the user the address
+        });
       });
-    });
+  });
 
    
   });
