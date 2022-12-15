@@ -177,6 +177,9 @@ db.once('open', function () {
         let key = datas.favourites[i].locationId;
         let obj = {};
         obj[key] = datas.favourites[i].name;
+        obj["locationId"] = datas.favourites[i].locationId;
+        obj["name"] = datas.favourites[i].name;
+        obj["_id"] = datas.favourites[i]._id;
         //console.log(obj);
         str.push(obj);
       }

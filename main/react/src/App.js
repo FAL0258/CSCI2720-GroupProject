@@ -66,7 +66,8 @@ function App(props) {
         let rFav = grabFav(ouAc);
         rFav
         .then(favD =>{
-          setFav(favD);
+          let finalFav = evCount(evD, favD);
+          setFav(finalFav);
           setEnd(1); 
         });
       });
@@ -113,7 +114,7 @@ function App(props) {
             <Route path="/" element={<Home />} />
             <Route path="/table" element={<Table locDataSet={locData}/>} />
             <Route path="/map" element={<Map locDataSet={locData}/>} />
-            <Route path="/favloc" element={<Favloc locDataSet={locData}/>} />
+            <Route path="/favloc" element={<Favloc favDataSet={favData}/>} />
             <Route path="/loadingpage" element={<LoadingPage />} />
             <Route
               path="/locationpage/:locationId"
@@ -165,7 +166,7 @@ function App(props) {
             <Route path="/loadingpage" element={<LoadingPage />} />
             <Route path="/table" element={<Table locDataSet={locData}/>} />
             <Route path="/map" element={<Map locDataSet={locData}/>} />
-            <Route path="/favloc" element={<Favloc locDataSet={locData}/>} />
+            <Route path="/favloc" element={<Favloc favDataSet={favData}/>} />
             <Route
               path="/locationpage/:locationId"
               element={<LocationPage locDataSet={locData} evDataSet={evData} userAc={ouAc} username={ouName} setEnd={setEnd}/>}
@@ -271,7 +272,7 @@ const Favloc = (props) => {
           <b>Your Favorite Location</b>
           <i className="bi bi-balloon-heart-fill"></i>
         </h2>
-        <Tables locDataSet={props.locDataSet} />
+        <Tables locDataSet={props.favDataSet} />
       </div>
     </div>
   );
