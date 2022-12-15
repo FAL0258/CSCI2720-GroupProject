@@ -41,7 +41,8 @@ const Comment = (props) => {
       }
 
       function loadfile(){ //fetch the comment from server
-        let url="http://localhost:4000/getCm/"+props.locId;
+        //let url="http://localhost:4000/getCm/"+props.locId;
+        let url = GLB.BACKEND_API + "/getCm/" + props.locId;
         fetch(url).then(res=>res.json()).then (txt=>{
             
             let str="";
