@@ -209,24 +209,20 @@ db.once('open', function () {
           else {
             new_commentId = cm.commentId + 1;                            //new userID equals to the maximum commentId plus 1
           }
+          User.findOne({userAc:req_author}).exec(function(err, user) { 
+            Location.findOne({locationId:req_location}).exec(function(err,loc){
+                Comment.create({
+                  commentId:new_commentId,
+                  location: loc._id,
+                  author: user._id,
+                  content: req_content,
+                  date: new Date()
+                })
+      
+              res.send("OK!");
+            });
+          });      
         });
-
-    User.findOne({userAc:req_author}).exec(function(err, user) { 
-      Location.findOne({locationId:req_location}).exec(function(err,loc){
-        
-        
-          Comment.create({
-            commentId:new_commentId,
-            location: loc._id,
-            author: user._id,
-            content: req_content,
-            date: new Date()
-          })
-
-        res.send("OK!");
-      });
-
-    });    
 });
    
 
@@ -453,14 +449,14 @@ app.post('/create/3',(req,res)=>{
 
   app.put('/addFav/:locId', (req,res)=>{
    
-    let req_author =req.body['author']; //this is the username
+    let req_userAc =req.body['userAc']; //this is the username
     let req_locId =req.body['locationId']; //this is the location id
-    let req_content=req.body['content']; //this is the comment content
-    
-    console.log(req_locId);
-    User.findOne({userAcd:req_locationId}).exec(function(err, loc) {
-      Comment.find({location:loc._id}).populate('author').exec(function(err, comment) {
 
+    console.log(req_locId);
+    User.findOne({userAc:req_userAc}).populate('favorites').exec(function(err, user) {
+      Location.findOne({locationId:req_locId}).exec(function(err,loc){
+        console.log(user.favorites);
+      })
   })
 });
 
