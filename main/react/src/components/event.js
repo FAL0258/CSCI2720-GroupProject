@@ -3,18 +3,23 @@ import GLB from "../config.js";
 
 const Event = (props) => {
      function showevent(){ //fetch the eventdetail from server
-        let url=GLB.BACKEND_API+ "/read/1/"+props.evId;
-        console.log(props.evId);
-        fetch(url).then(res=>res.text()).then (ev=>{
+        let index = 0;
+        for( let i = 0; i < props.evDataSet.length; i++ ){
+            if (props.evDataSet[i].eventId == props.evId)
+                index = i;
+        }
+        try{
             let str="";
-            str = "eventname: " + ev.title + "<br><br>" +
-            "date: " + ev.date + "<br><br>" +
-            "description: " + ev.description + "<br><br>" +
-            "presenter: " + ev.presenter + "<br><br>" +
-            "price: " + ev.price;
+            str = "eventname: " + props.evDataSet[index].title + "<br><br>" +
+            "date: " + props.evDataSet[index].date + "<br><br>" +
+            "description: " + props.evDataSet[index].description + "<br><br>" +
+            "presenter: " + props.evDataSet[index].presenter + "<br><br>" +
+            "price: " + props.evDataSet[index].price;
             document.querySelector("#eventdetail").innerHTML=str;
-        })
-        .catch(error=>console.log(error))
+        }
+        catch(error){
+            console.log(error);
+        };
      }
     // show the eventdetail
     showevent();
