@@ -25,15 +25,14 @@ const Comment = (props) => {
     function loadfile(){ //fetch the comment from server
         let url="http://localhost:4000/getCm/"+props.locId;
         fetch(url).then(res=>res.json()).then (txt=>{
-            console.log("DIU", txt);
-            let str="<h>";
+            
+            let str="";
+            
             for (let i=0;i<txt.length;i++){
-                str+=txt[i].name;
-                str+="<br/>"
-                str+=txt[i].content;
-                str+=txt[i].date;
-                str+="</h>";
-                str+="<br/>";
+                str+='<h2><b>'+txt[i].name+'</b></h2>';           
+                str+='<h5 style="color:black">'+txt[i].content+' </h5>';
+                str+='<p style="color:grey; text-align: right">'+txt[i].date.replace("GMT+0800 (Hong Kong Standard Time)", "")+'</p>';
+                str+="<hr/>";
                 str+="<br/>";
             }
             
