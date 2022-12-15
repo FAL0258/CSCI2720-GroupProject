@@ -242,7 +242,6 @@ db.once('open', function () {
         return;
       }
       else {
-        res.send("received");
         let new_event = new Event({
 
           eventId: req.body['eventId'], //still need to check if it is unique?

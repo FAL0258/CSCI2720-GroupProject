@@ -30,7 +30,7 @@ let {chosen} = useParams();
                console.log(data);
                window.alert(data);
                if ( data.indexOf("Created") != -1){
-                    props.setEnd = null;
+                    props.setEnd(null);
                }
           })
           .catch(err => console.log(err));
