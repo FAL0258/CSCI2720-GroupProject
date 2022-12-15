@@ -63,7 +63,7 @@ const Comment = (props) => {
     //load the comment everytime the page is loaded
     loadfile();
     return(
-        <div className="container">
+        <div className="container" id="commentArea" style={{display: "inline-block"}}>
             <div className="row">
                 <section id="comment" className="col-12">
                     <form>

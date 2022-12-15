@@ -6,7 +6,7 @@ import React, {useState} from "react";
 import { useParams } from "react-router-dom";
 import Maps from "./map.js";
 import Comment from "./comment.js";
-import Event from "./event.js";
+import EventButton from "./eventbutton.js";
 import GLB from "../config.js"
 import * as grab from "./grab.js";
 
@@ -87,6 +87,42 @@ const LocationPage = (props) => {
       index = i;
     }
   }
+
+  const [passEventButton, setEventButton] = useState([]); 
+  const [eventName, setEventName] = useState([]); 
+  const [noBtn, setnoBtn] = useState();
+
+  const eventButton = () => {
+    let url= GLB.BACKEND_API + "/read/5/" + locId;
+
+    fetch(url)
+    .then(response => response.json())
+    .then(json => {
+      let str="";
+      let eventButtonArray=[];
+      let eventNameArray=[];
+      for (let i=0;i<json.length;i++){
+        eventButtonArray.push(json[i].eventId);
+        eventNameArray.push(json[i].title);
+        // str+=<Event evId={eventId} evDataSet={props.evDataSet} setEnd={props.setEnd}/> 
+        // str+='<button onClick={showEventDetail}>' +  json[i].title + '</button><br>';
+      }
+      console.log(json);
+      
+      setEventButton(eventButtonArray);
+      setEventName(eventNameArray);
+      console.log(eventName);
+      
+      // document.querySelector("#eventlist").innerHTML=str;
+    })
+    .catch(err => console.log(err));
+    console.log("Done");
+  }
+  if (noBtn == null){
+    eventButton();
+    setnoBtn(1);
+  }
+  console.log(passEventButton);
   return (
     <>
       <div className="container">
@@ -111,6 +147,8 @@ const LocationPage = (props) => {
             </div>
             <p>Location: {props.locDataSet[index].name}</p>
             <p>Number of Events: {props.locDataSet[index].evCount}</p>
+            <div id="eventlist"> </div>
+            {passEventButton.map((xeventId,i) => ( <EventButton evId={xeventId} evName={eventName[i]} evDataSet={props.evDataSet} setEnd={props.setEnd}/> ))} 
             <button
               type="button"
               className="btn btn-outline-danger"
@@ -132,11 +170,13 @@ const LocationPage = (props) => {
                 color: "white",
                 textAlign: "center",
               }}
+              id="rightTitle"
             >
               Comment
             </h2>
-            {/* <Comment locId={locationId} userAc={ouAc} username={ouName} setEnd={props.setEnd}/> */}
-            <Event evId={eventId} evDataSet={props.evDataSet} setEnd={props.setEnd}/>
+            <Comment locId={locationId} userAc={ouAc} username={ouName} setEnd={props.setEnd}/>
+            <div id="showevent"> </div>
+            {/* <Event evId={eventId} evDataSet={props.evDataSet} setEnd={props.setEnd}/> */}
           </section>
         </div>
       </div>
