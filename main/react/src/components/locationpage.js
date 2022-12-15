@@ -21,13 +21,30 @@ const LocationPage = (props) => {
   console.log(props);
   let { locationId } = useParams();
   console.log(locationId);
+  let locId=locationId; 
   
   
   const fillheart = () => {
     let special = document.querySelector("#nonfill");
-    if (special.classList.contains("bi-heart")) {
+    if (special.classList.contains("bi-heart")) { //if it is not filled yet, which means the heart should be filled when onClick; Added to fav
       special.classList.remove("bi-heart");
       special.classList.add("bi-heart-fill");
+
+      let url="http://localhost:4000/addFav"+locationId;
+      let obj={ userAc: ouAc, locationId: locId};
+        fetch(url,{
+            method:"PUT",
+            headers:{
+                "Content-type":  'application/x-www-form-urlencoded; charset=utf-8'
+            },
+            body:new URLSearchParams(obj)
+           })
+           .then (res=>{
+            if(res.ok){console.log("PUT ok")}
+            else console.log("PUT NO")
+            return res;
+           })
+           .catch(error=>console.log(error))
     } else {
       special.classList.remove("bi-heart-fill");
       special.classList.add("bi-heart");

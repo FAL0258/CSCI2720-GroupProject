@@ -451,6 +451,18 @@ app.post('/create/3',(req,res)=>{
   });
 
 
+  app.put('/addFav/:locId', (req,res)=>{
+   
+    let req_author =req.body['author']; //this is the username
+    let req_locId =req.body['locationId']; //this is the location id
+    let req_content=req.body['content']; //this is the comment content
+    
+    console.log(req_locId);
+    User.findOne({userAcd:req_locationId}).exec(function(err, loc) {
+      Comment.find({location:loc._id}).populate('author').exec(function(err, comment) {
+
+  });
+
   app.all('/*', (req, res) => {
     /*
     Location.create({
