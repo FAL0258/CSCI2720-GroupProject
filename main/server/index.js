@@ -246,6 +246,7 @@ db.once('open', function () {
         return;
       }
       else {
+        res.send("received");
         let new_event = new Event({
 
           eventId: req.body['eventId'], //still need to check if it is unique?
@@ -295,6 +296,7 @@ app.post('/create/2',(req,res)=>{
 app.post('/create/3',(req,res)=>{  
   let new_userId;
   User.findOne().sort('-userId').exec(function(err, user) { //find the maximum userId
+    console.log(err, user);
     if (err) { res.status(404).set('Content-Type', 'text/plain').send("Error"); return;}
     else if (user == null){ //there is no user currently
         new_userId = 1; //first user id is 1
@@ -306,6 +308,7 @@ app.post('/create/3',(req,res)=>{
   User.findOne({userAc:req.body['userAc']}).exec(function(err, user) {
 
     if (err || user!=null){ //make sure userAc is unique
+
       res.status(400).set('Content-Type', 'text/plain').send('Account Name '+req.body['userAc']+' already exists.');
       return;}
     
@@ -314,7 +317,7 @@ app.post('/create/3',(req,res)=>{
         userId: new_userId,
         userAc: req.body['userAc'], 
         password: req.body['password'],
-        name:req.body['userAc'], //just assume the initialize name equals to the userAc 
+        name: req.body['userName'],
         isAdmin: false //user is not admin
       
       });
