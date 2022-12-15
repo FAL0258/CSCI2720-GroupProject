@@ -246,7 +246,6 @@ db.once('open', function () {
         return;
       }
       else {
-        res.send("received");
         let new_event = new Event({
 
           eventId: req.body['eventId'], //still need to check if it is unique?
@@ -460,7 +459,7 @@ app.post('/create/3',(req,res)=>{
     console.log(req_locId);
     User.findOne({userAcd:req_locationId}).exec(function(err, loc) {
       Comment.find({location:loc._id}).populate('author').exec(function(err, comment) {
-
+      });
   })
 });
 
