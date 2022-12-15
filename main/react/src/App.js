@@ -117,7 +117,7 @@ function App(props) {
             <Route path="/crudevent/:chosen" element={<CRUDevent />} />
             <Route path="/crudevent1" element={<CRUDevent1 />} />
             <Route path="/create/:chosen" element={<Create setEnd={setEnd}/>} />
-            <Route path="/read/:chosen" element={<Read evDataSet={evData} />} />
+            <Route path="/read/:chosen" element={<Read evDataSet={evData} locDataSet={locData}/>} />
             <Route path="/update/:chosen" element={<Update />} />
             <Route path="/delete/:chosen" element={<Delete />} />
             <Route path="*" element={<NoMatch />} />

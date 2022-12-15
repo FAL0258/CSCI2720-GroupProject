@@ -6,31 +6,34 @@ function Read(props){
     let {chosen} = useParams();
     //form 1
 
-    const load = (event, evId) => {
-        event.preventDefault();
-        //console.log(evId);
-        for (let i = 0; i < props.evDataSet.length; i++){
-            if (props.evDataSet[i].eventId.toString() == evId.toString()){
-                let api = GLB.BACKEND_API + "/read/4/" + props.evDataSet[i].eventId;
-                fetch(api)
-                .then(response => response.json())
-                .then(json => {
-                    console.log(json);
-                    console.log(props.evDataSet[i]);
-                    document.getElementById('title').value = props.evDataSet[i].title;
-                    document.getElementById('venue').value = json.name;
-                    document.getElementById('date').value = props.evDataSet[i].date;
-                    document.getElementById('description').value = props.evDataSet[i].description;
-                    document.getElementById('presenter').value = props.evDataSet[i].presenter;
-                    document.getElementById('price').value = props.evDataSet[i].price;
-                });
-                
-                break;
-            }
-        }
-    }
-
      if( chosen==1){ 
+        const load = (event, evId) => {
+            event.preventDefault();
+            //console.log(evId);
+            let flag = 0;
+            for (let i = 0; i < props.evDataSet.length; i++){
+                if (props.evDataSet[i].eventId.toString() == evId.toString()){
+                    let api = GLB.BACKEND_API + "/read/4/" + props.evDataSet[i].eventId;
+                    fetch(api)
+                    .then(response => response.json())
+                    .then(json => {
+                        flag = 1;
+                        //console.log(json);
+                        //console.log(props.evDataSet[i]);
+                        document.getElementById('title').value = props.evDataSet[i].title;
+                        document.getElementById('venue').value = json.name;
+                        document.getElementById('date').value = props.evDataSet[i].date;
+                        document.getElementById('description').value = props.evDataSet[i].description;
+                        document.getElementById('presenter').value = props.evDataSet[i].presenter;
+                        document.getElementById('price').value = props.evDataSet[i].price;
+                    })
+                    .catch(err => flag = 0);
+                    
+                    return;
+                }
+            }
+            if (flag == 0) window.alert("Event not found");
+        }
     return(
         <>
 
@@ -80,6 +83,22 @@ function Read(props){
     );}
     //form 2  
     else if( chosen==2){ 
+
+        const load = (event, locId) => {
+            event.preventDefault();
+            //console.log(locId);
+            //console.log(props.locDataSet);
+            for (let i = 0; i < props.locDataSet.length; i++){
+                if (props.locDataSet[i].locationId.toString() == locId.toString()){
+                    document.getElementById('name').value = props.locDataSet[i].name;
+                    document.getElementById('latitude').value = props.locDataSet[i].coordinates.lat;
+                    document.getElementById('longitude').value = props.locDataSet[i].coordinates.lng;
+                    return;
+                }
+            }
+            window.alert("Location not found")
+            
+        }
         return(
             <>
             <div className="text-center">
@@ -92,7 +111,7 @@ function Read(props){
             <input type="text" className="form-control" style={{width:50+"%", margin:'auto'}} placeholder="Location ID" id="locationId" name="locationId" required/>
             <br/>
            
-            <button className="btn btn-lg btn-block" style={{width:50+"%", margin:'auto', backgroundColor: 'rosybrown', color:'white'}}  type="button" onClick={e => load(e)}>Load Information</button>
+            <button className="btn btn-lg btn-block" style={{width:50+"%", margin:'auto', backgroundColor: 'rosybrown', color:'white'}}  type="button" onClick={e => load(e, document.getElementById('locationId').value)}>Load Information</button>
        <br/> <br/> 
             
             <label htmlFor="name" className="d-none">Location Name</label>
@@ -113,6 +132,19 @@ function Read(props){
         );}
      //form 3  
      else if( chosen==3){ 
+        const load = (event, userAc) => {
+            event.preventDefault();
+            //console.log(userAc);
+            let api = GLB.BACKEND_API + "/read/3/" + userAc;
+            fetch(api)
+            .then(response => response.json())
+            .then(json => {
+                //console.log(json);
+                document.getElementById('name').value = json.name;
+                document.getElementById('password').value = json.password;
+            })
+            .catch(err => window.alert("User not found"));
+        }
         return(
             <>
             <div className="text-center">
@@ -126,11 +158,15 @@ function Read(props){
             <br/>
 
            
-            <button className="btn btn-lg btn-block" style={{width:50+"%", margin:'auto', backgroundColor: 'rosybrown', color:'white'}}  type="button" onClick={e => load(e)}>Load Information</button>
+            <button className="btn btn-lg btn-block" style={{width:50+"%", margin:'auto', backgroundColor: 'rosybrown', color:'white'}}  type="button" onClick={e => load(e, document.getElementById('userAc').value)}>Load Information</button>
        <br/> <br/> 
             
+       <label htmlFor="name" className="d-none">User Name</label>
+            <input type="input" className="form-control" style={{width:50+"%", margin:'auto'}} placeholder="User Name" id="name" name="name"/>
+            <br/>
+
          <label htmlFor="password" className="d-none">User Password</label>
-            <input type="password" className="form-control" style={{width:50+"%", margin:'auto'}} placeholder="User Password" id="password" name="password"/>
+            <input type="input" className="form-control" style={{width:50+"%", margin:'auto'}} placeholder="User Password" id="password" name="password"/>
             <br/>
                       
            
