@@ -447,12 +447,14 @@ app.post('/create/3',(req,res)=>{
 
   //Update User
   app.post('/update/3', (req,res)=>{
-    User.findOne({userAc:req.body['userId']}).exec(function(err,user){
+    User.findOne({userAc:req.body['userAc']}).exec(function(err,user){
       if(err || user == null)
-        res.status(404).set('Content-Type', 'text/plain').send("User ID " + req.body['userId'] + " does not exist.");
+        res.status(404).set('Content-Type', 'text/plain').send("User ID " + req.body['userAc'] + " does not exist.");
         else{
           user.userAc = req.body['userAc'];
-          user.password = req.body['password'];
+          user.name = req.body['name'];
+          user.password = Bcrypt.hashSync(req.body['password']);
+          user.save();
           res.set('Content-Type', 'text/plain').send("User updated!");
         }
     })
