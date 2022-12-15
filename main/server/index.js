@@ -327,12 +327,37 @@ app.post('/create/3',(req,res)=>{
 
    
   });
+  /*
     //READ Event
   app.get('/read/1/:eventId', (req,res) =>{
-    Event.findOne({eventId:req.params['eventId']}).exec(function(err,event){
+    Event.findOne({eventId:req.params['eventId']}).populate('venue').exec(function(err,event){
       if(err || event == null || event == undefined)
         res.status(404).set('Content-Type', 'text/plain').send("Event ID " + req.params['EventId'] +" not found!");
-      else res.set('Content-Type', 'text/plain').send(event);
+      else{ 
+        //console.log(event);
+        let escapeStr = event.presenter.replaceAll('“', '\\“');
+        let str =
+                '{\n"title": "' +
+                event.title.replaceAll('"', '\\"') +
+                '",' +
+                '\n"venue": "' +
+                event.venue.name.replaceAll('"', '\\"') +
+                '",' +
+                '\n"date": "' +
+                event.date +
+                '",' +
+                '\n"des": "' +
+                event.description.replaceAll('"', '\\"') +
+                '",' +
+                '\n"pre": "' +
+                escapeStr.replaceAll('”', '\\”') +
+                '",' +
+                '\n"price": "' +
+                event.price +
+                '"\n}';
+        console.log(str);
+        res.set('Content-Type', 'text/plain').send(str);
+      }
     })
   });
   //READ Location
@@ -351,6 +376,7 @@ app.post('/create/3',(req,res)=>{
       else res.set('Content-Type', 'text/plain').send(user);
     })
   });
+  */
   //Update Event
   app.post('/update/1', (req, res)=>{
       Location.findOne({locationId:req.body['locationId']}).exec(function(err, loc){

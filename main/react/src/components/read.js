@@ -1,12 +1,22 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import GLB from "../config.js";
 
-function Read(){
+function Read(props){
     let {chosen} = useParams();
     //form 1
 
-    const load = (event) => {
+    const load = (event, evId) => {
         event.preventDefault();
+        //console.log(evId);
+        for (let i = 0; i < props.evDataSet.length; i++){
+            if (props.evDataSet[i].eventId.toString() == evId.toString()){
+                
+                console.log(props.evDataSet[i]);
+                document.getElementById('title').value = props.evDataSet[i].title;
+                break;
+            }
+        }
     }
 
      if( chosen==1){ 
@@ -24,7 +34,7 @@ function Read(){
         <input type="text" className="form-control" style={{width:50+"%", margin:'auto'}} placeholder="EventID" id="eventId" name="eventId" required/>
     <br/>
         
-       <button className="btn btn-lg btn-block" style={{width:50+"%", margin:'auto', backgroundColor: 'rosybrown', color:'white'}} type="button" onClick={e => load(e)}>Load Information</button>
+       <button className="btn btn-lg btn-block" style={{width:50+"%", margin:'auto', backgroundColor: 'rosybrown', color:'white'}} type="button" onClick={e => load(e, document.getElementById('eventId').value)}>Load Information</button>
        <br/> <br/> 
 
        <label htmlFor="title" className="d-none">Title</label>

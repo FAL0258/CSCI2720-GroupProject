@@ -71,6 +71,7 @@ function App(props) {
     // Admin page
     if (oisAdmin == "true") {
       console.log("Admin: ", oisAdmin);
+      console.log(evData);
       return (
         <BrowserRouter>
           <LogOut name={ouName} />
@@ -115,7 +116,7 @@ function App(props) {
             <Route path="/crudevent/:chosen" element={<CRUDevent />} />
             <Route path="/crudevent1" element={<CRUDevent1 />} />
             <Route path="/create/:chosen" element={<Create setEnd={setEnd}/>} />
-            <Route path="/read/:chosen" element={<Read />} />
+            <Route path="/read/:chosen" element={<Read evDataSet={evData} />} />
             <Route path="/update/:chosen" element={<Update />} />
             <Route path="/delete/:chosen" element={<Delete />} />
             <Route path="*" element={<NoMatch />} />
