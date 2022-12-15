@@ -123,7 +123,7 @@ function Update(){
        <br/> <br/> 
             
          <label htmlFor="password" className="d-none">User Password</label>
-            <input type="text" className="form-control" style={{width:50+"%", margin:'auto'}} placeholder="User Password" id="password" name="password"/>
+            <input type="password" className="form-control" style={{width:50+"%", margin:'auto'}} placeholder="User Password" id="password" name="password"/>
             <br/>
                       
             <button className="btn btn-lg btn-block" style={{width:50+"%", margin:'auto', backgroundColor: 'rosybrown', color:'white'}} type="button"   onClick={""}>Update</button>
