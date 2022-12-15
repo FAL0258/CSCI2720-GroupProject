@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
 const Comment = (props) => {
-    console.log(props.username);
+    console.log(props.userAc);
+    let userAc1=props.userAc;
     let username1=props.username;
     function savefile(){ //save the comment, and send to the server
         let url="http://localhost:4000/getCm/"+props.locId;
         let cmContent = document.querySelector("#new-comment").value;
-        let obj={ author: username1, location: props.locId, content: cmContent};
+        let obj={ author: userAc1, location: props.locId, content: cmContent};
         fetch(url,{
             method:"PUT",
             headers:{
