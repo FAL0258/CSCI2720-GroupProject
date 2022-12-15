@@ -165,6 +165,25 @@ db.once('open', function () {
     });
   });
 
+  app.all('/grabFav/:userAc', (req, res) => {
+    console.log(req.params['userAc']);
+    User.findOne({userAc: req.params['userAc']})
+    .populate("favourites")
+    .exec( (err, datas) => {
+      //console.log(datas);
+      //console.log(datas.favourites.length);
+      let str = [];
+      for(let i = 0; i < datas.favourites.length; i++){
+        let key = datas.favourites[i].locationId;
+        let obj = {};
+        obj[key] = datas.favourites[i].name;
+        //console.log(obj);
+        str.push(obj);
+      }
+      res.send(str);
+    });
+  });
+
   app.get('/getCm/:locId', (req, res) => { //load comment
     let req_locationId= req.params['locId'];
     console.log(req_locationId);

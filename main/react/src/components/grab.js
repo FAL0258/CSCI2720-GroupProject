@@ -59,6 +59,19 @@ function grabLoc() {
   });
 }
 
+function grabFav(userAc){
+  let api = GLB.BACKEND_API + "/grabFav/" + userAc;
+  //let api = "http://localhost:4000/grabLoc";
+  return new Promise( resolve => {
+    fetch(api)
+        .then((res) => res.json())
+        .then((txt) => {
+            console.log(txt);
+            resolve(txt);
+        })
+        .catch((error) => console.log(error));
+  });
+}
 
-export {grabEv, grabLoc, evCount, processData}
+export {grabEv, grabLoc, grabFav, evCount, processData}
 

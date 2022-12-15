@@ -21,12 +21,13 @@ import LoadingPage from "./components/loadingpage.js";
 //npm i -S @react-google-maps/api
 import "./style.css";
 import GLB from "./config.js";
-import {evCount, grabEv, grabLoc} from "./components/grab.js";
+import {evCount, grabEv, grabLoc, grabFav} from "./components/grab.js";
 
 
 function App(props) {
   const [evData, setEv] = useState();
   const [locData, setLoc] = useState();
+  const [favData, setFav] = useState([]);
   const [end, setEnd] = useState();
 
 
@@ -60,10 +61,14 @@ function App(props) {
       .then(locD =>{
         //console.log(locD);
         let rLoc = evCount(evD, locD);
-
         setLoc(rLoc);
         setEv(evD);
-        setEnd(1); 
+        let rFav = grabFav(ouAc);
+        rFav
+        .then(favD =>{
+          setFav(favD);
+          setEnd(1); 
+        });
       });
     });
   }
