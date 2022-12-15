@@ -6,10 +6,11 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import Maps from "./map.js";
 import Comment from "./comment.js";
+import Event from "./event.js";
 import GLB from "../config.js"
 import * as grab from "./grab.js";
 
-const locData = [
+const locData = [ 
   { lat: 22.39181, lng: 113.976771 },
   { lat: 22.35665, lng: 114.12623 }
 ];
@@ -23,6 +24,7 @@ const LocationPage = (props) => {
   let { locationId } = useParams();
   console.log(locationId);
   let locId=locationId; 
+  let eventId =props.evDataSet[0].eventId; 
   
   
   const fillheart = () => {
@@ -115,7 +117,8 @@ const LocationPage = (props) => {
             >
               Comment
             </h2>
-            <Comment locId={locationId} userAc={ouAc} username={ouName} setEnd={props.setEnd}/>
+            {/* <Comment locId={locationId} userAc={ouAc} username={ouName} setEnd={props.setEnd}/> */}
+            <Event evId={eventId} setEnd={props.setEnd}/>
           </section>
         </div>
       </div>
