@@ -41,9 +41,9 @@ db.once('open', function () {
   // Schemas
   const UserSchema = mongoose.Schema({
     userId: { type: Number, required: true, unique: true },
-    userAc: { type: String, required: true, minLength: 4, maxLength: 20, unique: true },
+    userAc: { type: String, required: true, minLength: 3, maxLength: 21, unique: true },
     name: { type: String, required: true },
-    password: { type: String, minLength: 4, maxLength: 20, required: true },
+    password: { type: String, required: true },
     isAdmin: { type: Boolean, required: true },
     favourites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Location' }]
   });
@@ -360,13 +360,16 @@ db.once('open', function () {
         new_userId = user.userId + 1;                            //new userID equals to the maximum userId plus 1
       }
       User.findOne({ userAc: req.body['userAc'] }).exec(function (err, user) {
-
+        let pwL =  req.body['password'].length;
         if (err || user != null) { //make sure userAc is unique
 
           res.status(400).set('Content-Type', 'text/plain').send('Account Name ' + req.body['userAc'] + ' already exists.');
           return;
         }
-
+        else if ( pwL > 20 || pwL < 4 ){
+          res.status(400).set('Content-Type', 'text/plain').send('Password length should be within 4-20. Please check again');
+          return;
+        }
         let new_user = new User({
 
           userId: new_userId,
