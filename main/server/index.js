@@ -389,7 +389,7 @@ db.once('open', function () {
         });
         new_user.save(function (err) {
 
-          if (err) { res.status(404).set('Content-Type', 'text/plain').send('Account name already taken! Please type again!'); return; }
+          if (err) { res.status(404).set('Content-Type', 'text/plain').send('Cannot Save!'); return; }
 
           res.set('Content-Type', 'text/plain').status(201).send("User Created!"); //send the user the address
         });

@@ -179,8 +179,8 @@ function Create(props) {
 
                          <form method="post">
 
-                              <label htmlFor="userName" className="d-none">Name</label>
-                              <input type="text" className="form-control" style={{ width: 50 + "%", margin: 'auto' }} placeholder="Name" id="userName" name="userName" />
+                              <label htmlFor="userName" className="d-none">Nickname</label>
+                              <input type="text" className="form-control" style={{ width: 50 + "%", margin: 'auto' }} placeholder="Nickname" id="userName" name="userName" />
                               <br />
 
                               <label htmlFor="userAc" className="d-none">Account</label>

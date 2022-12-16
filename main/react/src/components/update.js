@@ -68,7 +68,7 @@ function Update(props) {
 
                     <form>
 
-                        <label htmlFor="eventId">Event Id</label>
+                        <label htmlFor="eventId" style={{fontWeight:'bold',color:'rosybrown'}}>Event Id</label>
                         <input type="text" className="form-control text-center" style={{ width: 50 + "%", margin: 'auto' }} id="eventId" name="eventId" required />
                         <br />
 
@@ -76,28 +76,28 @@ function Update(props) {
                         <button className="btn btn-lg btn-block" style={{ width: 50 + "%", margin: 'auto', backgroundColor: 'rosybrown', color: 'white' }} type="button" onClick={e => load(e, document.getElementById('eventId').value)}>Load Information</button>
                         <br /> <br />
 
-                        <label htmlFor="title">Title</label>
+                        <label htmlFor="title" style={{fontWeight:'bold',color:'rosybrown'}}>Title</label>
                         <input type="text" className="form-control text-center" style={{ width: 50 + "%", margin: 'auto' }} id="title" name="title" />
                         <br />
 
 
-                        <label htmlFor="venue">Venue</label>
+                        <label htmlFor="venue" style={{fontWeight:'bold',color:'rosybrown'}}>Venue</label>
                         <input type="text" className="form-control text-center" style={{ width: 50 + "%", margin: 'auto' }} id="venue" name="venue" />
                         <br />
 
-                        <label htmlFor="date">Date</label>
+                        <label htmlFor="date" style={{fontWeight:'bold',color:'rosybrown'}}>Date</label>
                         <input type="text" className="form-control text-center" style={{ width: 50 + "%", margin: 'auto' }} id="date" name="date" />
                         <br />
 
-                        <label htmlFor="description">Description</label>
+                        <label htmlFor="description" style={{fontWeight:'bold',color:'rosybrown'}}>Description</label>
                         <textarea className="form-control" style={{ width: 50 + "%", margin: 'auto', height:200+'px'}}  id="description" name="description" />
                         <br />
 
-                        <label htmlFor="presenter">Presenter</label>
+                        <label htmlFor="presenter" style={{fontWeight:'bold',color:'rosybrown'}}>Presenter</label>
                         <input type="text" className="form-control text-center" style={{ width: 50 + "%", margin: 'auto' }} id="presenter" name="presenter" />
                         <br />
 
-                        <label htmlFor="price">Price</label>
+                        <label htmlFor="price" style={{fontWeight:'bold',color:'rosybrown'}}>Price</label>
                         <input type="text" className="form-control text-center" style={{ width: 50 + "%", margin: 'auto' }}  id="price" name="price" />
                         <br />
 
@@ -160,22 +160,22 @@ function Update(props) {
 
                     <form>
 
-                        <label htmlFor="locationId">Location ID</label>
+                        <label htmlFor="locationId" style={{fontWeight:'bold',color:'rosybrown'}}>Location ID</label>
                         <input type="text" className="form-control text-center" style={{ width: 50 + "%", margin: 'auto' }}  id="locationId" name="locationId" required />
                         <br />
 
                         <button className="btn btn-lg btn-block" style={{ width: 50 + "%", margin: 'auto', backgroundColor: 'rosybrown', color: 'white' }} type="button" onClick={e => load(e, document.getElementById('locationId').value)}>Load Information</button>
                         <br /> <br />
 
-                        <label htmlFor="name">Location Name</label>
+                        <label htmlFor="name" style={{fontWeight:'bold',color:'rosybrown'}}>Location Name</label>
                         <input type="text" className="form-control text-center" style={{ width: 50 + "%", margin: 'auto' }}  id="name" name="name" />
                         <br />
 
-                        <label htmlFor="latitude">Latitude</label>
+                        <label htmlFor="latitude" style={{fontWeight:'bold',color:'rosybrown'}}>Latitude</label>
                         <input type="text" className="form-control text-center" style={{ width: 50 + "%", margin: 'auto' }} id="latitude" name="latitude" />
                         <br />
 
-                        <label htmlFor="longitude">Longitude</label>
+                        <label htmlFor="longitude" style={{fontWeight:'bold',color:'rosybrown'}}>Longitude</label>
                         <input type="text" className="form-control text-center" style={{ width: 50 + "%", margin: 'auto' }}  id="longitude" name="longitude" />
                         <br />
 
@@ -229,7 +229,7 @@ function Update(props) {
 
                     <form>
 
-                        <label htmlFor="userAc">Account</label>
+                        <label htmlFor="userAc" style={{fontWeight:'bold',color:'rosybrown'}}>Account</label>
                         <input type="text" className="form-control text-center" style={{ width: 50 + "%", margin: 'auto' }}  id="userAc" name="userAc" />
                         <br />
 
@@ -237,7 +237,7 @@ function Update(props) {
                         <button className="btn btn-lg btn-block" style={{ width: 50 + "%", margin: 'auto', backgroundColor: 'rosybrown', color: 'white' }} type="button" onClick={e => load(e, document.getElementById('userAc').value)}>Load Information</button>
                         <br /> <br />
 
-                        <label htmlFor="name">User Name</label>
+                        <label htmlFor="name" style={{fontWeight:'bold',color:'rosybrown'}}>Nickname</label>
                         <input type="input" className="form-control text-center" style={{ width: 50 + "%", margin: 'auto' }} id="name" name="name" />
                         <br />
                         <label htmlFor="password" className="d-none">User Password</label>

@@ -163,7 +163,7 @@ function Read(props) {
                         <button className="btn btn-lg btn-block" style={{ width: 50 + "%", margin: 'auto', backgroundColor: 'rosybrown', color: 'white' }} type="button" onClick={e => load(e, document.getElementById('userAc').value)}>Load Information</button>
                         <br /> <br />
 
-                        <label htmlFor="name" style={{fontWeight:'bold',color:'rosybrown'}}>User Name</label>
+                        <label htmlFor="name" style={{fontWeight:'bold',color:'rosybrown'}}>Nickname</label>
                         <input type="input" className="form-control text-center" style={{ width: 50 + "%", margin: 'auto' }} id="name" name="name" />
                         <br />
 
