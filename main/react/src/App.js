@@ -249,6 +249,7 @@ const Map = (props) => {
 
 const Favloc = (props) => {
   return (
+    <section>
     <div className="container">
       <div className="row">
         <h2>
@@ -258,6 +259,7 @@ const Favloc = (props) => {
         <Tables locDataSet={props.favDataSet} />
       </div>
     </div>
+    </section>
   );
 };
 
