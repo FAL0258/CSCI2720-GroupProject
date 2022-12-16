@@ -29,10 +29,9 @@ function App(props) {
   const [favData, setFav] = useState([]);
   const [end, setEnd] = useState();
 
-
   // Handling session state for login
   console.log(GLB.BACKEND_API);
-  const ckToken = window.sessionStorage.getItem("fakeCookie");
+  let ckToken = window.sessionStorage.getItem("fakeCookie");
   let oisAdmin = "false";
   let ouName = "";
   let ouAc = "";
@@ -45,14 +44,14 @@ function App(props) {
   ouName = window.sessionStorage.getItem("userName");
   ouAc = window.sessionStorage.getItem("userAc");
 
-
+  let firstLoad = window.sessionStorage.getItem("firstLoad");
   // Temp session
   //let oisAdmin = 'true';
   //let ouName = 'Admin';
 
   // Direct to loading page if already loged in but data havnt ready yet
   if (ckToken != null && end == null){
-    return <LoadingPage ouAc={ouAc}setEnd={setEnd} setLoc={setLoc} setEv={setEv} setFav={setFav}/>;
+    return <LoadingPage ouAc={ouAc} setEnd={setEnd} setLoc={setLoc} setEv={setEv} setFav={setFav} firstLoad={firstLoad}/>;
   }
 
   // Only all those promise functions are resolved and start rendering everything
