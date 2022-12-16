@@ -19,6 +19,7 @@ const fillerNumber = 999;
 
 const LocationPage = (props) => {
   const [isFav, setisFav] = useState(null);
+  const [buttonVis, setBtnVis] = useState({visibility: "hidden"});
   let ouAc = props.userAc;
   let ouName = props.username;
   // console.log(props);
@@ -148,7 +149,7 @@ const LocationPage = (props) => {
             <p>Location: {props.locDataSet[index].name}</p>
             <p>Number of Events: {props.locDataSet[index].evCount}</p>
             <div id="eventlist"> </div>
-            {passEventId.map((xeventId, i) => (<EventButton evId={xeventId} evName={passEventName[i]} evDataSet={props.evDataSet} setEnd={props.setEnd} />))}
+            {passEventId.map((xeventId, i) => (<EventButton evId={xeventId} evName={passEventName[i]} evDataSet={props.evDataSet} setEnd={props.setEnd} setBtnVis={setBtnVis}/>))}
             <button
               type="button"
               className="btn btn-outline-danger"
@@ -174,7 +175,7 @@ const LocationPage = (props) => {
             >
               Comment
             </h2>
-            <Comment locId={locationId} userAc={ouAc} username={ouName} setEnd={props.setEnd} />
+            <Comment locId={locationId} userAc={ouAc} username={ouName} setEnd={props.setEnd} buttonVis={buttonVis} setBtnVis={setBtnVis}/>
             <div id="showevent"> </div>
             {/* <Event evId={eventId} evDataSet={props.evDataSet} setEnd={props.setEnd}/> */}
           </section>

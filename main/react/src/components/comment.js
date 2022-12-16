@@ -60,12 +60,22 @@ const Comment = (props) => {
         })
             .catch(error => console.log(error))
     }
+
+    function closeBtn(){
+        document.querySelector("#rightTitle").innerText = "Comment";
+        document.querySelector("#showevent").innerHTML = "";
+        document.querySelector("#comment").style.display = "inline-block";
+        document.querySelector("#evClose").style.visibility = "none";
+        props.setBtnVis({visibility: "hidden"});
+        window.sessionStorage.setItem("evTrigger", 0);
+    }
     //load the comment everytime the page is loaded
     loadfile();
     return (
-        <div className="container" id="commentArea" style={{ display: "inline-block" }}>
+        <div className="container">
             <div className="row">
-                <section id="comment" className="col-12">
+                <button id="evClose" className="" style={props.buttonVis} onClick={closeBtn}>Close</button>
+                <section id="comment" className="col-12" style={{ display: "inline-block" }}>
                     <form>
                         <div className="mb-3">
                         </div>

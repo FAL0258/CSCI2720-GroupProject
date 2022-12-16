@@ -21,7 +21,7 @@ import LoadingPage from "./components/loadingpage.js";
 //npm i -S @react-google-maps/api
 import "./style.css";
 import GLB from "./config.js";
-import { evCount, grabEv, grabLoc, grabFav } from "./components/grab.js";
+import { evCount, grabEv, grabLoc, grabFav, retrieveXML } from "./components/grab.js";
 
 
 function App(props) {
@@ -31,12 +31,13 @@ function App(props) {
   const [end, setEnd] = useState();
 
 
-  // Handling session state
+  // Handling session state for login
   console.log(GLB.BACKEND_API);
   const ckToken = window.sessionStorage.getItem("fakeCookie");
   let oisAdmin = "false";
   let ouName = "";
   let ouAc = "";
+  // Prompt to Loginpage
   if (ckToken == null) {
     //return (<LoginPage setToken={setToken} setUser={setUser}/>)
     return <LoginPage />;
@@ -50,31 +51,34 @@ function App(props) {
   //let oisAdmin = 'true';
   //let ouName = 'Admin';
 
-
+  // Promise functions to Initiate everything
   if (end == undefined || end == null) {
-    let ev = grabEv();
-    ev
-      .then(evD => {
-        //console.log(evD);
-        let loc = grabLoc();
-        loc
-          .then(locD => {
-            //console.log(locD);
-            let rLoc = evCount(evD, locD);
-            setLoc(rLoc);
-            setEv(evD);
-            let rFav = grabFav(ouAc);
-            rFav
-              .then(favD => {
-                let finalFav = evCount(evD, favD);
-                setFav(finalFav);
-                setEnd(1);
-              });
-          });
-      });
+    //let xml = retrieveXML();
+    //xml.then( next => {
+      let ev = grabEv();
+      ev
+        .then(evD => {
+          //console.log(evD);
+          let loc = grabLoc();
+          loc
+            .then(locD => {
+              //console.log(locD);
+              let rLoc = evCount(evD, locD);
+              setLoc(rLoc);
+              setEv(evD);
+              let rFav = grabFav(ouAc);
+              rFav
+                .then(favD => {
+                  let finalFav = evCount(evD, favD);
+                  setFav(finalFav);
+                  setEnd(1);
+                });
+            });
+        });
+    //});
   }
+  // Only all those promise functions are resolved and start rendering everything
   else {
-    // Start your code here
     // Admin page
     if (oisAdmin == "true") {
       console.log("Admin: ", oisAdmin);
