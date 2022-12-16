@@ -93,6 +93,9 @@ const LocationPage = (props) => {
   const [passEventName, setPassEventName] = useState([]);
   const [triggerButton, setTriggerButton] = useState();
 
+  //Flag for disable minimap's redirect function
+  const [flag, setFlag] = useState(true);
+
   const eventButton = () => {
     let url = GLB.BACKEND_API + "/read/5/" + locId;
 
@@ -144,7 +147,7 @@ const LocationPage = (props) => {
             </h2>
 
             <div id="smallermap">
-              <Maps mapWidth="500px" mapHeight="500px" coordinates={[props.locDataSet[index].coordinates]} locationIds={[props.locDataSet[index].locationId]} center={center} zoom={15} />
+              <Maps mapWidth="500px" mapHeight="500px" coordinates={[props.locDataSet[index].coordinates]} locationIds={[props.locDataSet[index].locationId]} center={center} zoom={15} flag={flag}/>
             </div>
             <p>Location: {props.locDataSet[index].name}</p>
             <p>Number of Events: {props.locDataSet[index].evCount}</p>
