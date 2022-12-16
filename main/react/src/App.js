@@ -5,7 +5,6 @@ import { useParams, useLocation } from "react-router-dom";
 //import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import Maps from "./components/map.js";
 import Tables from "./components/table.js";
-import SmallerMaps from "./components/smallermap.js";
 import LoginPage from "./components/loginpage.js";
 import LocationPage from "./components/locationpage.js";
 import SearchBox from "./components/searchbox.js";
@@ -53,8 +52,8 @@ function App(props) {
 
   // Promise functions to Initiate everything
   if (end == undefined || end == null) {
-    //let xml = retrieveXML();
-    //xml.then( next => {
+    let xml = retrieveXML();
+    xml.then( next => {
       let ev = grabEv();
       ev
         .then(evD => {
@@ -75,7 +74,7 @@ function App(props) {
                 });
             });
         });
-    //});
+    });
   }
   // Only all those promise functions are resolved and start rendering everything
   else {

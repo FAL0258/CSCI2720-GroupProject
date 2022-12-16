@@ -18,6 +18,17 @@ const DATABASE = "mongodb+srv://stu039:p397262W@cluster0.wenbhsm.mongodb.net/stu
 const PORT = 4000;
 const XML = "https://www.lcsd.gov.hk/datagovhk/event/events.xml";
 
+const LOCDICT = {'75010017': '639880355729c6ac2eb05c98',
+                 '8263': '6398812132f2d60f50732028',
+                 '76810312': '63988178b6dafa5f7a88e972',
+                 '87110120': '639881c2081f9eda5329aaf8',
+                 '87210046': '63988216ee35fcfe8cbaf583',
+                 '87510305': '6398824da6b11bf3856ee5da',
+                 '87311966': '639882b82f2be6f0a280627a',
+                 '36310593': '6398833485b2dfe2843bb7d5',
+                 '3110031': '639883718552f63953d83e04',
+                 '50110016': '639883e9a8f9ff4455c22255'};
+
 // DB Connection
 mongoose.connect(DATABASE);
 const db = mongoose.connection;
@@ -95,7 +106,7 @@ db.once('open', function () {
   });
 
   // Parse data from xml
-  app.put('/xml', (req, res) => {
+  app.all('/xml', (req, res) => {
     fetch(XML, {
       method: 'GET',
       headers: {
@@ -105,25 +116,49 @@ db.once('open', function () {
     })
       .then(response => { return response.text(); })
       .then(async (xml) => {
+        console.log("Receving");
         let jsonOutput = XMLconvert.xml2json(xml, { compact: true, spaces: 4 });
         let better = jsonOutput;
         jsonOutput = JSON.parse(jsonOutput);
         let jEvent = jsonOutput.events.event;
         let totalC = jEvent.length;
         //console.log(jEvent[1].titlee._cdata);
-
         // create every events in database
         for (let i = 0; i < totalC; i++) {
-          if (i%100 == 0) console.log("Getting :" + i + "/" + totalC);
-          const query = await Location.findOne({ locationId: jEvent[i].venueid._cdata });
-          const query2 = await Event.findOne({ eventId: jEvent[i]._attributes.id });
+		  let targetLocId = jEvent[i].venueid._cdata.toString();
+          if (i % 100 == 0) console.log("Getting :" + i + "/" + totalC);
+          //const query = await Location.findOne({ locationId: jEvent[i].venueid._cdata });
           // Create the event if not exist
-          if (query != null && query2 == null) {
-            // Find the event count in one location
-            const query3 = await Event.find({ venue: query._id });
-            // Prevent making too many records, limited to maximum 7 events per location
-            if (query3.length < 7) {
-              // Prevent price-free event from being created with null value
+          if (LOCDICT[targetLocId] != null) {
+            const query2 = await Event.findOne({ eventId: jEvent[i]._attributes.id });
+            if (query2 == null) {
+              // Find the event count in one location
+              //const query3 = await Event.find({ venue: query._id });
+              // Prevent making too many records, limited to maximum 7 events per location
+              //if (query3.length < 7) {
+                // Prevent price-free event from being created with null value
+                let tempPrice = jEvent[i].pricee._cdata;
+                if (tempPrice == null || tempPrice == undefined) {
+                  tempPrice = "Free";
+                }
+                // Prevent empty description
+                let tempDes = jEvent[i].desce._cdata;
+                if (tempDes == null || tempDes == undefined) {
+                  tempDes = "";
+                }
+                Event.create({
+                  eventId: jEvent[i]._attributes.id,
+                  title: jEvent[i].titlee._cdata,
+                  venue: LOCDICT[targetLocId],
+                  date: jEvent[i].predateE._cdata,
+                  description: tempDes,
+                  presenter: jEvent[i].presenterorge._cdata,
+                  price: tempPrice
+                });
+              //}
+            }
+            //Update the current record to latest dataset
+            else{
               let tempPrice = jEvent[i].pricee._cdata;
               if (tempPrice == null || tempPrice == undefined) {
                 tempPrice = "Free";
@@ -133,10 +168,10 @@ db.once('open', function () {
               if (tempDes == null || tempDes == undefined) {
                 tempDes = "";
               }
-              Event.create({
+              Event.findOneAndUpdate({eventId: jEvent[i]._attributes.id}, {
                 eventId: jEvent[i]._attributes.id,
                 title: jEvent[i].titlee._cdata,
-                venue: query._id,
+                venue: LOCDICT[targetLocId],
                 date: jEvent[i].predateE._cdata,
                 description: tempDes,
                 presenter: jEvent[i].presenterorge._cdata,
@@ -191,31 +226,31 @@ db.once('open', function () {
   app.get('/getCm/:locId', (req, res) => { //load comment
     let req_locationId = req.params['locId'];
     console.log(req_locationId);
-    Location.findOne({ locationId: req_locationId }).exec(function (err, loc) {
-      Comment.find({ location: loc._id }).populate('author').exec(function (err, comment) {
-        //console.log(comment);
-        let list = "[\n";
-        for (let i = 0; i < comment.length; i++) {
-          let str =
-            '{\n"name": "' +
-            comment[i].author.name +
-            '",' +
-            '\n"content": "' +
-            comment[i].content +
-            '",' +
-            '\n"date": "' +
-            comment[i].date +
-            '"\n}';
-          if (i < comment.length - 1) str += "\n,";
-          list += str + "\n";
-        }
-        list += "]";
-        res.send(list);
-        //res.send(comment);
-      });
-
-
-    })
+    if (req_locationId != null && req_locationId != undefined) {
+      Location.findOne({ locationId: req_locationId }).exec(function (err, loc) {
+        Comment.find({ location: loc._id }).populate('author').exec(function (err, comment) {
+          //console.log(comment);
+          let list = "[\n";
+          for (let i = 0; i < comment.length; i++) {
+            let str =
+              '{\n"name": "' +
+              comment[i].author.name +
+              '",' +
+              '\n"content": "' +
+              comment[i].content +
+              '",' +
+              '\n"date": "' +
+              comment[i].date +
+              '"\n}';
+            if (i < comment.length - 1) str += "\n,";
+            list += str + "\n";
+          }
+          list += "]";
+          res.send(list);
+          //res.send(comment);
+        });
+      })
+    }
   });
 
   app.put('/getCm/:locId', (req, res) => { //save comment

@@ -4,7 +4,9 @@ import GLB from "../config.js";
 function retrieveXML(){
   let api = GLB.BACKEND_API + "/xml";
   return new Promise(resolve => {
-    fetch(api)
+    fetch(api, {
+      method: 'PUT'
+    })
       .then((res) => res.text())
       .then((txt) => {
         console.log(txt);
