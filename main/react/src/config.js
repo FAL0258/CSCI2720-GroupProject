@@ -1,6 +1,6 @@
 // Use this file to store all the environment variables
 // Add header by import GLB from "./config.js"
-// Access with GLB.var
+// Access with GLB.BACKEND_API => something like "http://127.0.0.1:4000"
 
 const BACKEND_IP = "18.234.230.186";
 const BACKEND_PORT = "4000";

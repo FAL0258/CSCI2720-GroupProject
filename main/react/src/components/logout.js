@@ -9,6 +9,7 @@ const LogOut = (props) => {
             window.sessionStorage.removeItem("userName");
             window.sessionStorage.removeItem("isAdmin");
             window.sessionStorage.removeItem("userAc");
+            window.sessionStorage.removeItem("evTrigger");
             window.location.replace("/");
         }
     }

@@ -5,11 +5,9 @@ const EventButton = (props) => {
     // console.log(props.evName);
     // console.log(props.evId);
 
-    const [trigger, setTrigger] = useState(0);
-
+    window.sessionStorage.setItem("evTrigger", 0);
     const eventButton = () => {
         // Want to see event
-        if (trigger == 0) {
             let eventIdArray = [];
             eventIdArray.push(props.evId);
             // console.log(props.evName);
@@ -32,16 +30,10 @@ const EventButton = (props) => {
                 console.log(error);
             }
             document.querySelector("#rightTitle").innerText = "Event Detail";
-            document.querySelector("#commentArea").style.display = "none";
-
-            setTrigger(1);
-        } else {
-            // Want to see comment
-            setTrigger(0);
-            document.querySelector("#rightTitle").innerText = "Comment";
-            document.querySelector("#showevent").innerHTML = "";
-            document.querySelector("#commentArea").style.display = "inline-block";
-        }
+            document.querySelector("#comment").style.display = "none";
+            document.querySelector("#evClose").style.visibility = "visible";
+            props.setBtnVis({visibility: "visible"});
+            window.sessionStorage.setItem("evTrigger", 1);
     }
 
     return (

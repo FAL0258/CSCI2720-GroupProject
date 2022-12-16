@@ -95,7 +95,7 @@ db.once('open', function () {
   });
 
   // Parse data from xml
-  app.all('/xml', (req, res) => {
+  app.put('/xml', (req, res) => {
     fetch(XML, {
       method: 'GET',
       headers: {
@@ -114,6 +114,7 @@ db.once('open', function () {
 
         // create every events in database
         for (let i = 0; i < totalC; i++) {
+          if (i%100 == 0) console.log("Getting :" + i + "/" + totalC);
           const query = await Location.findOne({ locationId: jEvent[i].venueid._cdata });
           const query2 = await Event.findOne({ eventId: jEvent[i]._attributes.id });
           // Create the event if not exist
@@ -122,7 +123,7 @@ db.once('open', function () {
             const query3 = await Event.find({ venue: query._id });
             // Prevent making too many records, limited to maximum 7 events per location
             if (query3.length < 7) {
-              // Prevent free event from being created with null value
+              // Prevent price-free event from being created with null value
               let tempPrice = jEvent[i].pricee._cdata;
               if (tempPrice == null || tempPrice == undefined) {
                 tempPrice = "Free";

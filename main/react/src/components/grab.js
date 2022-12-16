@@ -1,6 +1,19 @@
 import { resolvePath } from "react-router";
 import GLB from "../config.js";
 
+function retrieveXML(){
+  let api = GLB.BACKEND_API + "/xml";
+  return new Promise(resolve => {
+    fetch(api)
+      .then((res) => res.text())
+      .then((txt) => {
+        console.log(txt);
+        resolve(txt);
+      })
+      .catch((error) => console.log(error));
+  });
+}
+
 function processData(datas, option) {
   let realData = [];
   let realLoc = [];
@@ -73,5 +86,5 @@ function grabFav(userAc) {
   });
 }
 
-export { grabEv, grabLoc, grabFav, evCount, processData }
+export { grabEv, grabLoc, grabFav, evCount, processData, retrieveXML }
 
