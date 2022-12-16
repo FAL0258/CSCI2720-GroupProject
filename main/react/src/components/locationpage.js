@@ -148,8 +148,9 @@ const LocationPage = (props) => {
             </div>
             <p>Location: {props.locDataSet[index].name}</p>
             <p>Number of Events: {props.locDataSet[index].evCount}</p>
-            <div id="eventlist"> </div>
-            {passEventId.map((xeventId, i) => (<EventButton evId={xeventId} evName={passEventName[i]} evDataSet={props.evDataSet} setEnd={props.setEnd} setBtnVis={setBtnVis}/>))}
+            <div id="eventlist" className="wrapper " > 
+            {passEventId.map((xeventId, i) => (<EventButton index={i} evId={xeventId} evName={passEventName[i]} evDataSet={props.evDataSet} setEnd={props.setEnd} setBtnVis={setBtnVis}/>))}
+            </div>
             <button
               type="button"
               className="btn btn-outline-danger"
@@ -176,7 +177,8 @@ const LocationPage = (props) => {
               Comment
             </h2>
             <Comment locId={locationId} userAc={ouAc} username={ouName} setEnd={props.setEnd} buttonVis={buttonVis} setBtnVis={setBtnVis}/>
-            <div id="showevent"> </div>
+            <p></p>
+            <div id="showevent"  > </div>
             {/* <Event evId={eventId} evDataSet={props.evDataSet} setEnd={props.setEnd}/> */}
           </section>
         </div>

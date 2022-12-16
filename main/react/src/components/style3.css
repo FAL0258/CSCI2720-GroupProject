@@ -8,3 +8,18 @@
 #idid:hover {
     font-weight: bold;
 }
+
+.wrapper {
+    
+    width:95%; 
+    overflow-y:scroll; 
+    position:relative;
+    height: 300px;
+    margin:5px;
+    
+}
+
+.eventbtn:hover{
+   background-color: #C1666B !important;
+   color:#F7E3AF !important;
+}
