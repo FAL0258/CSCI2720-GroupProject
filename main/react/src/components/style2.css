@@ -17,3 +17,12 @@
 
 
 }
+
+#evClose{
+  text-align:right;
+  width: auto;
+  color:rosybrown;
+  font-weight: bold;
+  background-color: white;
+  border: 2px solid rosybrown;
+}

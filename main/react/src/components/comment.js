@@ -74,7 +74,7 @@ const Comment = (props) => {
     return (
         <div className="container">
             <div className="row">
-                <button id="evClose" className="" style={props.buttonVis} onClick={closeBtn}>Close</button>
+                <div style={{textAlign: 'right'}}><button id="evClose" className="btn" style={props.buttonVis} onClick={closeBtn}>Close</button></div>
                 <section id="comment" className="col-12" style={{ display: "inline-block" }}>
                     <form>
                         <div className="mb-3">

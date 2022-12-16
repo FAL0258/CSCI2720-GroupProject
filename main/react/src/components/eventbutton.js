@@ -19,11 +19,11 @@ const EventButton = (props) => {
             }
             try {
                 let str = "";
-                str = "eventname: " + props.evDataSet[index].title + "<br><br>" +
-                    "date: " + props.evDataSet[index].date + "<br><br>" +
-                    "description: " + props.evDataSet[index].description + "<br><br>" +
-                    "presenter: " + props.evDataSet[index].presenter + "<br><br>" +
-                    "price: " + props.evDataSet[index].price;
+                str = "<p><b> Eventname: </b></p>" + props.evDataSet[index].title + "<br><br>" +
+                    "<p><b> Date: </b></p>" + props.evDataSet[index].date + "<br><br>" +
+                    "<p><b> Description: </b></p>" + props.evDataSet[index].description + "<br><br>" +
+                    "<p><b> Presenter: </b></p>" + props.evDataSet[index].presenter + "<br><br>" +
+                    "<p><b> Price: </b></p>" + props.evDataSet[index].price;
                 document.querySelector("#showevent").innerHTML = str;
             }
             catch (error) {
