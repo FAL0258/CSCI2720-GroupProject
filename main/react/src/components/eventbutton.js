@@ -45,9 +45,9 @@ const EventButton = (props) => {
     }
 
     return (
-        <>
-            <button type="button" onClick={eventButton}>{props.evName}</button><br></br>
-        </>
+        < div style={{textAlign:'center'}}>
+            <button type="button"  className="btn btn-block" style={{width:80+'%', backgroundColor: '#F7E3AF', color: '#C1666B', margin:2+'%',fontWeight:'bold'}}  onClick={eventButton}>{props.evName}</button><br></br>
+        </div>
     );
 }
 
