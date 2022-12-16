@@ -41,9 +41,9 @@ db.once('open', function () {
   // Schemas
   const UserSchema = mongoose.Schema({
     userId: { type: Number, required: true, unique: true },
-    userAc: { type: String, required: true, unique: true },
+    userAc: { type: String, required: true, minLength: 4, maxLength: 20, unique: true },
     name: { type: String, required: true },
-    password: { type: String, required: true },
+    password: { type: String, minLength: 4, maxLength: 20, required: true },
     isAdmin: { type: Boolean, required: true },
     favourites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Location' }]
   });
