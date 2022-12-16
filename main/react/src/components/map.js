@@ -39,13 +39,21 @@ const Maps = (props) => {
     // Text in popup will be link to corresponding /locationpage/:locID, index needs to be changed to locationID once backend is connected
     const locationId = props.locationIds[index].locationId;
     const url = "/locationpage/" + locationId;
-    return (
-      <Marker key={locationId} position={coordinate}>
-        <Popup>
-          <Link to={url}>View details</Link>
-        </Popup>
-      </Marker>
-    );
+    if (props.flag == null || props.flag == undefined){
+      return (
+        <Marker key={locationId} position={coordinate}>
+          <Popup>
+            <Link to={url}>View details</Link>
+          </Popup>
+        </Marker>
+      );
+    }
+    // It is minimap
+    else{
+      return (
+        <Marker key={locationId} position={coordinate}></Marker>
+      );
+    }
   };
 
   return (
