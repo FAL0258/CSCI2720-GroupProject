@@ -361,15 +361,22 @@ db.once('open', function () {
       }
       User.findOne({ userAc: req.body['userAc'] }).exec(function (err, user) {
         let pwL =  req.body['password'].length;
+        let acL=req.body['userAc'].length;
+        console.log("hi");
         if (err || user != null) { //make sure userAc is unique
 
           res.status(400).set('Content-Type', 'text/plain').send('Account Name ' + req.body['userAc'] + ' already exists.');
           return;
         }
-        else if ( pwL > 20 || pwL < 4 ){
-          res.status(400).set('Content-Type', 'text/plain').send('Password length should be within 4-20. Please check again');
+        else if(acL>20||acL<4){ //check if userAccount is within 4-20 characters
+          res.status(400).set('Content-Type', 'text/plain').send('User Account length should be within 4-20 characters. Please check again');
           return;
         }
+        else if ( pwL > 20 || pwL < 4 ){ //check if password is within 4-20 characters
+          res.status(400).set('Content-Type', 'text/plain').send('Password length should be within 4-20 characters. Please check again');
+          return;
+        }
+        
         let new_user = new User({
 
           userId: new_userId,
@@ -382,7 +389,7 @@ db.once('open', function () {
         });
         new_user.save(function (err) {
 
-          if (err) { res.status(404).set('Content-Type', 'text/plain').send('Error: cannot save'); return; }
+          if (err) { res.status(404).set('Content-Type', 'text/plain').send('Account name already taken! Please type again!'); return; }
 
           res.set('Content-Type', 'text/plain').status(201).send("User Created!"); //send the user the address
         });
@@ -511,8 +518,13 @@ db.once('open', function () {
   //Update User
   app.post('/update/3', (req, res) => {
     User.findOne({ userAc: req.body['userAc'] }).exec(function (err, user) {
+      let pwL =  req.body['password'].length;
       if (err || user == null)
         res.status(404).set('Content-Type', 'text/plain').send("User ID " + req.body['userAc'] + " does not exist.");
+      else if ( pwL > 20 || pwL < 4 ){
+        res.status(400).set('Content-Type', 'text/plain').send('Password length should be within 4-20. Please check again');
+        return;
+      }
       else {
         user.userAc = req.body['userAc'];
         user.name = req.body['name'];
