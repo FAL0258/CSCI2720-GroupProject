@@ -50,34 +50,13 @@ function App(props) {
   //let oisAdmin = 'true';
   //let ouName = 'Admin';
 
-  // Promise functions to Initiate everything
-  if (end == undefined || end == null) {
-    let xml = retrieveXML();
-    xml.then( next => {
-      let ev = grabEv();
-      ev
-        .then(evD => {
-          //console.log(evD);
-          let loc = grabLoc();
-          loc
-            .then(locD => {
-              //console.log(locD);
-              let rLoc = evCount(evD, locD);
-              setLoc(rLoc);
-              setEv(evD);
-              let rFav = grabFav(ouAc);
-              rFav
-                .then(favD => {
-                  let finalFav = evCount(evD, favD);
-                  setFav(finalFav);
-                  setEnd(1);
-                });
-            });
-        });
-    });
+  // Direct to loading page if already loged in but data havnt ready yet
+  if (ckToken != null && end == null){
+    return <LoadingPage ouAc={ouAc}setEnd={setEnd} setLoc={setLoc} setEv={setEv} setFav={setFav}/>;
   }
+
   // Only all those promise functions are resolved and start rendering everything
-  else {
+  if(end != null) {
     // Admin page
     if (oisAdmin == "true") {
       console.log("Admin: ", oisAdmin);

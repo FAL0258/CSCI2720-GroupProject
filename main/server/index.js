@@ -133,29 +133,26 @@ db.once('open', function () {
             const query2 = await Event.findOne({ eventId: jEvent[i]._attributes.id });
             if (query2 == null) {
               // Find the event count in one location
-              //const query3 = await Event.find({ venue: query._id });
               // Prevent making too many records, limited to maximum 7 events per location
-              //if (query3.length < 7) {
-                // Prevent price-free event from being created with null value
-                let tempPrice = jEvent[i].pricee._cdata;
-                if (tempPrice == null || tempPrice == undefined) {
-                  tempPrice = "Free";
-                }
-                // Prevent empty description
-                let tempDes = jEvent[i].desce._cdata;
-                if (tempDes == null || tempDes == undefined) {
-                  tempDes = "";
-                }
-                Event.create({
-                  eventId: jEvent[i]._attributes.id,
-                  title: jEvent[i].titlee._cdata,
-                  venue: LOCDICT[targetLocId],
-                  date: jEvent[i].predateE._cdata,
-                  description: tempDes,
-                  presenter: jEvent[i].presenterorge._cdata,
-                  price: tempPrice
-                });
-              //}
+              // Prevent price-free event from being created with null value
+              let tempPrice = jEvent[i].pricee._cdata;
+              if (tempPrice == null || tempPrice == undefined) {
+                tempPrice = "Free";
+              }
+              // Prevent empty description
+              let tempDes = jEvent[i].desce._cdata;
+              if (tempDes == null || tempDes == undefined) {
+                tempDes = "";
+              }
+              Event.create({
+                eventId: jEvent[i]._attributes.id,
+                title: jEvent[i].titlee._cdata,
+                venue: LOCDICT[targetLocId],
+                date: jEvent[i].predateE._cdata,
+                description: tempDes,
+                presenter: jEvent[i].presenterorge._cdata,
+                price: tempPrice
+              });
             }
             //Update the current record to latest dataset
             else{
