@@ -25,6 +25,7 @@ const LoadingPage = (props) => {
                     let finalFav = evCount(evD, favD);
                     props.setFav(finalFav);
                     window.sessionStorage.setItem("firstLoad", true);
+                    window.sessionStorage.setItem("lastUpdate", Date());
                     props.setEnd(1);
                     });
                 });

@@ -202,6 +202,8 @@ const Home = () => {
 
             <p>
               <i>source: LCSD Cultural Programmes</i>
+              <br/>
+              <sub style={{color:"grey"}}>Last updated time: {window.sessionStorage.getItem("lastUpdate")}</sub>
             </p>
           </div>
         </div>

@@ -10,6 +10,8 @@ const LogOut = (props) => {
             window.sessionStorage.removeItem("isAdmin");
             window.sessionStorage.removeItem("userAc");
             window.sessionStorage.removeItem("evTrigger");
+            window.sessionStorage.removeItem("firstLoad");
+            window.sessionStorage.removeItem("lastUpdate");
             window.location.replace("/");
         }
     }
