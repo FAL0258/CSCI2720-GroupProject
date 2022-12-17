@@ -201,11 +201,12 @@ function Update(props) {
                 })
                 .catch(err => window.alert("User not found"));
         }
-        const update = (event, userAc, name, password) => {
+        const update = (event, userAc, userNewAc, name, password) => {
             event.preventDefault();
             let data = new URLSearchParams();
             let api = GLB.BACKEND_API + "/update/3";
             data.append("userAc", userAc);
+            data.append("userNewAc", userNewAc);
             data.append("name", name);
             data.append("password", password);
 
@@ -236,7 +237,10 @@ function Update(props) {
 
                         <button className="btn btn-lg btn-block" style={{ width: 50 + "%", margin: 'auto', backgroundColor: 'rosybrown', color: 'white' }} type="button" onClick={e => load(e, document.getElementById('userAc').value)}>Load Information</button>
                         <br /> <br />
-
+                        
+                        <label htmlFor="userNewAc" style={{fontWeight:'bold',color:'rosybrown'}}>Update Account to</label>
+                        <input type="text" className="form-control text-center" style={{ width: 50 + "%", margin: 'auto' }}  id="userNewAc" name="userNewAc" />
+                        <br />
                         <label htmlFor="name" style={{fontWeight:'bold',color:'rosybrown'}}>Nickname</label>
                         <input type="input" className="form-control text-center" style={{ width: 50 + "%", margin: 'auto' }} id="name" name="name" />
                         <br />
@@ -244,7 +248,7 @@ function Update(props) {
                         <input type="password" className="form-control text-center" style={{ width: 50 + "%", margin: 'auto' }} placeholder="Update Password Here" id="password" name="password" />
                         <br />
 
-                        <button className="btn btn-lg btn-block" style={{ width: 50 + "%", margin: 'auto', backgroundColor: 'rosybrown', color: 'white' }} type="button" onClick={e => update(e, document.getElementById('userAc').value, document.getElementById('name').value, document.getElementById('password').value)}>Update</button>
+                        <button className="btn btn-lg btn-block" style={{ width: 50 + "%", margin: 'auto', backgroundColor: 'rosybrown', color: 'white' }} type="button" onClick={e => update(e, document.getElementById('userAc').value, document.getElementById('userNewAc').value , document.getElementById('name').value, document.getElementById('password').value)}>Update</button>
                     </form></div>
             </>
         );

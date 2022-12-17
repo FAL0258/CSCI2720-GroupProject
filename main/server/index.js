@@ -519,20 +519,27 @@ db.once('open', function () {
   app.post('/update/3', (req, res) => {
     User.findOne({ userAc: req.body['userAc'] }).exec(function (err, user) {
       let pwL =  req.body['password'].length;
-      if (err || user == null)
+      if (err || user == null){
         res.status(404).set('Content-Type', 'text/plain').send("User ID " + req.body['userAc'] + " does not exist.");
+      }
       else if ( pwL > 20 || pwL < 4 ){
         res.status(400).set('Content-Type', 'text/plain').send('Password length should be within 4-20. Please check again');
         return;
       }
       else {
-        user.userAc = req.body['userAc'];
-        user.name = req.body['name'];
-        user.password = Bcrypt.hashSync(req.body['password']);
-        user.save();
-        res.set('Content-Type', 'text/plain').send("User updated!");
+        User.findOne({ userAc: req.body['userNewAc'] }).exec(function (err, newUser) {
+        if ( err ) res.status(404).set('Content-Type', 'text/plain').send("Username length should be within 4-20. Please try again.");
+        else if ( newUser != null ) res.status(404).set('Content-Type', 'text/plain').send("This Username already exists, please try again");
+        else{
+          newUser.userAc = req.body['userNewAc'];
+          newUser.name = req.body['name'];
+          newUser.password = Bcrypt.hashSync(req.body['password']);
+          newUser.save();
+          res.set('Content-Type', 'text/plain').send("User updated!");
+        }
+        });
       }
-    })
+    });
   });
 
   app.post('/delete/1', (req, res) => {
@@ -655,4 +662,4 @@ db.once('open', function () {
   });
 })
 
-const server = app.listen(PORT);
+const server = app.listen(4000);
